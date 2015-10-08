@@ -30,6 +30,10 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
 	public void setEntityManager(EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
+	
+   public EntityManager getEntityManager() {
+        return entityManager;
+    }
 
 	public EntityManagerFactory getEntityManagerFactory() {
 		return entityManagerFactory;

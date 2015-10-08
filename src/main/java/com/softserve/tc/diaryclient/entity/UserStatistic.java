@@ -6,13 +6,11 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 @Entity
-//@Table(name="user_statistic")
 public class UserStatistic {
 
 	@Id
@@ -99,6 +97,66 @@ public class UserStatistic {
 	}
 
 	@Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+                + ((lastLogin == null) ? 0 : lastLogin.hashCode());
+        result = prime * result
+                + ((lastRecords == null) ? 0 : lastRecords.hashCode());
+        result = prime * result
+                + ((nickName == null) ? 0 : nickName.hashCode());
+        result = prime * result
+                + ((numberOfLogins == null) ? 0 : numberOfLogins.hashCode());
+        result = prime * result
+                + ((numberOfRecords == null) ? 0 : numberOfRecords.hashCode());
+        result = prime * result + ((uuid == null) ? 0 : uuid.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        UserStatistic other = (UserStatistic) obj;
+        if (lastLogin == null) {
+            if (other.lastLogin != null)
+                return false;
+        } else if (!lastLogin.equals(other.lastLogin))
+            return false;
+        if (lastRecords == null) {
+            if (other.lastRecords != null)
+                return false;
+        } else if (!lastRecords.equals(other.lastRecords))
+            return false;
+        if (nickName == null) {
+            if (other.nickName != null)
+                return false;
+        } else if (!nickName.equals(other.nickName))
+            return false;
+        if (numberOfLogins == null) {
+            if (other.numberOfLogins != null)
+                return false;
+        } else if (!numberOfLogins.equals(other.numberOfLogins))
+            return false;
+        if (numberOfRecords == null) {
+            if (other.numberOfRecords != null)
+                return false;
+        } else if (!numberOfRecords.equals(other.numberOfRecords))
+            return false;
+        if (uuid == null) {
+            if (other.uuid != null)
+                return false;
+        } else if (!uuid.equals(other.uuid))
+            return false;
+        return true;
+    }
+
+    @Override
 	public String toString() {
 		return "UserStatistic [uuid=" + uuid + ", nickName=" + nickName + ", numberOfRecords=" + numberOfRecords
 				+ ", numberOfLogins=" + numberOfLogins + ", lastRecords=" + lastRecords + ", lastLogin=" + lastLogin

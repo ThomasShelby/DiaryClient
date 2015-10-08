@@ -7,11 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-//@Table(name="settings")
 public class UserSettings {
 	
 	@Id
@@ -125,7 +123,65 @@ public class UserSettings {
 		this.timeFormat = timeFormat;
 	}
 
-	/* (non-Javadoc)
+	@Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+                + ((language == null) ? 0 : language.hashCode());
+        result = prime * result
+                + ((nickName == null) ? 0 : nickName.hashCode());
+        result = prime * result + ((numberOfRecordsToShow == null) ? 0
+                : numberOfRecordsToShow.hashCode());
+        result = prime * result
+                + ((showDateOfBirth == null) ? 0 : showDateOfBirth.hashCode());
+        result = prime * result
+                + ((showFullName == null) ? 0 : showFullName.hashCode());
+        result = prime * result + ((theme == null) ? 0 : theme.hashCode());
+        result = prime * result
+                + ((timeFormat == null) ? 0 : timeFormat.hashCode());
+        result = prime * result + ((uuid == null) ? 0 : uuid.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        UserSettings other = (UserSettings) obj;
+        if (language != other.language)
+            return false;
+        if (nickName == null) {
+            if (other.nickName != null)
+                return false;
+        } else if (!nickName.equals(other.nickName))
+            return false;
+        if (numberOfRecordsToShow == null) {
+            if (other.numberOfRecordsToShow != null)
+                return false;
+        } else if (!numberOfRecordsToShow.equals(other.numberOfRecordsToShow))
+            return false;
+        if (showDateOfBirth != other.showDateOfBirth)
+            return false;
+        if (showFullName != other.showFullName)
+            return false;
+        if (theme != other.theme)
+            return false;
+        if (timeFormat != other.timeFormat)
+            return false;
+        if (uuid == null) {
+            if (other.uuid != null)
+                return false;
+        } else if (!uuid.equals(other.uuid))
+            return false;
+        return true;
+    }
+
+    /* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

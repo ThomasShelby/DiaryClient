@@ -3,6 +3,7 @@
 <tiles:insertDefinition name="defaultTemplate">
 	<tiles:putAttribute name="body">
 		<div class="body">
+		<img src="/images/tmpFiles/${user.avatar}" alt="user avatar" style="width:304px;height:228px;"/>
 			<h2>profile</h2>
 			<ul>
 				<li><b>Nick Name: </b>${user.nickName}</li>

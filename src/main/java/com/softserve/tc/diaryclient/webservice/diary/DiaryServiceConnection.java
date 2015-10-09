@@ -2,6 +2,7 @@ package com.softserve.tc.diaryclient.webservice.diary;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+
 import java.util.Properties;
 
 import javax.xml.namespace.QName;
@@ -39,7 +40,7 @@ public class DiaryServiceConnection {
 			Service service = Service.create(wsdlUrl, qname);
 			port = service.getPort(DiaryService.class);
 
-			// TODO using for checking connection. delete method sayHello() after
+			//using for checking connection
 			logger.info(port.sayHello("Java-159.1"));
 
 			return port;

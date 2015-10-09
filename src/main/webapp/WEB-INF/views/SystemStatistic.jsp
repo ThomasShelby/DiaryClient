@@ -6,24 +6,52 @@
 <tiles:insertDefinition name="defaultTemplate">
     <tiles:putAttribute name="body">
 
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <div id="chart_div"></div>
 
 	<div class="body">
 	<h1>System statistic per last month:</h1>
-
-	<c:forEach items="${systemStatisticList}" var="sysstatistic">
+	<div class="text"><p>>General number of logins per month:${list}</p><br>	
+	</div>
 	
-		<ul>
-			<li><b>General number of records per month: </b>${sysstatistic.genNumOfRecordsPerMonth}</li>
-			<li><b>General number of users per month: </b>${sysstatistic.genNumOfUsersPerMonth}</li>
-			<li><b>Most active user per month: </b>${sysstatistic.mostActiveUserPerMonth}</li>
-			<li><b>Most popular record: </b>${sysstatistic.mostPopRecord}</li>
-			<li><b>Most popular user per month: </b>${sysstatistic.mostPpopularUserPerMonth}</li>
-			<li><b>Number of new users per month: </b>${sysstatistic.numOfNewUsersPerMonth}</li>
-			<li><b>The biggest record: </b>${sysstatistic.theBiggestRecord}</li>
-			<li><b>The longest time online: </b>${sysstatistic.theLongestTimeOnline}</li>
-		</ul>
+		<script>
+	google.load('visualization', '1', {packages: ['corechart', 'bar']});
+	google.setOnLoadCallback(drawTrendlines);
 
-	</c:forEach>
+	function drawTrendlines() {
+	      var data = new google.visualization.DataTable();
+	      data.addColumn('timeofday', 'Time of Day');
+	      data.addColumn('number', 'Logins per day');
+
+	      data.addRows([
+<c:forEach items="${map}" var="entry">
+[{v: [${entry.key}+8, 0, 0], f: 'day ${entry.key}'}, ${entry.value}],
+</c:forEach>]);
+          
+	      var options = {
+	        title: 'System statistics throughout the last month (daily):',
+	        trendlines: {
+	          0: {type: 'exponential', lineWidth: 5, opacity: .5}  
+	        },
+	        hAxis: {
+	          title: 'Days of month',
+	          format: ' ',
+	          viewWindow: {
+	            min: [7, 30, 0],
+	            max: [37, 30, 0]
+	          }
+	        },
+	        vAxis: {
+	          title: 'Amount per day',
+	        	  type: "integer"
+	        }
+	      };
+
+	      var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+	      chart.draw(data, options);
+	    }
+	</script>
+	
 
 	<button onclick="location.href=''">Back</button>
 	<div>

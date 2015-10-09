@@ -16,8 +16,8 @@
 						http://www.springframework.org/schema/tx/spring-tx-3.2.xsd 
 						http://www.springframework.org/schema/task 
 						http://www.springframework.org/schema/task/spring-task-3.2.xsd">
+    <context:component-scan base-package="com.softserve.tc.*"></context:component-scan>
 
-	<context:component-scan base-package="com.softserve.tc.*"></context:component-scan>
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">

@@ -6,7 +6,6 @@
 <tiles:insertDefinition name="defaultTemplate">
 	<tiles:putAttribute name="body">
 		<div class="body">
-		<div class="body">
 			<c:forEach items="${usersList}" var="users">
 				<a href='userProfile?nickName=${users.nickName}'>${users.nickName}</a>
 				</br>

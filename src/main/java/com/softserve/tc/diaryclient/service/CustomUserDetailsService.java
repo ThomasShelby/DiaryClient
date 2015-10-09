@@ -19,9 +19,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         com.softserve.tc.diaryclient.entity.User user = UserDAOImpl.findByUserName(username);
-        System.out.println(user.getUsername());
-        System.out.println(user.getPassword());
-        System.out.println(user.getRole());
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         if (user.getRole().equals("ADMIN")) {
             authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));

@@ -3,7 +3,6 @@ package com.softserve.tc.diaryclient.webservice.diary;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.Properties;
 
 import org.apache.log4j.Logger;

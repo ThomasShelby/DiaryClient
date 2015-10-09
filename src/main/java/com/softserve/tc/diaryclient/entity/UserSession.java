@@ -6,13 +6,11 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 @Entity
-//@Table(name="session")
 public class UserSession {
 	
 	@Id
@@ -88,6 +86,59 @@ public class UserSession {
 	}
 
 	@Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+                + ((endSession == null) ? 0 : endSession.hashCode());
+        result = prime * result
+                + ((nickName == null) ? 0 : nickName.hashCode());
+        result = prime * result
+                + ((sessionNumber == null) ? 0 : sessionNumber.hashCode());
+        result = prime * result
+                + ((startSession == null) ? 0 : startSession.hashCode());
+        result = prime * result + ((uuid == null) ? 0 : uuid.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        UserSession other = (UserSession) obj;
+        if (endSession == null) {
+            if (other.endSession != null)
+                return false;
+        } else if (!endSession.equals(other.endSession))
+            return false;
+        if (nickName == null) {
+            if (other.nickName != null)
+                return false;
+        } else if (!nickName.equals(other.nickName))
+            return false;
+        if (sessionNumber == null) {
+            if (other.sessionNumber != null)
+                return false;
+        } else if (!sessionNumber.equals(other.sessionNumber))
+            return false;
+        if (startSession == null) {
+            if (other.startSession != null)
+                return false;
+        } else if (!startSession.equals(other.startSession))
+            return false;
+        if (uuid == null) {
+            if (other.uuid != null)
+                return false;
+        } else if (!uuid.equals(other.uuid))
+            return false;
+        return true;
+    }
+
+    @Override
 	public String toString() {
 		return "UserSession [uuid=" + uuid + ", nickName=" + nickName + ", sessionNumber=" + sessionNumber
 				+ ", startSession=" + startSession + ", endSession=" + endSession + "]\n";

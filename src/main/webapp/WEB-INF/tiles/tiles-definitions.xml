@@ -5,14 +5,15 @@
 <tiles-definitions>
 
 	<definition name="defaultTemplate" template="/WEB-INF/tiles/template.jsp">
+		<put-attribute name="title" value="The Diary" />
 		<put-attribute name="header" value="/WEB-INF/tiles/header.jsp" />
 		<put-attribute name="menu" value="/WEB-INF/tiles/menu.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/tiles/footer.jsp" />
 	</definition>
 
-	<definition name="filter" extends="defaultTemplate" template="/WEB-INF/tiles/template-filter.jsp">
+	<definition name="filter" extends="defaultTemplate"
+		template="/WEB-INF/tiles/template-filter.jsp">
 		<put-attribute name="filter" value="/WEB-INF/tiles/filter.jsp" />
 	</definition>
-
 
 </tiles-definitions>

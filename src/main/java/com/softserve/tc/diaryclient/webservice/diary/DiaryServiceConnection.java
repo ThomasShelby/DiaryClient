@@ -2,7 +2,6 @@ package com.softserve.tc.diaryclient.webservice.diary;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import java.util.Properties;
 
 import javax.xml.namespace.QName;

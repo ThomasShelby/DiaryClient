@@ -8,18 +8,14 @@
 				
 			<li><a href="userProfile?nickName=${pageContext.request.userPrincipal.name}">My Profile</a></li>
 					
-			<li><a href="publicRecords">public records</a></li>
+			<li><a href="addRecord?nickName='${pageContext.request.userPrincipal.name}'">Add record</a></li>
+			
+			<li><a href="my-statistic?nickName=${pageContext.request.userPrincipal.name}">My Statistic</a></li>
 					
-			<li><a href="addRecord?nickName='${pageContext.request.userPrincipal.name}'">add record</a></li>		
+			<li><a href="settings">Settings</a></li>
 			
-			<li><a href="mystatistic?nickName=${pageContext.request.userPrincipal.name}" >My Statistic</a></li>
-			
-			<li><a href="systemStatistic">SystemStatistic</a></li>
-			
-			<li><a href="usersList">Users Statistic</a></li>
+			<li><a href="publicRecords">Public records</a></li>
 					
-			<li><a href="users">Users</a></li>
-				
 		</ul>
 	</c:if>
 	<c:if test="${pageContext.request.userPrincipal.name == null}">

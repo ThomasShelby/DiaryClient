@@ -122,6 +122,89 @@ public class SystemStatistic {
     }
     
     @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((genNumOfRecordsPerMonth == null) ? 0
+                : genNumOfRecordsPerMonth.hashCode());
+        result = prime * result + ((genNumOfUsersPerMonth == null) ? 0
+                : genNumOfUsersPerMonth.hashCode());
+        result = prime * result + ((mostActiveUserPerMonth == null) ? 0
+                : mostActiveUserPerMonth.hashCode());
+        result = prime * result
+                + ((mostPopRecord == null) ? 0 : mostPopRecord.hashCode());
+        result = prime * result + ((mostPpopularUserPerMonth == null) ? 0
+                : mostPpopularUserPerMonth.hashCode());
+        result = prime * result + ((numOfNewUsersPerMonth == null) ? 0
+                : numOfNewUsersPerMonth.hashCode());
+        result = prime * result + ((theBiggestRecord == null) ? 0
+                : theBiggestRecord.hashCode());
+        result = prime * result + ((theLongestTimeOnline == null) ? 0
+                : theLongestTimeOnline.hashCode());
+        result = prime * result + ((uuid == null) ? 0 : uuid.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        SystemStatistic other = (SystemStatistic) obj;
+        if (genNumOfRecordsPerMonth == null) {
+            if (other.genNumOfRecordsPerMonth != null)
+                return false;
+        } else
+            if (!genNumOfRecordsPerMonth.equals(other.genNumOfRecordsPerMonth))
+            return false;
+        if (genNumOfUsersPerMonth == null) {
+            if (other.genNumOfUsersPerMonth != null)
+                return false;
+        } else if (!genNumOfUsersPerMonth.equals(other.genNumOfUsersPerMonth))
+            return false;
+        if (mostActiveUserPerMonth == null) {
+            if (other.mostActiveUserPerMonth != null)
+                return false;
+        } else if (!mostActiveUserPerMonth.equals(other.mostActiveUserPerMonth))
+            return false;
+        if (mostPopRecord == null) {
+            if (other.mostPopRecord != null)
+                return false;
+        } else if (!mostPopRecord.equals(other.mostPopRecord))
+            return false;
+        if (mostPpopularUserPerMonth == null) {
+            if (other.mostPpopularUserPerMonth != null)
+                return false;
+        } else if (!mostPpopularUserPerMonth
+                .equals(other.mostPpopularUserPerMonth))
+            return false;
+        if (numOfNewUsersPerMonth == null) {
+            if (other.numOfNewUsersPerMonth != null)
+                return false;
+        } else if (!numOfNewUsersPerMonth.equals(other.numOfNewUsersPerMonth))
+            return false;
+        if (theBiggestRecord == null) {
+            if (other.theBiggestRecord != null)
+                return false;
+        } else if (!theBiggestRecord.equals(other.theBiggestRecord))
+            return false;
+        if (theLongestTimeOnline == null) {
+            if (other.theLongestTimeOnline != null)
+                return false;
+        } else if (!theLongestTimeOnline.equals(other.theLongestTimeOnline))
+            return false;
+        if (uuid == null) {
+            if (other.uuid != null)
+                return false;
+        } else if (!uuid.equals(other.uuid))
+            return false;
+        return true;
+    }
+
+    @Override
     public String toString() {
         return "SystemStatistic [genNumOfUsersPerMonth=" + genNumOfUsersPerMonth
                 + ", genNumOfRecordsPerMonth=" + genNumOfRecordsPerMonth

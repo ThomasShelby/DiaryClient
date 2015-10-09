@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.google.gson.Gson;
+import com.softserve.tc.diary.entity.Tag;
 import com.softserve.tc.diary.entity.User;
 import com.softserve.tc.diary.webservice.*;
 import com.softserve.tc.diaryclient.dao.UserStatisticDAO;
 import com.softserve.tc.diaryclient.entity.Record;
+import com.softserve.tc.diaryclient.entity.SystemStatistic;
 import com.softserve.tc.diaryclient.entity.UserStatistic;
 import com.softserve.tc.diaryclient.service.UserStatisticService;
 import com.softserve.tc.diaryclient.webservice.diary.DiaryServiceConnection;
@@ -25,24 +27,37 @@ public class UserStatisticController {
     @Autowired
     UserStatisticService userStatisticService ;
     
-    @RequestMapping(value = "/usersList")
+    @RequestMapping(value = "/users-statistic")
     public String users(Model model) {
         DiaryService port = DiaryServiceConnection.getDairyServicePort();
-        
+    
         List<UserStatistic> usersList = userStatDAO.getAll();
         String json = new Gson().toJson(usersList);
         model.addAttribute("usersList", json);
         
+        User mostActiveUser = port.getMostActiveUser(); 
+        model.addAttribute("mostActiveUser", mostActiveUser);
+        int numberOfRecords = userStatisticService.getUserAmountOfRecords(mostActiveUser.getNickName());
+        model.addAttribute("usersAmountOfRecords", numberOfRecords);
+        
+        Tag mostPopularTag = port.getMostPopularTag();
+        model.addAttribute("mostPopularTag", mostPopularTag);
+        
+        int[] sexStatistic = port.getSexStatistic();
+        int male = sexStatistic[0];
+        model.addAttribute("male", male);
+        int female = sexStatistic[1];
+        model.addAttribute("female", female);
+        
         return "users-statistic";
     }
     
-    @RequestMapping(value = "/mystatistic", method = RequestMethod.GET)
+    @RequestMapping(value = "/my-statistic", method = RequestMethod.GET)
     public String myStatistic(@RequestParam(value = "nickName",required=false) String nickName,Model model) {
         DiaryService port = DiaryServiceConnection.getDairyServicePort();
-        if (nickName ==""){
-            nickName="BigBunny";
+        if (nickName.isEmpty()){
+            return "redirect:/login";
         }
-        nickName = "BigBunny";
         User us = port.getUserByNickName(nickName);
         model.addAttribute("user", us);
         UserStatistic clientUserStat = userStatDAO.findByNickName("Bob");
@@ -54,7 +69,7 @@ public class UserStatisticController {
         /*List<com.softserve.tc.diary.entity.Record> records= port.getAllRecordsByDate(nickName,"2015-09-03 00:00:00");
         model.addAttribute("recordsByDate", records);*/
         
-        return "mystatistic";
+        return "my-statistic";
     }
     
 }

@@ -6,11 +6,11 @@ public interface BaseDAO<T> {
 
 	void create(T object);
 
-	T findByNickName(String nickName);
+	T find(String id);
 
 	void update(T object);
 
-	void delete(String nickName);
+	void delete(T object);
 
 	List<T> getAll();
 }

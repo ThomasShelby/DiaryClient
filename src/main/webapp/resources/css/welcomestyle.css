@@ -1,0 +1,36 @@
+.Wmenu ul{
+	font-size:20px;
+	list-style:none;
+	float:left;
+	width:300px;
+	margin-left:50px;
+}
+
+.Wmenu a{
+	text-decoration:none;
+}
+
+.Wcontent{
+	font-size:35px;
+	float:left;
+}
+
+/* unvisited link */
+a {
+    color: #000;
+}
+
+/* visited link */
+a:visited {
+    color: #000;
+}
+
+/* mouse over link */
+a:hover {
+    color: #040875;
+}
+
+/* selected link */
+a:active {
+    color: #040875;
+}

@@ -11,27 +11,26 @@
 			<p>The most popular tag(one by record) :
 				${mostPopularTag.getTagMessage()}</p>
 			</div>
-			<div id="chartForLogins"></div>
-			<div id="chartForRecords"></div>
-			<div id="chartForSexes"></div>
+			</br>
+			<div id= "drawCharts">
+				<h3>Select chart to display :</h3>
+				<a id = "drawCol" class ="block">Show number of logins </a>
+				<a id = "drawLine" class = "block">Show number of records </a>
+				<a id = "drawPie" class = "block">Show sex statistics </a>
+			</div>
+			</br>
+			<div id="chart"></div></br>
 			<button onclick="location.href='/DiaryClient'">Back</button>
 		</div>
 		
 	</tiles:putAttribute>
 </tiles:insertDefinition>
 <style type="text/css">
-	#chartForLogins{
-	float:left;
-	}
-	#chartForRecords{
-	float:left;
-	}
-	#chartForSexes{
-	float:left;
-	}
 	.text{
-	font-size:20px;
-	float:left;
+	font-size:15px;
+	}
+	.block{
+	display:block;
 	}
 </style>
 <script type ="text/javascript"
@@ -40,7 +39,6 @@
 	src="http://underscorejs.org/underscore-min.js"></script>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript" >
-google.setOnLoadCallback(drawChart);
 function getDataForLogins() {
 	var json= ${usersList};
 	for (var i = 0; i < json.length; i++) {
@@ -65,6 +63,24 @@ function getDataForLogins() {
 	var jsonData = [ header ].concat(rows);
 	return jsonData;
 }
+function drawChartForLogins() {
+	var dataForLogins = getDataForLogins();
+	var dataForLogins = google.visualization
+			.arrayToDataTable(dataForLogins);
+	var optionsForLogins = {
+		isStacked : false,
+		title : 'Statistic by number of Logins',
+		height : 300,
+		width : 500,
+		colors : [ 'blue' ]
+	};
+	var chartForLogins = new google.visualization.ColumnChart(document
+			.getElementById('chart'));
+	chartForLogins.draw(dataForLogins, optionsForLogins);
+}
+
+
+
 function getDataForRecords() {
 	var json = ${usersList};
 	for (var i = 0; i < json.length; i++) {
@@ -90,6 +106,23 @@ function getDataForRecords() {
 	var jsonData = [ header ].concat(rows);
 	return jsonData;
 }
+function drawChartForRecords() {
+	var dataForRecords = getDataForRecords();
+	var dataForRecords = google.visualization
+			.arrayToDataTable(dataForRecords);
+	var optionsForRecords = {
+		isStacked : false,
+		title : 'Statistic by number of Records',
+		height : 300,
+		width : 500,
+		colors : [ 'red' ]
+	};
+	var chartForRecords = new google.visualization.LineChart(document
+			.getElementById('chart'));
+	chartForRecords.draw(dataForRecords, optionsForRecords);
+	
+}
+
 
 function getDataForSexes() {
 	var male = ${male};
@@ -102,34 +135,7 @@ function getDataForSexes() {
 	return data;
 }
 
-
-google.load("visualization", "1", {
-	packages : [ "corechart" ],
-	callback : drawChart
-});
-
-function drawChart() {
-	var dataForLogins = getDataForLogins();
-	var dataForLogins = google.visualization
-			.arrayToDataTable(dataForLogins);
-	var optionsForLogins = {
-		isStacked : false,
-		title : 'Statistic by number of Logins',
-		height : 300,
-		width : 500,
-		colors : [ 'blue' ]
-	};
-	var dataForRecords = getDataForRecords();
-	var dataForRecords = google.visualization
-			.arrayToDataTable(dataForRecords);
-	var optionsForRecords = {
-		isStacked : false,
-		title : 'Statistic by number of Records',
-		height : 300,
-		width : 500,
-		colors : [ 'red' ]
-	};
-	
+function drawChartForSexes() {
 	var dataForSexes = getDataForSexes();
 	var dataForSexes = google.visualization
 			.arrayToDataTable(dataForSexes);
@@ -140,15 +146,23 @@ function drawChart() {
 		is3D:true,
 	};
 
-	var chartForLogins = new google.visualization.ColumnChart(document
-			.getElementById('chartForLogins'));
-	chartForLogins.draw(dataForLogins, optionsForLogins);
-	var chartForRecords = new google.visualization.LineChart(document
-			.getElementById('chartForRecords'));
-	chartForRecords.draw(dataForRecords, optionsForRecords);
-	
 	var chartForSexes = new google.visualization.PieChart(document
-			.getElementById('chartForSexes'));
+			.getElementById('chart'));
 	chartForSexes.draw(dataForSexes, optionsForSexes);
 }
+
+function initialize () {
+    $('#drawCol').click(function() {
+        drawChartForLogins();
+    });
+    $('#drawLine').click(function() {
+        drawChartForRecords();
+    });
+    $('#drawPie').click(function() {
+        drawChartForSexes();
+    });
+}
+google.setOnLoadCallback(initialize);
+google.load("visualization", "1", {packages:["corechart"]});
+
 </script>

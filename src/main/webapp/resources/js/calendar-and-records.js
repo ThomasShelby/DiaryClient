@@ -1,3 +1,8 @@
+/**
+ * Created by UserMaryana on 10/9/2015.
+ */
+"use strict";
+var inputDate = $("#selecteddate").text();
 YUI().use(
 		'calendar',
 		'datatype-date',
@@ -13,10 +18,22 @@ YUI().use(
 			;
 
 			var dtdate = Y.DataType.Date;
-			calendar.on("selectionChange", function(ev) {
-				var newDate = ev.newSelection[0];
-				Y.one("#selecteddate").setHTML(
-						dtdate.format(newDate));
+
+			Date.prototype.yyyymmdd = function() {
+				var yyyy = this.getFullYear().toString();
+				var mm = (this.getMonth()+1).toString();
+				var dd  = this.getDate().toString();
+				return yyyy + (mm[1]?mm:"0"+mm[0]) + (dd[1]?dd:"0"+dd[0]); // padding
+			};
+			var today = new Date();
+			today.yyyymmdd();
+			calendar.selectDates(today);
+			Y.one("#selecteddate").setHTML(
+					dtdate.format(today));
+			
+			getRecordsByDate();
+			function getRecordsByDate()
+			{
 
 				var inputDate = $("#selecteddate").text();
 				$.ajax({
@@ -26,19 +43,19 @@ YUI().use(
 					data : ({
 						selected : inputDate
 					}),
-					success: function(data){ 
+					success: function(data){
 						if(data){
 							var len = data.length;
 							var txt = "";
 							$("#table").empty().addClass("hidden");
 							if(len > 0){
-								txt += "<tr><th>ID</th><th>Title</th><th>Text" 
+								txt += "<tr><th>ID</th><th>Title</th><th>Text"
 									+"</th><th>Visibility</th><th>Date</th></tr>";
 								for(var i=0;i<len;i++){
 									txt += "<tr><td>"+data[i].uuid+"</td><td>"
 									+data[i].title+"</td></td>"
 									+ "</td><td>"+data[i].text+"</td></td>"
-									+"</td><td>"+data[i].visibility+"</td></td>"
+									+ "</td><td>"+data[i].visibility+"</td></td>"
 									+ "<td><td>"+data[i].createdTime+"</td><tr>";
 								}
 								if(txt != ""){
@@ -48,5 +65,13 @@ YUI().use(
 						}
 					}
 				});
+			};
+
+			calendar.on("selectionChange", function(ev) {
+				var newDate = ev.newSelection[0];
+				Y.one("#selecteddate").setHTML(
+						dtdate.format(newDate));
+				all();
+
 			});
 		});

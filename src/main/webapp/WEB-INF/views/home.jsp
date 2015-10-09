@@ -4,6 +4,7 @@
 <tiles:insertDefinition name="defaultTemplate">
 	<tiles:putAttribute name="body">
 		<div class="body">
+
 			<script src="http://yui.yahooapis.com/3.18.1/build/yui/yui-min.js"></script>
 			<script src="resources/js/jquery-1.9.1.min.js"></script>
 			<script src="resources/js/calendar-and-records.js"></script>
@@ -20,5 +21,6 @@
 			<h2 style="color: blue; text-align: center">Records</h2>
 			<table id="table" class="hidden"></table>
 		</div>
+
 	</tiles:putAttribute>
 </tiles:insertDefinition>

@@ -8,8 +8,9 @@
 <tiles:insertDefinition name="defaultTemplate">
 	<tiles:putAttribute name="body">
 		<div class="body">
-		<h3>${user.nickName}</h3><br>
-			<form action="edit" name="user" method="post">
+			<h3>${user.nickName}</h3>
+			<br>
+			<form action="edit?${_csrf.parameterName}=${_csrf.token}" name="user" enctype="multipart/form-data" method="post">
 				<input type="hidden" name="${_csrf.parameterName}"
 					value="${_csrf.token}" /> <input type="hidden" name="uuid"
 					value="${user.uuid}" /> <input type="hidden" name="password"
@@ -65,6 +66,10 @@
 						<td><label for="dateOfBirth">Date of birth</label></td>
 						<td><input id="dateOfBirth" type="text" name="dateOfBirth"
 							value="${user.dateOfBirth}" /></td>
+					</tr>
+					<tr>
+						<td>File to upload:</td>
+						<td><input type="file" name="file"></td>
 					</tr>
 				</table>
 				<input type="submit" value="Save">

@@ -7,7 +7,7 @@
 	<tiles:putAttribute name="body">
 
 		<div class="body">
-<script src="resources/js/jquery.1.10.2.min.js"></script>
+<script src="resources/js/jquery-1.9.1.min.js"></script>
 <script src="resources/js/jquery.autocomplete.min.js" /></script>
 <script src="resources/js/autocompleteHashTag.js" /></script>
 <link rel="stylesheet" type="text/css" href="resources/css/autocomplete-style.css">

@@ -36,6 +36,9 @@
 			<div class="btn2">
 				<button onclick="location.href='/DiaryClient/login'">Log in</button>
 			</div>
+			<div class="btn2">
+			<button onclick="location.href='/DiaryClient/signup'">Sign up</button>
+			</div>
 		</c:if>
 		</sec:authorize>
 </header>

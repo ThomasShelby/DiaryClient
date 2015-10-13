@@ -32,9 +32,8 @@ public class xmlToHtmlServlet extends HttpServlet {
 
 		String app_path;
 		app_path = request.getSession().getServletContext().getRealPath("/");
-		String filepathXML =  app_path  + "WEB-INF\\xsl\\chicago.xml";
-		String filepathXSL =  app_path  + "WEB-INF\\xsl\\chicago.xsl";
-//		response.getWriter().append(" filepathXML: "+filepathXML+" filepathXSL: "+filepathXSL);
+		String filepathXML =  app_path  + "WEB-INF\\xsl\\autosave.xml";
+		String filepathXSL =  app_path  + "WEB-INF\\xsl\\autosave.xsl";
         try {
             PrintWriter writer = response.getWriter();
             TransformerFactory tFactory = TransformerFactory.newInstance();

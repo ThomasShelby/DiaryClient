@@ -1,8 +1,6 @@
 /**
  * Created by UserMaryana on 10/9/2015.
  */
-"use strict";
-var inputDate = $("#selecteddate").text();
 YUI().use(
 		'calendar',
 		'datatype-date',
@@ -30,7 +28,8 @@ YUI().use(
 			calendar.selectDates(today);
 			Y.one("#selecteddate").setHTML(
 					dtdate.format(today));
-			
+
+			getDaysWichHaveRecordsPerMonth();
 			getRecordsByDate();
 			function getRecordsByDate()
 			{
@@ -71,7 +70,40 @@ YUI().use(
 				var newDate = ev.newSelection[0];
 				Y.one("#selecteddate").setHTML(
 						dtdate.format(newDate));
-				all();
+				getRecordsByDate();
 
 			});
+			Y.one("#togglePrevMonth").on('click', function () {
+				getDaysWichHaveRecordsPerMonth()
+			    });
+			
+			Y.one("#toggleNextMonth").on('click', function () {
+				getDaysWichHaveRecordsPerMonth()
+			    });
+
+			function getDaysWichHaveRecordsPerMonth()
+			{
+				var inputDate = $("#selecteddate").text();
+				var startOfMonth = inputDate.substring(0,8)+ '01';
+				$.ajax({
+					url : 'getDaysWichHaveRecordsPerMonth',
+					type : 'GET',
+					dataType : 'json',
+					data : ({
+						dateStart : startOfMonth
+					}),
+					success: function(data){
+						if(data){
+							var len = data.length;
+							if(len > 0){
+								for(var i=0;i<len;i++){
+									$('td[class~="yui3-calendar-day"]').each(function() {
+										if ($(this).text() == data[i].substring(8,10)){
+											$(this).css("background-color", "yellow");
+										}})
+								}};
+						}
+					}
+				});
+			}
 		});

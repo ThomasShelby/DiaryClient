@@ -5,10 +5,9 @@
 
 <tiles:insertDefinition name="filter">
 	<tiles:putAttribute name="body">
-	<link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css"> 
 		<div class="body">
-		
-		
+<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
 <table id="pubRecords" >
     <thead>
       <tr><th width=20%>Title</th><th width=20%>Created Time</th><th width=60%>Text</th></tr>
@@ -21,8 +20,7 @@
 	</c:forEach>
     </tbody>
   </table>
-  <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
-  <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+  <!--  <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>-->
   <script>
   $(function(){
     $("#pubRecords").dataTable();

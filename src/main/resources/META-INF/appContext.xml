@@ -21,18 +21,20 @@
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-		<property name="driverClassName" value="org.postgresql.Driver" />
-		<property name="url" value="jdbc:postgresql://localhost:5432/DiaryClient" />
-		<property name="username" value="root" />
-		<property name="password" value="root" />
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
 	</bean>
+	
+	 <context:property-placeholder location="classpath:properties/clientdb.properties"/>
 
 	<bean id="jpaVendorAdapter"
 		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-		<property name="database" value="POSTGRESQL" />
-		<property name="showSql" value="false" />
-		<property name="generateDdl" value="true" />
-		<property name="databasePlatform" value="org.hibernate.dialect.PostgreSQLDialect" />
+		<property name="database" value="${jdbc.database}" />
+		<property name="showSql" value="${jdbc.showSql}" />
+		<property name="generateDdl" value="${jdbc.generateDdl}" />
+		<property name="databasePlatform" value="${jdbc.databasePlatform}" />
 	</bean>
 
 	<bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
@@ -53,4 +55,12 @@
 	<bean id="baseDao" class="com.softserve.tc.diaryclient.dao.impl.BaseDAOImpl">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
+	
+	 <bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+ 
+         <!-- setting maximum upload size -->
+        <property name="maxUploadSize" value="10000000" />
+ 
+    </bean>
 </beans>

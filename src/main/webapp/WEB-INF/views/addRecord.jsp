@@ -7,6 +7,10 @@
 	<tiles:putAttribute name="body">
 
 		<div class="body">
+<script src="resources/js/jquery-1.9.1.min.js"></script>
+<script src="resources/js/jquery.autocomplete.min.js" /></script>
+<script src="resources/js/autocompleteHashTag.js" /></script>
+<link rel="stylesheet" type="text/css" href="resources/css/autocomplete-style.css">
 			<h1>Dear ${pageContext.request.userPrincipal.name} please add your
 				record</h1>
 			<form action="addRecord" name="record" method="post">
@@ -15,7 +19,7 @@
 				<input type="hidden" name="nick"
 					value="${pageContext.request.userPrincipal.name}" />
 				<div>
-					Title: <input id="title" size=110 type="text" name="title"
+					Title: <input id="title" class="autocomplete" size=110 type="text" name="title"
 						value="${record.title}" />
 				</div>
 				<div>
@@ -26,7 +30,7 @@
 				</div>
 				<div>
 					Message:
-					<textarea id="text" type="text" name="text" cols="100" rows="30"
+					<textarea id="text" type="text" class="autocomplete" name="text" cols="100" rows="30"
 						wrap="hard" value="${record.text}">
         			</textarea>
 				</div>

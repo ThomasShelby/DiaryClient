@@ -73,13 +73,7 @@ YUI().use(
 				getRecordsByDate();
 
 			});
-			Y.one("#togglePrevMonth").on('click', function () {
-				getDaysWichHaveRecordsPerMonth()
-			    });
-			
-			Y.one("#toggleNextMonth").on('click', function () {
-				getDaysWichHaveRecordsPerMonth()
-			    });
+
 
 			function getDaysWichHaveRecordsPerMonth()
 			{

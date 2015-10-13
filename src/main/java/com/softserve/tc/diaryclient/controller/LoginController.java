@@ -52,24 +52,6 @@ public class LoginController {
 
         }
         
-        @RequestMapping(value = "/register", method = RequestMethod.GET)
-        public ModelAndView register(@RequestParam(value = "error", required = false) String error,
-                        @RequestParam(value = "registered", required = false) String registered) {
-                ModelAndView model = new ModelAndView();
-                if (error != null) {
-                        model.addObject("error", "Invalid username or password!");
-                }
-
-                if (registered != null) {
-                        model.addObject("msg", "You've been logged out successfully.");
-                }
-                model.addObject("title", "The Diary Registration");
-                model.setViewName("register");
-
-                return model;
-
-        }
-        
         @RequestMapping(value = "/403", method = RequestMethod.GET)
         public ModelAndView accesssDenied() {
 

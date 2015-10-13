@@ -26,7 +26,7 @@
             <input name='submit' type='submit' value='Log in' /><br>
             <label><input type="checkbox" name="remember" checked class="checkbox"/> Remember me</label>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-            <div class="register">Not registered yet? <a href="/DiaryClient/register">Register here</a></div>
+            <div class="register">Not registered yet? <a href="/DiaryClient/signup">Register here</a></div>
         </form>
     </div>
 </body>

@@ -1,5 +1,3 @@
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%> 
 
@@ -7,12 +5,11 @@
 <center>
 	<form action="hashTag" method="get">
 		Search by hash Tag:
-        <input type="text" name="hashTag" autocomplite="ON" placeholder=" // #MyHashTag"/>
-        <input  id="search" type="submit" value="Search!" />
-        </center>
+        <input class="autocomplete" type="text" name="hashTag" placeholder=" // #MyHashTag" />
+        <input  id="search" type="submit" value="Search!" /> 
 	</form>
-	    </div > 
-<link rel="stylesheet" type="text/css" href="resources/css/filter-style.css">
+</center>
+</div>
 	    
    <!--  <center>
      <div id="sorting">

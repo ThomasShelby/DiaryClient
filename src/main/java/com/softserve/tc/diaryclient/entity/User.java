@@ -5,7 +5,10 @@ public class User {
     private String username;
     private String password;
     private String role;
-
+    
+    public User() {
+        super();
+    }
     public User(String username, String password, String role) {
         super();
         this.username = username;

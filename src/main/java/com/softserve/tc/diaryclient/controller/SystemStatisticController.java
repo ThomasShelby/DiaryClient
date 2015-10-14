@@ -1,5 +1,6 @@
 package com.softserve.tc.diaryclient.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 

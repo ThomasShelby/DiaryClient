@@ -1,5 +1,6 @@
 package com.softserve.tc.diaryclient.dao.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +42,8 @@ public class LoginDurationDAOImpl extends BaseDAOImpl<LoginDuration>
     public Map<Integer, Long> getLoginDate() {
         List<Object[]> list = getEntityManager()
                 .createQuery(
-                        "Select EXTRACT(DAY FROM loginDate), COUNT(*) FROM LoginDuration GROUP BY loginDate")
+                        "Select EXTRACT(DAY FROM loginDate), COUNT(*) FROM LoginDuration "
+                        + "GROUP BY loginDate ORDER BY loginDate")
                 .getResultList();
         Map<Integer, Long> statsPerDate =
                 new HashMap<Integer, Long>(list.size());

@@ -6,54 +6,90 @@
 <tiles:insertDefinition name="defaultTemplate">
     <tiles:putAttribute name="body">
 
-  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-  <div id="chart_div"></div>
 
-	<div class="body">
-	<h1>System statistic per last month:</h1>
-	<div class="text"><p>>General number of logins per month:${list}</p><br>	
-	</div>
-	
-		<script>
-	google.load('visualization', '1', {packages: ['corechart', 'bar']});
-	google.setOnLoadCallback(drawTrendlines);
 
-	function drawTrendlines() {
-	      var data = new google.visualization.DataTable();
-	      data.addColumn('timeofday', 'Time of Day');
-	      data.addColumn('number', 'Logins per day');
 
-	      data.addRows([
-<c:forEach items="${map}" var="entry">
-[{v: [${entry.key}+8, 0, 0], f: 'day ${entry.key}'}, ${entry.value}],
-</c:forEach>]);
-          
-	      var options = {
-	        title: 'System statistics throughout the last month (daily):',
-	        trendlines: {
-	          0: {type: 'exponential', lineWidth: 5, opacity: .5}  
-	        },
-	        hAxis: {
-	          title: 'Days of month',
-	          format: ' ',
-	          viewWindow: {
-	            min: [7, 30, 0],
-	            max: [37, 30, 0]
-	          }
-	        },
-	        vAxis: {
-	          title: 'Amount per day',
-	        	  type: "integer"
-	        }
-	      };
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.css" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.min.js"></script>
+    <style>
+        text {
+            font: 12px sans-serif;
+        }
+        svg {
+            display: block;
+        }
+        html, body, #test1, svg {
+            margin: 0px;
+            padding: 0px;
+            height: 100%;
+            width: 100%;
+        }
+        #test1 .nv-bar{
+            fill-opacity: .8;
+        }
+    </style>
+<div id="test1">
+    <svg></svg>
+</div>
 
-	      var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
-	      chart.draw(data, options);
-	    }
-	</script>
-	
+<script>
+    var test_data = [{
+        "key": "Logins per day",
+        "values": [
+       <c:forEach items="${map}" var="entry">
+        {
+            "x": "${entry.key}",
+            "y": ${entry.value}
+        },
+        </c:forEach>
+        ]
+    }];
+    nv.addGraph({
+        generate: function () {
+            var width = nv.utils.windowSize().width,
+                    height = nv.utils.windowSize().height;
 
-	<button onclick="location.href=''">Back</button>
-	<div>
+            var chart = nv.models.multiBarChart() 
+            .width(width) 
+            .height(height) 
+            .showControls(true) 
+            .reduceXTicks(false) 
+            .color( [d3.rgb("#08306b"), d3.rgb("#4292c6")])
+			chart.yAxis.tickFormat(d3.format(',d'));
+            chart.xAxis.rotateLabels(-45);
+            chart.xAxis.tickFormat(function (d) {
+                return moment(d, "DD") 
+                        .format("DD/10"); 
+            });
+            chart.dispatch.on('renderEnd', function () {
+                console.log('Render Complete');
+            });
+            var svg = d3.select('#test1 svg').datum(test_data);
+            console.log('calling chart');
+            svg.transition().duration(0).call(chart);
+            return chart;
+        },
+
+        callback: function (graph) {
+            nv.utils.windowResize(function () {
+                var width = nv.utils.windowSize().width;
+                var height = nv.utils.windowSize().height;
+                graph.width(width).height(height);
+
+                d3.select('#test1 svg')
+                        .attr('width', width)
+                        .attr('height', height)
+                        .transition().duration(0)
+                        .call(graph);
+            });
+        }
+
+    });
+</script>
+
+
+
     </tiles:putAttribute>
 </tiles:insertDefinition>

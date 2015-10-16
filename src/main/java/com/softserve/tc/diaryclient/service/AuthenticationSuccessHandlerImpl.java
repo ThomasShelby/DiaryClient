@@ -25,3 +25,4 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
        response.sendRedirect("home");
     }
 }
+

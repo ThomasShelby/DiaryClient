@@ -9,7 +9,6 @@
    http://www.springframework.org/schema/context 
    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	<import resource="classpath:/META-INF/appContext.xml" />
-	<context:component-scan base-package="com.softserve.tc" />
 
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">

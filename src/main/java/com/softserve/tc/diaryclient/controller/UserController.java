@@ -1,8 +1,6 @@
 package com.softserve.tc.diaryclient.controller;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -46,56 +44,24 @@ public class UserController {
             Model model) {
         DiaryService port = DiaryServiceConnection.getDairyServicePort();
         User user = port.getUserByNickName(nickName);
-        String[] address = user.getAddress().split(", ");
         model.addAttribute("user", user);
-        model.addAttribute("country", address[0]);
-        model.addAttribute("city", address[1]);
-        model.addAttribute("street", address[2]);
-        model.addAttribute("building", address[3]);
         return "editUser";
     }
     
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public String saveEdit(@ModelAttribute("user") User user,
-            @RequestParam("country") String country,
-            @RequestParam("city") String city,
-            @RequestParam("street") String street,
-            @RequestParam("building") String building,
             @RequestParam("file") MultipartFile file) {
         DiaryService port = DiaryServiceConnection.getDairyServicePort();
-        String fileName = null;
-        File serverFile = null;
-        if (!file.isEmpty()) {
-            fileName = file.getOriginalFilename();
-            try {
-                byte[] bytes = file.getBytes();
-                
-                // Creating the directory to store file
-                String rootPath = System.getProperty("catalina.home");
-                File dir = new File(rootPath + File.separator + "tmpFiles");
-                if (!dir.exists())
-                    dir.mkdirs();
-                // Create the file on server
-                serverFile = new File(dir.getAbsolutePath()
-                        + File.separator + fileName);
-                BufferedOutputStream stream = new BufferedOutputStream(
-                        new FileOutputStream(serverFile));
-                stream.write(bytes);
-                stream.close();
-                logger.info("You successfully uploaded file=" + fileName);
-                
-            } catch (Exception e) {
-                logger.error("You failed to upload " + fileName + " => "
-                        + e.getMessage());
+        try {
+            if (file.isEmpty()) {
+                port.updateUserWithoutImage(user);
+            } else {
+                port.updateUser(user, file.getBytes(),
+                        file.getOriginalFilename());
             }
-        } else {
-            logger.error("You failed to upload " + fileName
-                    + " because the file was empty.");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        user.setAddress(
-                country + ", " + city + ", " + street + ", " + building);
-        user.setAvatar(fileName);
-        port.updateUser(user);
         return "redirect:/userProfile?nickName=" + user.getNickName();
     }
     

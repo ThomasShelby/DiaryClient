@@ -18,7 +18,7 @@
 					value="${user.avatar}" /> <input type="hidden" name="role"
 					value="${user.role}" /> <input type="hidden" name="session"
 					value="${user.session}" /> <input type="hidden" name="nickName"
-					value="${user.nickName}" />
+					value="${user.nickName}" /><input type="hidden" name="address.uuid" value="${user.address.uuid}" />
 				<table>
 					<tr>
 						<td><label for="firstName">First name</label></td>
@@ -32,23 +32,23 @@
 					</tr>
 					<tr>
 						<td><label for="country">Country</label></td>
-						<td><input id="country" type="text" name="country"
-							value="${country}" /></td>
+						<td><input id="country" type="text" name="address.country"
+							value="${user.address.country}" /></td>
 					</tr>
 					<tr>
 						<td><label for="city">City</label></td>
-						<td><input id="city" type="text" name="city" value="${city}" />
+						<td><input id="city" type="text" name="address.city" value="${user.address.city}" />
 						</td>
 					</tr>
 					<tr>
 						<td><label for="street">Street</label></td>
-						<td><input id="street" type="text" name="street"
-							value="${street}" /></td>
+						<td><input id="street" type="text" name="address.street"
+							value="${user.address.street}" /></td>
 					</tr>
 					<tr>
 						<td><label for="building">Building</label></td>
-						<td><input id="building" type="text" name="building"
-							value="${building}" /></td>
+						<td><input id="building" type="text" name="address.buildNumber"
+							value="${user.address.buildNumber}" /></td>
 					</tr>
 					<tr>
 						<td><label for="eMail">E-Mail</label></td>

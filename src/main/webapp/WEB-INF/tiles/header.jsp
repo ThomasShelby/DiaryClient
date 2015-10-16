@@ -38,7 +38,9 @@
 			<div class="btn2">
 				<button onclick="location.href='/DiaryClient/login'">Log in</button>
 			</div>
-
+			<div class="btn2">
+			<button onclick="location.href='/DiaryClient/signup'">Sign up</button>
+			</div>
 		</sec:authorize>
 </header>
 <link rel="stylesheet" type="text/css" href="resources/css/header.css">

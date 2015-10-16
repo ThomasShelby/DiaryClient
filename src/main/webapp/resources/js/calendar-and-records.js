@@ -33,14 +33,7 @@ YUI().use(
         var startOfMonth = inputDate.substring(0,8)+ '01';
         highlightDaysWichHaveRecordsPerMonth(startOfMonth);
 
-        //reselect selected date
-        selectedDate = $("#selecteddate").text()
-        $('td[class~="yui3-calendar-day"]').each(function() {
-            if ($(this).text() == selectedDate.substring(8,10)){
-                $(this).css("background-color", "blue");
-            }})
-
-        calendar.on("selectionChange", function(ev) {
+       calendar.on("selectionChange", function(ev) {
             var newDate = ev.newSelection[0];
             Y.one("#selecteddate").setHTML(
                 dtdate.format(newDate));
@@ -51,13 +44,7 @@ YUI().use(
         $(".yui3-calendarnav-nextmonth, .yui3-calendarnav-prevmonth").click(function(){
             var inputDate = getCurrentDayAndMonth();
             highlightDaysWichHaveRecordsPerMonth(inputDate);
-
-            //reselect selected date
-            selectedDate = $("#selecteddate").text()
-            $('td[class~="yui3-calendar-day"]').each(function() {
-                if ($(this).text() == selectedDate.substring(8,10)){
-                    $(this).css("background-color", "blue");
-                }})
+        
         });
 
         function getRecordsByDate(inputDate)
@@ -83,7 +70,7 @@ YUI().use(
                                     + "</td><td>"+data[i].text+"</td></td>"
                                     + "</td><td>"+data[i].visibility+"</td></td>"
                                     + "<td><td>"+data[i].createdTime+"</td><tr>";
-                            }																											
+                            }
                             if(txt != ""){
                                 $("#table").append(txt).removeClass("hidden");
                             }
@@ -104,7 +91,7 @@ YUI().use(
                 }),
                 success: function(data){
                     $('td[class~="yui3-calendar-day"]').each(function() {
-                        $(this).css("color", "white");
+                        $(this).css("text-shadow", "0px 0px red");
                     })
                     if(data){
                         var len = data.length;
@@ -112,7 +99,7 @@ YUI().use(
                             for(var i=0;i<len;i++){
                                 $('td[class~="yui3-calendar-day"]').each(function() {
                                     if ($(this).text() == data[i].substring(8,10)){
-                                        $(this).css("color", "yellow");
+                                        $(this).css("text-shadow", "2px 2px red");
                                     }})
                             }
                         }

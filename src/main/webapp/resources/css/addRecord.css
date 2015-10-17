@@ -1,0 +1,135 @@
+.addRecord{
+    margin:30px auto;
+    width:650px;
+    height: 600px;
+    max-width: 700px;
+    padding: 20px 20px 20px 20px;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: 5px;
+    background-clip: padding-box;
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 13px 3px rgba(0,0,0,.5);
+    overflow: hidden;
+    position: relative;
+
+}
+.bigger{
+   float: left;
+    width:100%;
+    height: 105px;
+    border-bottom:2px solid #ccc;
+}
+#userAvatar{
+    width: 120px;
+    float: left;
+}
+
+#nickName{
+    width: 50%;
+    font-size: 230%;
+    font-weight:300;
+    float: left;
+    position: absolute;
+    left: 140px;
+    top: 15px;
+    color: white;
+}
+#fullName{
+      width: 50%;
+    font-size: 150%;
+    font-weight:300;
+    float: left;
+    position: absolute;
+    left: 140px;
+    top: 60px;
+
+}
+.close-dialog{
+    position: absolute;
+    right: 0;
+    top: 0;
+    text-align: center;
+    color: #fff;
+    background-color: #CC3D55;
+    height: 30px;
+    width: 30px;
+    border:0;
+    text-decoration: none;
+}
+.close-dialog:before{
+    font-family: Arial;
+    color: rgba(255, 255, 255, 0.9);
+    content: "x";
+    font-size: 20px;
+    text-shadow: 0 -1px rgba(0, 0, 0, 0.5);
+    outline: none;
+}
+.middle{
+    padding-top:10px;
+    height:30px;
+    width: 100%;
+    font-size: 120%;
+
+}
+.status{
+   margin-left:70px;
+}
+
+#title {
+    box-shadow: 0 0 5px 1px #969696;
+    width: 100%;
+    height:25px;
+    background: #f6f6f6;
+	border: 1px solid #cecece;
+	border-radius: 8px 0 0 0;
+}
+.leftV{
+    width: 15%;
+    float: left;
+}
+.rightV{
+    width: 85%;
+    float: left;
+    left: 15%;
+}
+#thirdBlock{
+    padding-top:220px;
+    width: 100%;
+    font-size: 120%;
+}
+
+#text {
+    width: 100%;
+    outline: none;
+    resize: none;
+    overflow: auto;
+    height: 300px;
+	background: #f6f6f6;
+	border: 1px solid #cecece;
+	border-radius: 8px 0 0 0;
+}
+#fileInput{
+    box-shadow: 0 0 5px 1px #969696;
+    width: 100%;
+    height:25px;
+    background: #f6f6f6;
+    border: 1px solid #cecece;
+	border-radius: 8px 0 0 0;
+}
+.file_upload{
+    height:35px;
+    padding-top:310px;
+    font-size: 120%;
+
+    border-bottom:2px solid #ccc;
+}
+#butS{
+    width:100px;
+    background: rgba(0, 0, 0, 0.5);
+    display:block;
+    margin:0 auto;
+    margin-top:1%;
+    padding:10px;
+    text-align:center;
+    color:#fff;
+}

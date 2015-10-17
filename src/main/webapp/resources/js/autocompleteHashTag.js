@@ -3,8 +3,8 @@
 			paramName: "tag",
 			serviceUrl: 'getTags',
 			delimiter: " ",
-			minChars: 3,
-			deferRequestBy: 300,
+			minChars: 1,
+			deferRequestBy: 200,
 		    transformResult: function(response) {
 		        return {
 		        	

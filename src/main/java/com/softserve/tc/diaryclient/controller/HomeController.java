@@ -1,6 +1,8 @@
 package com.softserve.tc.diaryclient.controller;
 
+
 import java.io.IOException;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -32,30 +34,30 @@ import net.aksingh.owmjapis.OpenWeatherMap.Units;
 @Controller
 public class HomeController {
 
-	private Logger logger = Log.init(this.getClass().getName());
+    private Logger logger = Log.init(this.getClass().getName());
 
-	public final String START_OF_DAY = " 00:00:00";
+    public final String START_OF_DAY = " 00:00:00";
 
-	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String home(Locale locale, Model model, HttpServletRequest request) {
-	    String userNickName = request.getUserPrincipal().getName();
-	    DiaryService port = DiaryServiceConnection.getDairyServicePort();
-	    User user=port.getUserByNickName(userNickName);
-	    String userCity=user.getAddress().getCity();
-	    String defaultCity="Kiev";
-	    
-	    logger.info("Connect to OpenWeatherMap service");
-	    OpenWeatherMap weatherService=new OpenWeatherMap(Units.METRIC,"a151b14359476eb0b7b2738e8723dc0c");
-	    CurrentWeather weather=null;
-	    
-	    JsonObject json =null;
-	    JsonParser parser=new JsonParser();
-	    
-	    try {
-	        if(userCity==null){
-	            userCity=defaultCity;
-	        }
-	        logger.info("Get current weather for "+userCity+" in JSON format");
+    @RequestMapping(value = "/home", method = RequestMethod.GET)
+    public String home(Locale locale, Model model, HttpServletRequest request) {
+        String userNickName = request.getUserPrincipal().getName();
+        DiaryService port = DiaryServiceConnection.getDairyServicePort();
+        User user=port.getUserByNickName(userNickName);
+        String userCity=user.getAddress().getCity();
+        String defaultCity="Kiev";
+        
+        logger.info("Connect to OpenWeatherMap service");
+        OpenWeatherMap weatherService=new OpenWeatherMap(Units.METRIC,"a151b14359476eb0b7b2738e8723dc0c");
+        CurrentWeather weather=null;
+        
+        JsonObject json =null;
+        JsonParser parser=new JsonParser();
+        
+        try {
+            if(userCity==null){
+                userCity=defaultCity;
+            }
+            logger.info("Get current weather for "+userCity+" in JSON format");
             weather=weatherService.currentWeatherByCityName(userCity);
             logger.info("Parsing JSON");
             json= parser.parse(weather.getRawResponse()).getAsJsonObject();
@@ -91,42 +93,42 @@ public class HomeController {
         } catch (IOException e) {
             logger.error(e);
         }
-		return "home";
-	}
+        return "home";
+    }
 
-	@RequestMapping(value = "/getRecordsByDay", method = RequestMethod.GET)
-	public @ResponseBody String getRecordsByDay(@RequestParam("selected") String date, HttpServletRequest request) {
+    @RequestMapping(value = "/getRecordsByDay", method = RequestMethod.GET)
+    public @ResponseBody String getRecordsByDay(@RequestParam("selected") String date, HttpServletRequest request) {
 
-		String userNickName = request.getUserPrincipal().getName();
-		DiaryService port = DiaryServiceConnection.getDairyServicePort();
+        String userNickName = request.getUserPrincipal().getName();
+        DiaryService port = DiaryServiceConnection.getDairyServicePort();
 
-		logger.info(userNickName + " gets records per " + date);
+        logger.info(userNickName + " gets records per " + date);
 
-		List<Record> recordsList = port.getAllRecordsByDate(userNickName, date + START_OF_DAY);
+        List<Record> recordsList = port.getAllRecordsByDate(userNickName, date + START_OF_DAY);
 
-		return new Gson().toJson(recordsList);
+        return new Gson().toJson(recordsList);
 
-	}
+    }
 
-	@RequestMapping(value = "/getDaysWichHaveRecordsPerMonth", method = RequestMethod.GET)
-	public @ResponseBody String getDaysWichHaveRecordsPerMonth(@RequestParam("dateStart") String date,
-			HttpServletRequest request) {
+    @RequestMapping(value = "/getDaysWichHaveRecordsPerMonth", method = RequestMethod.GET)
+    public @ResponseBody String getDaysWichHaveRecordsPerMonth(@RequestParam("dateStart") String date,
+            HttpServletRequest request) {
 
-		String userNickName = request.getUserPrincipal().getName();
-		DiaryService port = DiaryServiceConnection.getDairyServicePort();
+        String userNickName = request.getUserPrincipal().getName();
+        DiaryService port = DiaryServiceConnection.getDairyServicePort();
 
-		logger.info(userNickName + " gets records per month to " + date);
+        logger.info(userNickName + " gets records per month to " + date);
 
-		List<String> listOfDatesWithRecordsInString = port.getDatesWithRecordsPerMonth(userNickName, date);
+        List<String> listOfDatesWithRecordsInString = port.getDatesWithRecordsPerMonth(userNickName, date);
 
-//		List<LocalDateTime> listOfDatesWithRecords = new ArrayList<LocalDateTime>();
-//		for (String dateElement : listOfDatesWithRecordsInString) {
-//			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//			LocalDateTime dateTime = LocalDateTime.parse(dateElement.substring(0, 9), formatter);
-//			listOfDatesWithRecords.add(dateTime);
-//		}
-//		logger.info(listOfDatesWithRecords.toString());
-		return new Gson().toJson(listOfDatesWithRecordsInString);
+//      List<LocalDateTime> listOfDatesWithRecords = new ArrayList<LocalDateTime>();
+//      for (String dateElement : listOfDatesWithRecordsInString) {
+//          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//          LocalDateTime dateTime = LocalDateTime.parse(dateElement.substring(0, 9), formatter);
+//          listOfDatesWithRecords.add(dateTime);
+//      }
+//      logger.info(listOfDatesWithRecords.toString());
+        return new Gson().toJson(listOfDatesWithRecordsInString);
 
-	}
+    }
 }

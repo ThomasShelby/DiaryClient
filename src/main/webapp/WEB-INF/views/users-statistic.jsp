@@ -14,9 +14,9 @@
 			</br>
 			<div id= "drawCharts">
 				<h3>Select chart to display :</h3>
-				<a id = "drawCol" class ="block">Show number of logins </a>
-				<a id = "drawLine" class = "block">Show number of records </a>
-				<a id = "drawPie" class = "block">Show sex statistics </a>
+				<a href="#" id = "drawCol" class ="block">Show number of logins </a>
+				<a href="#" id = "drawLine" class = "block">Show number of records </a>
+				<a href="#" id = "drawPie" class = "block">Show sex statistics </a>
 			</div>
 			</br>
 			<div id="chart"></div></br>

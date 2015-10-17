@@ -1,0 +1,14 @@
+div.weather {
+	overflow: hidden;
+	white-space: nowrap;
+	position: absolute;
+	bottom: 56%;
+    left: 80%;
+	background-image:
+		url("http://supernovathemes.com/wp-content/themes/supernonvathemes/images/bg/b51.png");
+	width: auto;
+	padding: 15px;
+	text-align: center;
+	border-radius: 20px;
+	box-shadow: rgba(0, 0, 0, 0.2) 0px 10px 30px;
+}

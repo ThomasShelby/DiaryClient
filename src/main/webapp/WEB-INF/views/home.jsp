@@ -17,11 +17,19 @@
 					<div id="links" style="padding-left: 20px;">
 						Selected date: <span id="selecteddate"></span>
 					</div>
+				<div class="weather">
+					<b>Weather in: </b>${city_name}<br>
+					<img src="http://openweathermap.org/img/w/${weather_icon}.png" alt="weather_icon" /><br>
+					<b>Temperature: </b>${city_name}<br> 
+					<b>Temperature: </b>${temp} C<br> 
+					<b>Humidity:  </b>${humidity} %<br> 
+					<b>Wind: </b>${wind} m/s<br>
 				</div>
+				</div>
+				
 			</div>
 			<h2 style="color: blue; text-align: center">Records</h2>
 			<table id="table" class="hidden"></table>
 		</div>
-
 	</tiles:putAttribute>
 </tiles:insertDefinition>

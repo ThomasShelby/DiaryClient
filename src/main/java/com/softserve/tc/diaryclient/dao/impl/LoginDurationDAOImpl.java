@@ -43,7 +43,7 @@ public class LoginDurationDAOImpl extends BaseDAOImpl<LoginDuration>
         List<Object[]> list = getEntityManager()
                 .createQuery(
                         "Select EXTRACT(DAY FROM loginDate), COUNT(*) FROM LoginDuration "
-                        + "GROUP BY loginDate ORDER BY loginDate")
+                                + "GROUP BY loginDate ORDER BY loginDate")
                 .getResultList();
         Map<Integer, Long> statsPerDate =
                 new HashMap<Integer, Long>(list.size());
@@ -68,16 +68,17 @@ public class LoginDurationDAOImpl extends BaseDAOImpl<LoginDuration>
     @Transactional
     @SuppressWarnings("unchecked")
     public Map<Integer, Double> getGenLoginDuration() {
+        
         List<Object[]> list = getEntityManager()
                 .createQuery(
-                        "Select EXTRACT(DAY FROM loginDate), SUM(duration) FROM LoginDuration GROUP BY loginDate, duration ORDER BY loginDate")
+                        "Select EXTRACT(DAY FROM loginDate), SUM(duration) FROM LoginDuration GROUP BY loginDate ORDER BY loginDate")
                 .getResultList();
         Map<Integer, Double> logDuration =
                 new HashMap<Integer, Double>(list.size());
         for (Object[] row : list) {
             Integer logindate = (Integer) row[0];
-            Double count = (Double) row[1];
-            logDuration.put(logindate, count);
+            Double duration = (Double) row[1];
+            logDuration.put(logindate, duration);
         }
         
         return logDuration;

@@ -36,7 +36,7 @@
     </style>
 <button class="chart-button logins-per-day" onclick="showLoginPerDayStatistics()" style="display:none;">Logins per day</button>
 <button class="chart-button duration-per-day" onclick="showDurationPerDayStatistics()">Duration per day</button>
-    
+<button class="chart-button session-duration-per-day" onclick="showSessionDurationPerDayStatistics()" style="display:none;">Session duration per day</button>
 <div id="chart">
    	<svg></svg>
 </div>
@@ -47,13 +47,21 @@
 
 function showLoginPerDayStatistics(){
 	$(".logins-per-day").hide();
+	$(".session-duration-per-day").hide();
 	$(".duration-per-day").show();
 	renderChart(test_data);
 };
 function showDurationPerDayStatistics(){
-	$(".logins-per-day").show();
+	$(".logins-per-day").hide();
 	$(".duration-per-day").hide();
+	$(".session-duration-per-day").show();
 	renderChart(loginDurationData);
+};
+function showSessionDurationPerDayStatistics(){
+	$(".duration-per-day").hide();
+	$(".session-duration-per-day").hide();
+	$(".logins-per-day").show();
+    renderChart(sessionDurationData);
 };
 
 var test_data = [{
@@ -71,6 +79,17 @@ var loginDurationData = [{
     "key": "Durations per day",
     "values": [
        <c:forEach items="${loginDuration}" var="entry">
+        {
+            "x": "${entry.key}",
+            "y": "${entry.value}"
+        },
+        </c:forEach>
+    ]
+}];
+var sessionDurationData = [{
+    "key": "Session durations per day",
+    "values": [
+       <c:forEach items="${sessionDuration}" var="entry">
         {
             "x": "${entry.key}",
             "y": "${entry.value}"

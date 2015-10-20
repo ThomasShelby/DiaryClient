@@ -23,6 +23,7 @@ public class AutocompleteController {
 	@RequestMapping(value = "/getTags", method = RequestMethod.GET)
 	public @ResponseBody
 	String getTags(@RequestParam String tag) {
+		System.out.println(tag);
 		if (tag.startsWith("#")) {
 			DiaryService port = DiaryServiceConnection.getDairyServicePort();
 			data = port.getListTagsByPrefix(tag);

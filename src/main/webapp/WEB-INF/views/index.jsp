@@ -64,7 +64,10 @@ a:active {
 	<div class="Wcontent">
 	<p>Hi everyone, this is The Diary!</br>
 	Here You can note something for yourself , express your opinion ,</br> and simply enjoy good company of people.</br>
-	On the left menu You can check some information about us and our users,</br> go to you page , add record or even look on all public records You want.</br>
+	On the left menu You can check some information about us and our users,</br> go to you page , add record or even look on all public records You want.
+	</br>
+<br /><br />
+
 	</p>
 	</div>
 	<br>

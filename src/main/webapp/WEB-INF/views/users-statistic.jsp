@@ -5,6 +5,7 @@
 <tiles:insertDefinition name="defaultTemplate">
 	<tiles:putAttribute name="body">
 		<div class="body">
+		<canvas id="canvas" width="500px" height="500px">
 			<div class="text"><p>The most active user: ${mostActiveUser.nickName}
 				-${mostActiveUser.firstName} ${mostActiveUser.secondName} with
 				${usersAmountOfRecords} records.</p><br>

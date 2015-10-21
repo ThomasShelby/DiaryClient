@@ -10,7 +10,7 @@
 		        	
 		            suggestions: $.map($.parseJSON(response), function(item) {
 		            	
-		                return { value: item.tag, data: item.uuid };
+		                return { value: item };
 		            })
 		            
 		        };

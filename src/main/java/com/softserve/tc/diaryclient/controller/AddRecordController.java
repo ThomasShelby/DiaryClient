@@ -82,7 +82,7 @@ public class AddRecordController {
 
 	private List<String> getHashTagsFromText(String string) {
 
-		Pattern pattern = Pattern.compile(HASH_TAG_SIGH + "[a-zA-Z]+");
+		Pattern pattern = Pattern.compile(HASH_TAG_SIGH + "#[a-zA-Z\d]+");
 		Matcher matcher =pattern.matcher(string);
 
 		List<String> hashTags = new ArrayList<String>();

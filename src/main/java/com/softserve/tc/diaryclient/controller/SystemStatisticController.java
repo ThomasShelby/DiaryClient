@@ -1,6 +1,5 @@
 package com.softserve.tc.diaryclient.controller;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -10,12 +9,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.softserve.tc.diaryclient.dao.LoginDurationDAO;
+import com.softserve.tc.diaryclient.dao.UserSessionDAO;
 
 @Controller
 public class SystemStatisticController {
     @Autowired    
     LoginDurationDAO logDurDAO;
-
+    
+    @Autowired
+    UserSessionDAO userSessDao;
     
     @RequestMapping(value = "/systemStatistic")
     public String systemStatistic(Model model) {
@@ -25,7 +27,9 @@ public class SystemStatisticController {
         model.addAttribute("list", list);
         Map<Integer, Double> loginDuration = logDurDAO.getGenLoginDuration();
         model.addAttribute("loginDuration", loginDuration);  
-        
+        Map<Integer, Integer> sessionDuration = userSessDao.getSessionDuration();
+        model.addAttribute("sessionDuration", sessionDuration);  
+
         return "SystemStatistic";
     }
     

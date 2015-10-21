@@ -20,7 +20,7 @@ public class DiaryServiceCashLoader {
 	}
 	
 	public void removeFromCashOfHashTags(String tag){
-		if (!listOfHahses.contains(tag)){
+		if (listOfHahses.contains(tag)){
 			listOfHahses.remove(tag);
 		}
 	}

@@ -5,7 +5,8 @@
 <center>
 	<form action="hashTag" method="get">
 		Search by hash Tag:
-        <input class="autocomplete" type="text" name="hashTag" placeholder=" // #MyHashTag" />
+        <input id="filterField" class="autocomplete" type="text" name="hashTag" placeholder=" // #MyHashTag" 
+        oninput="lookingForHashTag('filterField')" />
         <input  id="search" type="submit" value="Search!" /> 
 	</form>
 </center>

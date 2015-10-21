@@ -1,8 +1,11 @@
 package com.softserve.tc.diaryclient.autosave;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+
 import org.apache.log4j.Logger;
 
 import com.softserve.tc.diaryclient.entity.Record;
@@ -29,11 +32,18 @@ public class XStreamRecordParser implements XMLParser {
     }
     
     public boolean marshalTextToFile(Record record, String file) {
-        
+        String rootPath = System.getProperty("catalina.home");
+        File dir = new File(rootPath + File.separator + "tmpFiles"
+                + File.separator + "autosaved_records");
+        if (!dir.exists())
+            dir.mkdirs();
+        File xmlFile = new File(dir.getAbsolutePath()
+                + File.separator + file);
+        FileOutputStream fos=null;
         try {
             LOG.debug(
                     String.format("Converting record to XML file %s ", record));
-            FileOutputStream fos = new FileOutputStream(file);
+            fos = new FileOutputStream(xmlFile);
             xs.alias("record", Record.class);
             xs.toXML(record, fos);
             return true;
@@ -42,6 +52,14 @@ public class XStreamRecordParser implements XMLParser {
                     error);
         } catch (XStreamException e) {
             LOG.error("Exception occured during converting record to XML", e);
+        } finally {
+            try {
+                fos.flush();
+                fos.close();
+            } catch (IOException e) {
+                LOG.error(e);
+            }
+            
         }
         return false;
     }

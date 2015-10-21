@@ -1,16 +1,24 @@
 .addRecord{
-    margin:30px auto;
-    width:650px;
+
+    position: fixed;
+    z-index: 105;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    margin-left:30%;
+    margin-right:15%;
+    width:55%;
     height: 600px;
     max-width: 700px;
     padding: 20px 20px 20px 20px;
     border: 1px solid rgba(0,0,0,.2);
     border-radius: 5px;
     background-clip: padding-box;
-    background: rgba(0, 0, 0, 0.5);
+        background: #3399cc;
     box-shadow: 0 0 13px 3px rgba(0,0,0,.5);
     overflow: hidden;
-    position: relative;
 
 }
 .bigger{
@@ -108,15 +116,7 @@
 	border: 1px solid #cecece;
 	border-radius: 8px 0 0 0;
 }
-#fileInput{
-    box-shadow: 0 0 5px 1px #969696;
-    width: 100%;
-    height:25px;
-    background: #f6f6f6;
-    border: 1px solid #cecece;
-	border-radius: 8px 0 0 0;
-}
-.file_upload{
+.file_upload_block{
     height:35px;
     padding-top:310px;
     font-size: 120%;
@@ -132,4 +132,35 @@
     padding:10px;
     text-align:center;
     color:#fff;
+}
+
+
+.file_upload {
+  position: relative;
+  overflow: hidden;
+  float:left;
+  background: #eee;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  line-height: 1;
+  text-align: center;
+  padding: 5px;
+  height: 15px;
+  width: 20px;
+}
+#file {
+   position: absolute;
+  top: 0; right: 0;
+  font-size: 200px;
+  opacity: 0;
+  cursor: pointer;
+}
+#url {
+    box-shadow: 0 0 5px 1px #969696;
+    height:20px;
+    border: 1px solid #cecece;
+    float: right;
+    width: 70%;
+    background: #f6f6f6;
+    border-radius: 8px 0 0 0;
 }

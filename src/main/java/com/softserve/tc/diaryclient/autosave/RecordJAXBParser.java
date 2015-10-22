@@ -3,12 +3,15 @@ package com.softserve.tc.diaryclient.autosave;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+
 import org.apache.log4j.Logger;
 
 import com.softserve.tc.diaryclient.entity.Record;
@@ -56,14 +59,21 @@ public class RecordJAXBParser implements XMLParser {
     }
     
     public boolean marshalTextToFile(Record record, String file) {
-        
+        String rootPath = System.getProperty("catalina.home");
+        File dir = new File(rootPath + File.separator + "tmpFiles"
+                + File.separator + "autosaved_records");
+        if (!dir.exists())
+            dir.mkdirs();
+        File xmlFile = new File(dir.getAbsolutePath()
+                + File.separator + file);
+        FileOutputStream fos=null;
         try {
             logger.debug(
                     String.format("Converting record to XML file %s ", record));
             JAXBContext context = JAXBContext.newInstance(Record.class);
             Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            FileOutputStream fos = new FileOutputStream(file);
+            fos = new FileOutputStream(xmlFile);
             marshaller.marshal(record, fos);
             
             return true;
@@ -73,6 +83,14 @@ public class RecordJAXBParser implements XMLParser {
         } catch (JAXBException e) {
             logger.error("Exception occured during converting record to XML",
                     e);
+        } finally {
+            try {
+                fos.flush();
+                fos.close();
+            } catch (IOException e) {
+                logger.error(e);
+            }
+            
         }
         
         return false;

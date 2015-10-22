@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.softserve.tc.diary.entity.Record;
 import com.softserve.tc.diary.webservice.DiaryService;
+import com.softserve.tc.diaryclient.autosave.RecordJAXBParser;
 import com.softserve.tc.diaryclient.log.Log;
 import com.softserve.tc.diaryclient.service.UserFolderForPersonalData;
 import com.softserve.tc.diaryclient.webservice.diary.DiaryServiceCashLoader;
@@ -83,7 +84,15 @@ public class AddRecordController {
 			model.addAttribute("result", result);
 			model.addAttribute("record", record);
 		}
-		return "recordsDescription";
+		File xmlFile = new File(System.getProperty("catalina.home")
+                + File.separator + "tmpFiles"
+                + File.separator + "autosaved_records" + File.separator + nick
+                + "-tempRecord.xml");
+        if (xmlFile.exists() && xmlFile.isFile()) {
+            xmlFile.delete();
+            logger.info("DELETED " + xmlFile.getAbsolutePath());
+        }
+        return "recordsDescription";
 	}
 
 	private List<String> getHashTagsFromText(String string) {
@@ -111,8 +120,21 @@ public class AddRecordController {
 
 		DiaryService port = diaryServicePortProvider.getPort();
 		String userNickName = request.getUserPrincipal().getName();
+		
+		File xmlFile = new File(System.getProperty("catalina.home")
+                + File.separator + "tmpFiles"
+                + File.separator + "autosaved_records" + File.separator + userNickName
+                + "-tempRecord.xml");
+        com.softserve.tc.diaryclient.entity.Record temporaryRecord=null;
+        if (xmlFile.isFile()&&xmlFile.exists()) {
+            logger.info("Load previous not submited record");
+            RecordJAXBParser jaxb = new RecordJAXBParser();
+            temporaryRecord =jaxb.unmarshalTextFromFile(xmlFile.getAbsolutePath());
+        }
+		
 		com.softserve.tc.diary.entity.User user = port.getUserByNickName(userNickName);
 		model.addAttribute("user", user);
+		model.addAttribute("temporaryRecord", temporaryRecord);
 
 		return "addRecord";
 	}

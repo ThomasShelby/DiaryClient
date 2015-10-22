@@ -20,8 +20,7 @@ public class RecordJAXBParserTest {
         RecordJAXBParser parser = new RecordJAXBParser();
         
         Record record = new Record();
-        record.setUser_name("Thomas");
-        record.setCreated_time("2015-05-20 12:00:56");
+        record.setNick("Thomas");
         record.setText(
                 "#Hello, I'm Thomas #Shelby. I'm from #Birmingham, #England!");
         record.setSupplement("http:/bigBoss/works/perfectly");
@@ -40,8 +39,7 @@ public class RecordJAXBParserTest {
         RecordJAXBParser parser = new RecordJAXBParser();
         
         Record record = new Record();
-        record.setUser_name("Thomas");
-        record.setCreated_time("2015-05-20 12:00:56");
+        record.setNick("Thomas");
         record.setText(
                 "#Hello, I'm Thomas #Shelby. I'm from #Birmingham, #England!");
         record.setSupplement("http:/bigBoss/works/perfectly");

@@ -91,6 +91,16 @@ public class RecordDescriptionController {
 			model.addAttribute("result", result);
 			model.addAttribute("record", record);
 		}
+		
+		File xmlFile = new File(System.getProperty("catalina.home")
+                + File.separator + "tmpFiles"
+                + File.separator + "autosaved_records" + File.separator + nick
+                + "-tempRecord.xml");
+        if (xmlFile.exists() && xmlFile.isFile()) {
+            xmlFile.delete();
+            logger.info("DELETED " + xmlFile.getAbsolutePath());
+        }
+        
 		return "recordsDescription";
 	}
 

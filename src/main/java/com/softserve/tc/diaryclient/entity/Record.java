@@ -10,53 +10,43 @@ import javax.xml.bind.annotation.XmlType;
  *         
  */
 @XmlRootElement(name = "record")
-@XmlType(propOrder = { "id_rec", "user_name", "created_time", "text",
-        "supplement" })
+@XmlType(propOrder = { "uuid", "nick", "title", "text", "supplement" })
 public class Record {
-    
-    private String id_rec;
-    private String user_name;
-    private String created_time;
+    private String uuid;
+    private String nick;
+    private String title;
     private String text;
     private String supplement;
     
     public Record() {
     }
     
-    public Record(String id_rec, String user_name, String created_time,
-            String text, String supplement) {
-        this.id_rec = id_rec;
-        this.user_name = user_name;
-        this.created_time = created_time;
+    public Record(String uuid, String nick, String title, String text,
+            String supplement) {
+        super();
+        this.uuid = uuid;
+        this.nick = nick;
+        this.title = title;
         this.text = text;
         this.supplement = supplement;
     }
     
-    public String getId_rec() {
-        return id_rec;
+    public String getUuid() {
+        return uuid;
     }
     
     @XmlElement
-    public void setId_rec(String id_rec) {
-        this.id_rec = id_rec;
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
     
-    public String getUser_name() {
-        return user_name;
-    }
-    
-    @XmlElement
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
-    }
-    
-    public String getCreated_time() {
-        return created_time;
+    public String getNick() {
+        return nick;
     }
     
     @XmlElement
-    public void setCreated_time(String created_time) {
-        this.created_time = created_time;
+    public void setNick(String nick) {
+        this.nick = nick;
     }
     
     public String getText() {
@@ -66,6 +56,15 @@ public class Record {
     @XmlElement
     public void setText(String text) {
         this.text = text;
+    }
+    
+    public String getTitle() {
+        return title;
+    }
+    
+    @XmlElement
+    public void setTitle(String title) {
+        this.title = title;
     }
     
     public String getSupplement() {
@@ -79,9 +78,8 @@ public class Record {
     
     @Override
     public String toString() {
-        return "Record [id_rec=" + id_rec + ", user_name=" + user_name
-                + ", created_time=" + created_time + ", text="
-                + text + ", supplement=" + supplement + "]";
+        return "Record [uuid=" + uuid + ", nick=" + nick + ", title=" + title
+                + ", text=" + text + ", supplement=" + supplement + "]";
     }
     
 }

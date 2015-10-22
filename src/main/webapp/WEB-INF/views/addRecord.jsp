@@ -14,10 +14,12 @@ $(document).ready(function() {
 		var token = $('#csrfToken').val();
 		var header = $('#csrfHeader').val();
 
+		var uuid = $("#uuid").val();
 		var nick = $("#nick").val();
 		var title = $("#title").val();
 		var text = $("#text").val();
 		var data = {
+			'uuid' : uuid,
 			'nick' : nick,
 			'title' : title,
 			'text' : text
@@ -52,10 +54,10 @@ $(document).ready(function() {
     <input id="nick" type="hidden" name="nick" value="${pageContext.request.userPrincipal.name}" />
     
     <c:if test="${record == null}">
-		<input type="hidden" name="uuid" value="${temporaryRecord.uuid}" />
+		<input id="uuid" type="hidden" name="uuid" value="${temporaryRecord.uuid}" />
 	</c:if>
 	<c:if test="${record != null}">
-		<input type="hidden" name="uuid" value="${record.uuid}" />
+		<input id="uuid" type="hidden" name="uuid" value="${record.uuid}" />
 	</c:if>
 	
     <input type="hidden" name="userId" value="${user.uuid}" />
@@ -125,12 +127,7 @@ $(document).ready(function() {
         </div>
         <div class="rightV">
           <div class="file_upload">+<input id="file" type="file" name="file" onchange="setValue()" /></div>
-          	<c:if test="${record == null}">
-					<input id="url" type="text" name="url" value="${temporaryRecord.supplement}" readonly /> 
-	        </c:if>
-			<c:if test="${record != null}">
-					 <input  id="url" type="text" name="supplement" value="${record.supplement}" readonly /> 
-	        </c:if>
+			<input  id="url" type="text" name="supplement" value="${record.supplement}" readonly /> 
         </div>
     </div>  
 

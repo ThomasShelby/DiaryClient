@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.softserve.tc.diary.entity.Record;
-import com.softserve.tc.diary.entity.Status;
 import com.softserve.tc.diary.entity.User;
 import com.softserve.tc.diary.webservice.DiaryService;
+import com.softserve.tc.diaryclient.autosave.RecordJAXBParser;
 import com.softserve.tc.diaryclient.log.Log;
 import com.softserve.tc.diaryclient.webservice.diary.DiaryServiceConnection;
 
@@ -42,8 +42,27 @@ public class RecordDescriptionController {
 	public String editRecordGet(@RequestParam("id_rec") String id_rec, Model model) {
 		Record record = port.readByKey(id_rec);
 		User user = port.getUserByKey(record.getUserId());
+		
+        File xmlFile = new File(System.getProperty("catalina.home")
+                + File.separator + "tmpFiles"
+                + File.separator + "autosaved_records" + File.separator
+                + user.getNickName() + id_rec
+                + "-tempRecord.xml");
+        com.softserve.tc.diaryclient.entity.Record temporaryRecord = null;
+        if (xmlFile.isFile() && xmlFile.exists()) {
+            logger.info("Load previous edited but not submited record "
+                    + xmlFile.getAbsolutePath());
+            RecordJAXBParser jaxb = new RecordJAXBParser();
+            temporaryRecord =
+                    jaxb.unmarshalTextFromFile(xmlFile.getAbsolutePath());
+            model.addAttribute("record", temporaryRecord);
+        } else {
+            model.addAttribute("record", record);
+        }
+        
 		model.addAttribute("user", user);
-		model.addAttribute("record", record);
+		
+		//model.addAttribute("temporaryRecord", temporaryRecord);
 		return "addRecord";
 	}
 
@@ -74,12 +93,14 @@ public class RecordDescriptionController {
 			model.addAttribute("record", rec);
 		}
 
-		File xmlFile = new File(System.getProperty("catalina.home") + File.separator + "tmpFiles" + File.separator
-				+ "autosaved_records" + File.separator + nick + "-tempRecord.xml");
-		if (xmlFile.exists() && xmlFile.isFile()) {
-			xmlFile.delete();
-			logger.info("DELETED " + xmlFile.getAbsolutePath());
-		}
+        File xmlFile = new File(System.getProperty("catalina.home")
+                + File.separator + "tmpFiles" + File.separator
+                + "autosaved_records" + File.separator + user.getNickName()
+                + record.getUuid() + "-tempRecord.xml");
+        if (xmlFile.exists() && xmlFile.isFile()) {
+            xmlFile.delete();
+            logger.info("DELETED " + xmlFile.getAbsolutePath());
+        }
 
 		return "recordsDescription";
 	}

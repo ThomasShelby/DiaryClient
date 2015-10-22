@@ -1,5 +1,7 @@
 package com.softserve.tc.diaryclient.controller;
 
+import java.io.File;
+
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,8 +25,14 @@ public class AutosaveRecordController {
         logger.info("Get record from request");
         logger.info("Save record to xml");
         RecordJAXBParser jaxb = new RecordJAXBParser();
-        jaxb.marshalTextToFile(record,
-                record.getNick() + "-tempRecord.xml");
+        String rootPath = System.getProperty("catalina.home");
+        File dir = new File(rootPath + File.separator + "tmpFiles"
+                + File.separator + "autosaved_records");
+        if (!dir.exists())
+            dir.mkdirs();
+        File xmlFile = new File(dir.getAbsolutePath()
+                + File.separator + record.getNick()+record.getUuid() + "-tempRecord.xml");
+        jaxb.marshalTextToFile(record, xmlFile.getAbsolutePath());
                 
     }
 }

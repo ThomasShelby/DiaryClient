@@ -32,18 +32,11 @@ public class XStreamRecordParser implements XMLParser {
     }
     
     public boolean marshalTextToFile(Record record, String file) {
-        String rootPath = System.getProperty("catalina.home");
-        File dir = new File(rootPath + File.separator + "tmpFiles"
-                + File.separator + "autosaved_records");
-        if (!dir.exists())
-            dir.mkdirs();
-        File xmlFile = new File(dir.getAbsolutePath()
-                + File.separator + file);
         FileOutputStream fos=null;
         try {
             LOG.debug(
                     String.format("Converting record to XML file %s ", record));
-            fos = new FileOutputStream(xmlFile);
+            fos = new FileOutputStream(file);
             xs.alias("record", Record.class);
             xs.toXML(record, fos);
             return true;

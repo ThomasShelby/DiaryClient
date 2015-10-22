@@ -19,9 +19,9 @@
 			<ul type="square">
 				<li>uuid: ${record.uuid}</li>
 				<li>Title: ${record.title}</li>
-				<li>Author ${user.nickName} </li>
+				<li>Author: ${user.nickName} </li>
 				<li>Created: ${record.createdTime} </li>
-				<li><a href="/images/tmpFiles/${record.supplement}" target="_blank"> Open file ${record.supplement} </a> </li>
+				<li><a href="/images/tmpFiles/${user.nickName}/${record.supplement}" target="_blank"> Open file ${record.supplement} </a> </li>
 				<li><button onclick="location.href='publicRecords'">Back</button> </li>
 				<li><button onclick="openEditRecord('${record.uuid}')">edit</button> </li>
 				<li>Test: ${record.text}</li>

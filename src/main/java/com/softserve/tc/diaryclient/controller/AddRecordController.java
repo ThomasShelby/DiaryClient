@@ -1,8 +1,7 @@
 package com.softserve.tc.diaryclient.controller;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -19,10 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.softserve.tc.diary.entity.Record;
+import com.softserve.tc.diary.entity.Status;
+import com.softserve.tc.diary.entity.User;
 import com.softserve.tc.diary.webservice.DiaryService;
 import com.softserve.tc.diaryclient.autosave.RecordJAXBParser;
 import com.softserve.tc.diaryclient.log.Log;
-import com.softserve.tc.diaryclient.service.UserFolderForPersonalData;
 import com.softserve.tc.diaryclient.webservice.diary.CashBeanGetter;
 import com.softserve.tc.diaryclient.webservice.diary.DiaryServiceCashLoader;
 import com.softserve.tc.diaryclient.webservice.diary.DiaryServiceConnection;
@@ -31,7 +31,7 @@ import com.softserve.tc.diaryclient.webservice.diary.DiaryServiceConnection;
 public class AddRecordController {
 
 	public static final String HASH_TAG_SIGH = "#";
-
+	private static DiaryService port = DiaryServiceConnection.getDairyServicePort();
 	private static Logger logger = Log.init(UserController.class.toString());
 
 	@RequestMapping(value = "/addRecord", method = RequestMethod.POST)
@@ -39,48 +39,40 @@ public class AddRecordController {
 			@RequestParam("status") String status, @RequestParam("nick") String nick,
 			@RequestParam("file") MultipartFile file, Model model) {
 
-		String fileName = null;
-		File serverFile = null;
+		User user = port.getUserByNickName(nick);
+		Record record = null;
 		if (!file.isEmpty()) {
-			fileName = file.getOriginalFilename();
+			String fileName = file.getOriginalFilename();
+			record = new Record(user.getUuid(), title, text, fileName, Status.valueOf(status));
 			try {
-				String url = UserFolderForPersonalData.createFolderForUser(nick);
-
-				byte[] bytes = file.getBytes();
-
-				serverFile = new File(url + File.separator + fileName);
-				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-
-				fileName = nick + File.separator + fileName;
-				stream.write(bytes);
-				stream.close();
-				logger.info("You successfully uploaded file=" + fileName);
-
-			} catch (Exception e) {
-				logger.error("You failed to upload " + fileName + " => " + e.getMessage());
-
+			byte[] bytes = file.getBytes();
+			record = port.addRecord(record, bytes);
+			} catch(IOException e){
+				logger.error("file not loaded");
 			}
+			
+		} else {
+			record = new Record(user.getUuid(), title, text, null, Status.valueOf(status));
+			record = port.addRecord(record, null);
 		}
 
-		DiaryService port = DiaryServiceConnection.getDairyServicePort();
-		Record record = port.addRecord(nick, title, text, status, fileName);
+		if (record == null) {
+			model.addAttribute("result", false);
+		} else {
+			model.addAttribute("result", true);
+			model.addAttribute("user", user);
+			model.addAttribute("record", record);
+		}
+		
 		List<String> hashTags = getHashTagsFromText(title + text);
 		if (hashTags.size()>0) {
 			addHashTagToCash(hashTags);
 		}
-
-		boolean result = false;
-		if (record == null) {
-			model.addAttribute("result", result);
-		} else {
-			result = true;
-			model.addAttribute("result", result);
-			model.addAttribute("record", record);
-		}
-		File xmlFile = new File(System.getProperty("catalina.home")
+		
+        File xmlFile = new File(System.getProperty("catalina.home")
                 + File.separator + "tmpFiles"
                 + File.separator + "autosaved_records" + File.separator + nick
-                + "-tempRecord.xml");
+                + record.getUuid() + "-tempRecord.xml");
         if (xmlFile.exists() && xmlFile.isFile()) {
             xmlFile.delete();
             logger.info("DELETED " + xmlFile.getAbsolutePath());
@@ -88,6 +80,30 @@ public class AddRecordController {
         return "recordsDescription";
 	}
 
+	@RequestMapping(value = "/addRecord", method = RequestMethod.GET)
+	public String addRecordGet(HttpServletRequest request, Model model) {
+
+		String userNickName = request.getUserPrincipal().getName();
+		
+		File xmlFile = new File(System.getProperty("catalina.home")
+                + File.separator + "tmpFiles"
+                + File.separator + "autosaved_records" + File.separator + userNickName
+                + "-tempRecord.xml");
+        com.softserve.tc.diaryclient.entity.Record temporaryRecord=null;
+        if (xmlFile.isFile() && xmlFile.exists()) {
+            logger.info("Load previous not submited record");
+            RecordJAXBParser jaxb = new RecordJAXBParser();
+            temporaryRecord =
+                    jaxb.unmarshalTextFromFile(xmlFile.getAbsolutePath());
+        }
+		
+		com.softserve.tc.diary.entity.User user = port.getUserByNickName(userNickName);
+		model.addAttribute("user", user);
+		model.addAttribute("temporaryRecord", temporaryRecord);
+
+		return "addRecord";
+	}
+	
 	private List<String> getHashTagsFromText(String string) {
 
 		Pattern pattern = Pattern.compile(HASH_TAG_SIGH + "[a-zA-Z\\d]+");
@@ -107,30 +123,6 @@ public class AddRecordController {
 			DiaryServiceCashLoader loader = CashBeanGetter.getInstance();
 			loader.addToCashOfHashTags(hashTag);
 		}
-	}
-
-	@RequestMapping(value = "/addRecord", method = RequestMethod.GET)
-	public String addRecordGet(HttpServletRequest request, Model model) {
-
-		DiaryService port = DiaryServiceConnection.getDairyServicePort();
-		String userNickName = request.getUserPrincipal().getName();
-		
-		File xmlFile = new File(System.getProperty("catalina.home")
-                + File.separator + "tmpFiles"
-                + File.separator + "autosaved_records" + File.separator + userNickName
-                + "-tempRecord.xml");
-        com.softserve.tc.diaryclient.entity.Record temporaryRecord=null;
-        if (xmlFile.isFile()&&xmlFile.exists()) {
-            logger.info("Load previous not submited record");
-            RecordJAXBParser jaxb = new RecordJAXBParser();
-            temporaryRecord =jaxb.unmarshalTextFromFile(xmlFile.getAbsolutePath());
-        }
-		
-		com.softserve.tc.diary.entity.User user = port.getUserByNickName(userNickName);
-		model.addAttribute("user", user);
-		model.addAttribute("temporaryRecord", temporaryRecord);
-
-		return "addRecord";
 	}
 
 }

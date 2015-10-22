@@ -43,8 +43,8 @@ Painter.prototype = {
         this.painting = false;
         this.x = undefined;
         this.y = undefined;
-    },
-}
+    }
+};
 
 function Caint(canvas) {
     var ctx = canvas.getContext("2d");
@@ -87,7 +87,7 @@ function Caint(canvas) {
         var x = e.pageX;
         var y = e.pageY
 
-        x -= canvas.offsetLeft;
+        x -= canvas.offsetLeft+400;
         y -= canvas.offsetTop;
 
         if (painter.painting) {
@@ -97,7 +97,6 @@ function Caint(canvas) {
 
     /* * * * */
     canvas.style.backgroundColor = backgroundColor;
-    canvas.style.margin = "auto";
     canvas.style.display = "block";
     canvas.style.cursor = "default";
 

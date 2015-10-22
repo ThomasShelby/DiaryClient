@@ -6,6 +6,7 @@
 <script src="resources/js/jquery-1.9.1.min.js"></script>
 <script src="resources/js/jquery.autocomplete.min.js" /></script>
 <script src="resources/js/autocompleteHashTag.js" /></script>
+<script src="resources/js/addCanvas.js" /></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -33,10 +34,33 @@ $(document).ready(function() {
 			}
 		});
 	});
+	
+	$('input:radio[name="canvas"]').change(
+		    function(){
+		        if (this.checked && this.value == 'canvas') {
+		        	$(document.getElementById("canvasDiv")).show();
+		        	$(document.getElementById("messageDiv")).hide();
+		        }else {
+		        	$(document.getElementById("canvasDiv")).hide();
+		        	$(document.getElementById("messageDiv")).show();
+		        }
+		    });
+	$('input:button[name="saveCanvas"]').click(function(){
+		var canvas = document.getElementById("canvas");
+		var context = canvas.getContext("2d");                    
+		var imageDataURL = canvas.toDataURL('image/png');
+		console.log(imageDataURL);
+		document.getElementById('canvasData').value = imageDataURL;
+	});
+	
 });</script>
 <link rel="stylesheet" type="text/css" href="resources/css/autocomplete-style.css">
 <link rel="stylesheet" type="text/css" href="resources/css/addRecord.css">
-
+<style type = "text/css"> 
+#canvasDiv {
+	display:none;
+}
+</style>
 <div class="addRecord">
 	<!-- set action for this form (update or create record) -->
 	<c:if test="${record == null}">
@@ -102,9 +126,13 @@ $(document).ready(function() {
     <!-- third block -->
     <div id="thirdBlock">
         <div class="leftV">
-	        Message:
+	        Message:<input type="radio" name="canvas" value="noCanvas" checked>
+	        <br>
+	        Canvas:<input type="radio" name="canvas" value="canvas">
+	        <br>
+	        <input type="button" name="saveCanvas" value ="Save canvas">
         </div>
-        <div class="rightV">
+        <div id="messageDiv"class="rightV">
         	<c:if test="${record == null}">
 					 <textarea id="text" type="text" class="autocomplete" name="text"
 						wrap="soft" oninput="lookingForHashTag('text')">${temporaryRecord.text}</textarea>
@@ -114,6 +142,10 @@ $(document).ready(function() {
 						wrap="soft" oninput="lookingForHashTag('text')">${record.text}</textarea>
 	        </c:if>
         </div>
+        <div id = "canvasDiv" class="rightV">   
+	        <canvas id="canvas" height="300px" width="595px"></canvas>
+	        <input type="hidden" name="canvasData" id="canvasData" value="" />
+	    </div>
     </div>
     
     
@@ -139,4 +171,3 @@ $(document).ready(function() {
 	</center>
 	</form>
 </div>
-

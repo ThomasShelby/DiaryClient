@@ -17,9 +17,10 @@
 						http://www.springframework.org/schema/task 
 						http://www.springframework.org/schema/task/spring-task-3.2.xsd
 						http://www.springframework.org/schema/beans 
-            http://www.springframework.org/schema/beans/spring-beans.xsd">
-            
-    <context:component-scan base-package="com.softserve.tc.*"></context:component-scan>
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            ">
+
+	<context:component-scan base-package="com.softserve.tc.*"></context:component-scan>
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
@@ -29,8 +30,9 @@
 		<property name="username" value="${jdbc.username}" />
 		<property name="password" value="${jdbc.password}" />
 	</bean>
-	
-	 <context:property-placeholder location="classpath:properties/clientdb.properties"/>
+
+	<context:property-placeholder
+		location="classpath:properties/clientdb.properties" />
 
 	<bean id="jpaVendorAdapter"
 		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
@@ -58,15 +60,20 @@
 	<bean id="baseDao" class="com.softserve.tc.diaryclient.dao.impl.BaseDAOImpl">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
-	
-	 <bean id="cashDiaryService"
-          class="com.softserve.tc.diaryclient.webservice.diary.DiaryServiceCashLoader" />
-	
-	 <bean id="multipartResolver"
-        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
- 
-         <!-- setting maximum upload size -->
-        <property name="maxUploadSize" value="10000000" />
- 
-    </bean>
+
+	<bean id="diaryServicePortProvider"
+		class="com.softserve.tc.diaryclient.webservice.diary.DiaryServicePortProvider"
+		scope="singleton" />
+
+	<bean id="cashDiaryService"
+		class="com.softserve.tc.diaryclient.webservice.diary.DiaryServiceCashLoader" 
+		scope="singleton" />
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+
+		<!-- setting maximum upload size -->
+		<property name="maxUploadSize" value="10000000" />
+
+	</bean>
 </beans>

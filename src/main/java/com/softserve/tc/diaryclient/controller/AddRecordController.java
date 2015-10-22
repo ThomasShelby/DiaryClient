@@ -3,7 +3,6 @@ package com.softserve.tc.diaryclient.controller;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -12,6 +11,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,9 +23,9 @@ import com.softserve.tc.diary.entity.Record;
 import com.softserve.tc.diary.webservice.DiaryService;
 import com.softserve.tc.diaryclient.log.Log;
 import com.softserve.tc.diaryclient.service.UserFolderForPersonalData;
-import com.softserve.tc.diaryclient.webservice.diary.CashBeanGetter;
 import com.softserve.tc.diaryclient.webservice.diary.DiaryServiceCashLoader;
 import com.softserve.tc.diaryclient.webservice.diary.DiaryServiceConnection;
+import com.softserve.tc.diaryclient.webservice.diary.DiaryServicePortProvider;
 
 @Controller
 public class AddRecordController {
@@ -33,6 +33,12 @@ public class AddRecordController {
 	public static final String HASH_TAG_SIGH = "#";
 
 	private static Logger logger = Log.init(UserController.class.toString());
+	
+	@Autowired
+	public DiaryServiceCashLoader diaryServiceCashLoader;
+	
+	@Autowired
+	DiaryServicePortProvider diaryServicePortProvider;
 
 	@RequestMapping(value = "/addRecord", method = RequestMethod.POST)
 	public String addRecordPost(@RequestParam("title") String title, @RequestParam("text") String text,
@@ -62,7 +68,7 @@ public class AddRecordController {
 			}
 		}
 
-		DiaryService port = DiaryServiceConnection.getDairyServicePort();
+		DiaryService port = diaryServicePortProvider.getPort();
 		Record record = port.addRecord(nick, title, text, status, fileName);
 		List<String> hashTags = getHashTagsFromText(title + text);
 		if (hashTags.size()>0) {
@@ -96,15 +102,14 @@ public class AddRecordController {
 	private void addHashTagToCash(List<String> hashTags) {
 
 		for (String hashTag : hashTags) {
-			DiaryServiceCashLoader loader = CashBeanGetter.getInstance();
-			loader.addToCashOfHashTags(hashTag);
+			diaryServiceCashLoader.addToCashOfHashTags(hashTag);
 		}
 	}
 
 	@RequestMapping(value = "/addRecord", method = RequestMethod.GET)
 	public String addRecordGet(HttpServletRequest request, Model model) {
 
-		DiaryService port = DiaryServiceConnection.getDairyServicePort();
+		DiaryService port = diaryServicePortProvider.getPort();
 		String userNickName = request.getUserPrincipal().getName();
 		com.softserve.tc.diary.entity.User user = port.getUserByNickName(userNickName);
 		model.addAttribute("user", user);

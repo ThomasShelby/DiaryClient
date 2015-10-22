@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.json.JSONException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,7 @@ import com.softserve.tc.diary.entity.User;
 import com.softserve.tc.diary.log.Log;
 import com.softserve.tc.diary.webservice.DiaryService;
 import com.softserve.tc.diaryclient.webservice.diary.DiaryServiceConnection;
+import com.softserve.tc.diaryclient.webservice.diary.DiaryServicePortProvider;
 
 import net.aksingh.owmjapis.CurrentWeather;
 import net.aksingh.owmjapis.OpenWeatherMap;
@@ -35,13 +37,16 @@ import net.aksingh.owmjapis.OpenWeatherMap.Units;
 public class HomeController {
 
     private Logger logger = Log.init(this.getClass().getName());
+    
+	@Autowired
+	DiaryServicePortProvider provider;
 
     public final String START_OF_DAY = " 00:00:00";
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String home(Locale locale, Model model, HttpServletRequest request) {
         String userNickName = request.getUserPrincipal().getName();
-        DiaryService port = DiaryServiceConnection.getDairyServicePort();
+        DiaryService port = provider.getPort();
         User user=port.getUserByNickName(userNickName);
         String userCity=user.getAddress().getCity();
         String defaultCity="Kiev";
@@ -100,7 +105,7 @@ public class HomeController {
     public @ResponseBody String getRecordsByDay(@RequestParam("selected") String date, HttpServletRequest request) {
 
         String userNickName = request.getUserPrincipal().getName();
-        DiaryService port = DiaryServiceConnection.getDairyServicePort();
+        DiaryService port = provider.getPort();
 
         logger.info(userNickName + " gets records per " + date);
 
@@ -115,7 +120,7 @@ public class HomeController {
             HttpServletRequest request) {
 
         String userNickName = request.getUserPrincipal().getName();
-        DiaryService port = DiaryServiceConnection.getDairyServicePort();
+        DiaryService port = provider.getPort();
 
         logger.info(userNickName + " gets records per month to " + date);
 

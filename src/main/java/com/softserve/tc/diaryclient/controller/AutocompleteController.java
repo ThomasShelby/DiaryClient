@@ -3,6 +3,7 @@ package com.softserve.tc.diaryclient.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,18 +11,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
-import com.softserve.tc.diaryclient.webservice.diary.CashBeanGetter;
 import com.softserve.tc.diaryclient.webservice.diary.DiaryServiceCashLoader;
 
 @Controller
 public class AutocompleteController {
 
-//	private static List<Tag> data = new ArrayList<Tag>();
 	private static List<String> data = new ArrayList<String>();
+	
+	@Autowired
+	public DiaryServiceCashLoader diaryServiceCashLoader;
 	
 	@RequestMapping(value = "/getTags", method = RequestMethod.GET)
 	public @ResponseBody
 	String getTags(@RequestParam String tag) {
+		
 		System.out.println(tag);
 		if (tag.startsWith("#")) {
 			//get data directly from service
@@ -29,8 +32,7 @@ public class AutocompleteController {
 			//data = port.getListTagsBPrefix(tag);
 
 			//get data (hashes) from client cash
-			DiaryServiceCashLoader loader = CashBeanGetter.getInstance();
-			data = loader.getListOfHashTagsFromCash();
+			data = diaryServiceCashLoader.getListOfHashTagsFromCash();
 
 			return new Gson().toJson(simulateSearchResult(tag));	
 		}
@@ -47,7 +49,7 @@ public class AutocompleteController {
 				result.add(tag);
 			}
 		}
-
+		
 		return result;
 	}
 }

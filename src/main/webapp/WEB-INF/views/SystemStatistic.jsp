@@ -74,6 +74,17 @@ var test_data = [{
         },
         </c:forEach>
     ]
+}, {
+    "key": "Records per day",
+    "values": [
+
+	<c:forEach var = "valueArray" items = "${recordsPerDay}">
+	{
+		"x": "${valueArray[0]}",
+		"y": "${valueArray[1]}"
+	},
+	</c:forEach>
+]       
 }];
 var loginDurationData = [{
     "key": "Durations per day",

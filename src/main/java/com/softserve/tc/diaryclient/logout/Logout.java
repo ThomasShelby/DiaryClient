@@ -27,6 +27,7 @@ public class Logout {
             for(SessionInformation sessionInformation: sessionRegistry.getAllSessions(userFromSession, false)){
                 System.out.println("#_#_#_#_#_ SESSION ID : "+sessionInformation.getSessionId());
                 System.out.println("#_#_#_#_#_ LAST REQUEST : "+sessionInformation.getLastRequest());
+                System.out.println("#_#_#_#_#_ IS_EXPIRED : "+sessionInformation.isExpired());
             }
             System.out.println("#####################################");
         }

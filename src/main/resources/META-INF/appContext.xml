@@ -51,6 +51,9 @@
 		<property name="jpaDialect" ref="jpaDialect" />
 	</bean>
 
+	<bean id="securityContextLogoutHandler" class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler">
+	</bean>
+
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory"></property>
 	</bean>

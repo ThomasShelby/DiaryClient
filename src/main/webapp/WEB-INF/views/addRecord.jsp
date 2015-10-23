@@ -47,11 +47,11 @@ $(document).ready(function() {
 		        	$(document.getElementById("messageDiv")).show();
 		        }
 		    });
-	$('input:button[name="saveCanvas"]').click(function(){
+	$("#butS").mousedown(function(){
 		var canvas = document.getElementById("canvas");
 		var context = canvas.getContext("2d");                    
 		var imageDataURL = canvas.toDataURL('image/png');
-		console.log(imageDataURL);
+		//console.log(imageDataURL);
 		document.getElementById('canvasData').value = imageDataURL;
 	});
 	
@@ -132,8 +132,6 @@ $(document).ready(function() {
 	        Message:<input type="radio" name="canvas" value="noCanvas" checked>
 	        <br>
 	        Canvas:<input type="radio" name="canvas" value="canvas">
-	        <br>
-	        <input type="button" name="saveCanvas" value ="Save canvas">
         </div>
         <div id="messageDiv"class="rightV">
         	<c:if test="${record == null}">

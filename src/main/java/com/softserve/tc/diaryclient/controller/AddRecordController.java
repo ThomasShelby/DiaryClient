@@ -1,5 +1,7 @@
 package com.softserve.tc.diaryclient.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,7 +9,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.bind.DatatypeConverter;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -37,7 +41,7 @@ public class AddRecordController {
 	@RequestMapping(value = "/addRecord", method = RequestMethod.POST)
 	public String addRecordPost(@RequestParam("title") String title, @RequestParam("text") String text,
 			@RequestParam("status") String status, @RequestParam("nick") String nick,
-			@RequestParam("file") MultipartFile file, Model model) {
+			@RequestParam("file") MultipartFile file,@RequestParam("canvasData") String canvasData, Model model) {
 
 		User user = port.getUserByNickName(nick);
 		Record record = null;
@@ -77,6 +81,25 @@ public class AddRecordController {
             xmlFile.delete();
             logger.info("DELETED " + xmlFile.getAbsolutePath());
         }
+        
+        try{
+            //logger.info(canvasData);
+            String img64 = canvasData.substring(22);
+            //logger.info(img64);
+            byte[] decodedBytes = DatatypeConverter.parseBase64Binary(img64 );
+            BufferedImage bfi = ImageIO.read(new ByteArrayInputStream(decodedBytes));    
+            File outputfile = new File(System.getProperty("catalina.home")+ File.separator+"tmpFiles"
+                    + File.separator+nick+File.separator+"canvas"+File.separator+"title-"+title+".png");
+            if(!outputfile.exists()) {
+                outputfile.createNewFile();
+            } 
+            ImageIO.write(bfi , "png", outputfile);
+            logger.info(outputfile);
+            bfi.flush();
+        }catch(Exception e) {  
+            logger.info("unable to save image from canvas");
+        }
+        
         return "recordsDescription";
 	}
 

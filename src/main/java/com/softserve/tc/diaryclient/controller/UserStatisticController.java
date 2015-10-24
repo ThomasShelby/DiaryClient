@@ -58,7 +58,7 @@ public class UserStatisticController {
         }
         User us = port.getUserByNickName(nickName);
         model.addAttribute("user", us);
-        UserStatistic clientUserStat = userStatDAO.findByNickName("Bob");
+        UserStatistic clientUserStat = userStatDAO.findByNickName(nickName);
         model.addAttribute("userStatistic",clientUserStat);
         
         int numberOfRecords = port.getUserAmountOfRecords(nickName);

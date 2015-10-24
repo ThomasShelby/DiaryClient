@@ -1,5 +1,6 @@
 package com.softserve.tc.diaryclient.controller;
 
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -24,6 +25,7 @@ import com.softserve.tc.diary.entity.Record;
 import com.softserve.tc.diary.entity.User;
 import com.softserve.tc.diary.log.Log;
 import com.softserve.tc.diary.webservice.DiaryService;
+import com.softserve.tc.diaryclient.logout.Logout;
 import com.softserve.tc.diaryclient.webservice.diary.DiaryServicePortProvider;
 
 import net.aksingh.owmjapis.CurrentWeather;
@@ -32,14 +34,15 @@ import net.aksingh.owmjapis.OpenWeatherMap.Units;
 
 @Controller
 public class HomeController {
+    @Autowired
+    Logout logout;
+    
+    private Logger logger = Log.init(this.getClass().getName());
 
-	private Logger logger = Log.init(this.getClass().getName());
-
-	DiaryService port;
+	private DiaryService port;
 
 	public final String START_OF_DAY = " 00:00:00";
 
-	@SuppressWarnings("static-access")
 	@Autowired
 	public HomeController(DiaryServicePortProvider provider) {
 		port = provider.getPort();
@@ -103,26 +106,25 @@ public class HomeController {
 		return "home";
 	}
 
-	@RequestMapping(value = "/getRecordsByDay", method = RequestMethod.GET)
-	public @ResponseBody String getRecordsByDay(@RequestParam("selected") String date, HttpServletRequest request) {
+    @RequestMapping(value = "/getRecordsByDay", method = RequestMethod.GET)
+    public @ResponseBody String getRecordsByDay(@RequestParam("selected") String date, HttpServletRequest request) {
 
-		String userNickName = request.getUserPrincipal().getName();
-		logger.info(userNickName + " gets records per " + date);
-		List<Record> recordsList = port.getAllRecordsByDate(userNickName, date + START_OF_DAY);
+        String userNickName = request.getUserPrincipal().getName();
+        logger.info(userNickName + " gets records per " + date);
+        List<Record> recordsList = port.getAllRecordsByDate(userNickName, date + START_OF_DAY);
 
-		return new Gson().toJson(recordsList);
+        return new Gson().toJson(recordsList);
 
-	}
+    }
 
-	@RequestMapping(value = "/getDaysWichHaveRecordsPerMonth", method = RequestMethod.GET)
-	public @ResponseBody String getDaysWichHaveRecordsPerMonth(@RequestParam("dateStart") String date,
-			HttpServletRequest request) {
+    @RequestMapping(value = "/getDaysWichHaveRecordsPerMonth", method = RequestMethod.GET)
+    public @ResponseBody String getDaysWichHaveRecordsPerMonth(@RequestParam("dateStart") String date,
+            HttpServletRequest request) {
 
-		String userNickName = request.getUserPrincipal().getName();
-		logger.info(userNickName + " gets records per month to " + date);
-		List<String> listOfDatesWithRecordsInString = port.getDatesWithRecordsPerMonth(userNickName, date);
+        String userNickName = request.getUserPrincipal().getName();
+        logger.info(userNickName + " gets records per month to " + date);
+        List<String> listOfDatesWithRecordsInString = port.getDatesWithRecordsPerMonth(userNickName, date);
 
 		return new Gson().toJson(listOfDatesWithRecordsInString);
-
-	}
+    }
 }

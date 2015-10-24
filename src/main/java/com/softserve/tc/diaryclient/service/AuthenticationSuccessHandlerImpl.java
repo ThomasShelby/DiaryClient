@@ -19,8 +19,7 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
         //do what you want with 
        authentication = SecurityContextHolder.getContext().getAuthentication();
        DiaryService port = DiaryServicePortProvider.getPort();
-       port.updateSession(authentication.getName());
+       port.updateSession(authentication.getName(), request.getSession(false).getId());
        response.sendRedirect("home");
     }
 }
-

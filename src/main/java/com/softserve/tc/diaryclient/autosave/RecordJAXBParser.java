@@ -59,13 +59,7 @@ public class RecordJAXBParser implements XMLParser {
     }
     
     public boolean marshalTextToFile(Record record, String file) {
-        String rootPath = System.getProperty("catalina.home");
-        File dir = new File(rootPath + File.separator + "tmpFiles"
-                + File.separator + "autosaved_records");
-        if (!dir.exists())
-            dir.mkdirs();
-        File xmlFile = new File(dir.getAbsolutePath()
-                + File.separator + file);
+        
         FileOutputStream fos=null;
         try {
             logger.debug(
@@ -73,7 +67,7 @@ public class RecordJAXBParser implements XMLParser {
             JAXBContext context = JAXBContext.newInstance(Record.class);
             Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            fos = new FileOutputStream(xmlFile);
+            fos = new FileOutputStream(file);
             marshaller.marshal(record, fos);
             
             return true;

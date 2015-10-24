@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,15 +16,18 @@ import org.springframework.web.multipart.MultipartFile;
 import com.softserve.tc.diary.entity.User;
 import com.softserve.tc.diary.webservice.DiaryService;
 import com.softserve.tc.diaryclient.log.Log;
-import com.softserve.tc.diaryclient.webservice.diary.DiaryServiceConnection;
+import com.softserve.tc.diaryclient.webservice.diary.DiaryServicePortProvider;
 
 @Controller
 public class UserController {
     private static Logger logger = Log.init(UserController.class.toString());
     
+	@Autowired
+	DiaryServicePortProvider diaryServicePortProvider;
+    
     @RequestMapping(value = "/users")
     public String users(Model model) {
-        DiaryService port = DiaryServiceConnection.getDairyServicePort();
+        DiaryService port = diaryServicePortProvider.getPort();
         List<User> usersList = port.getAllUsers();
         model.addAttribute("usersList", usersList);
         return "Users";
@@ -32,7 +36,7 @@ public class UserController {
     @RequestMapping(value = "/userProfile")
     public String userProfile(@RequestParam(value = "nickName") String nickName,
             Model model) {
-        DiaryService port = DiaryServiceConnection.getDairyServicePort();
+        DiaryService port = diaryServicePortProvider.getPort();
         User us = port.getUserByNickName(nickName);
         model.addAttribute("user", us);
         return "user_profile";
@@ -42,7 +46,7 @@ public class UserController {
     public String editProfile(
             @RequestParam(value = "nickName", required = true) String nickName,
             Model model) {
-        DiaryService port = DiaryServiceConnection.getDairyServicePort();
+        DiaryService port = diaryServicePortProvider.getPort();
         User user = port.getUserByNickName(nickName);
         model.addAttribute("user", user);
         return "editUser";
@@ -51,7 +55,7 @@ public class UserController {
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public String saveEdit(@ModelAttribute("user") User user,
             @RequestParam("file") MultipartFile file) {
-        DiaryService port = DiaryServiceConnection.getDairyServicePort();
+        DiaryService port = diaryServicePortProvider.getPort();
         try {
             if (file.isEmpty()) {
                 port.updateUserWithoutImage(user);
@@ -68,7 +72,7 @@ public class UserController {
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public String deleteProfile(@RequestParam(value = "nickName",
             required = true) String nickName) {
-        DiaryService port = DiaryServiceConnection.getDairyServicePort();
+        DiaryService port = diaryServicePortProvider.getPort();
         port.deleteUser(port.getUserByNickName(nickName));
         return "redirect:/users";
     }

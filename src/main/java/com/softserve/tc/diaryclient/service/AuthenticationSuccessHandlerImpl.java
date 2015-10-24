@@ -11,16 +11,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import com.softserve.tc.diary.webservice.DiaryService;
-import com.softserve.tc.diaryclient.webservice.diary.DiaryServiceConnection;
+import com.softserve.tc.diaryclient.webservice.diary.DiaryServicePortProvider;
 
 public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHandler {
 
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         //do what you want with 
        authentication = SecurityContextHolder.getContext().getAuthentication();
-       DiaryService port = DiaryServiceConnection.getDairyServicePort();
+       DiaryService port = DiaryServicePortProvider.getPort();
        port.updateSession(authentication.getName(), request.getSession(false).getId());
        response.sendRedirect("home");
     }
 }
-

@@ -13,16 +13,20 @@ import org.apache.log4j.Logger;
 import com.softserve.tc.diary.webservice.DiaryService;
 import com.softserve.tc.diaryclient.log.Log;
 
-public class DiaryServiceConnection {
+public class DiaryServicePortProvider {
 
-	private static Logger logger = Log.init(DiaryServiceConnection.class.getName());
+	private static Logger logger = Log.init(DiaryServicePortProvider.class.getName());
+    static DiaryService port;
 
-	static DiaryService port = null;
-
-	private DiaryServiceConnection() {
+	private DiaryServicePortProvider() {
+		port = getDairyServicePort();
 	}
-
-	public static synchronized DiaryService getDairyServicePort() {
+	
+	public static synchronized DiaryService getPort(){
+		return port;
+	}
+	
+	private DiaryService getDairyServicePort() {
 
 		if (port != null) {
 			return port;
@@ -56,7 +60,7 @@ public class DiaryServiceConnection {
 		return port;
 	}
 
-	public static String getProperty(String propertyName){
+	public String getProperty(String propertyName){
 		Properties properties = DiaryServiceProperty.getInstance().properties;
 		String gettedProperty = "";
 		gettedProperty = properties.getProperty(propertyName);		

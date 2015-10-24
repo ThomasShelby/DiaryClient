@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.softserve.tc.diary.webservice.DiaryService;
 import com.softserve.tc.diaryclient.dao.LoginDurationDAO;
 import com.softserve.tc.diaryclient.dao.UserSessionDAO;
-import com.softserve.tc.diaryclient.webservice.diary.DiaryServiceConnection;
+import com.softserve.tc.diaryclient.webservice.diary.DiaryServicePortProvider;
 
 @Controller
 public class SystemStatisticController {
@@ -20,6 +20,13 @@ public class SystemStatisticController {
     
     @Autowired
     UserSessionDAO userSessDao;
+    
+	private DiaryService port;
+	
+	@Autowired
+	public SystemStatisticController(DiaryServicePortProvider diaryServicePortProvider) {
+		port = diaryServicePortProvider.getPort();
+	}
     
     @RequestMapping(value = "/systemStatistic")
     public String systemStatistic(Model model) {
@@ -32,7 +39,6 @@ public class SystemStatisticController {
         Map<Integer, Integer> sessionDuration = userSessDao.getSessionDuration();
         model.addAttribute("sessionDuration", sessionDuration);
         
-        DiaryService port = DiaryServiceConnection.getDairyServicePort();
         int[][] recordsPerDay = port.getRecDate();
         model.addAttribute("recordsPerDay", recordsPerDay);
 

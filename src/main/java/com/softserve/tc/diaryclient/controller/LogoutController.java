@@ -11,13 +11,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.softserve.tc.diary.webservice.DiaryService;
-import com.softserve.tc.diaryclient.webservice.diary.DiaryServiceConnection;
+import com.softserve.tc.diaryclient.webservice.diary.DiaryServicePortProvider;
 
 @Controller
 public class LogoutController {
+	
     @Autowired
     LogoutHandler securityContextLogoutHandler;
     
+	private DiaryService port;
+	
+	@Autowired
+	public LogoutController(DiaryServicePortProvider diaryServicePortProvider) {
+		port = diaryServicePortProvider.getPort();
+	}
     
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public String logout(HttpServletRequest request, HttpServletResponse response) {
@@ -27,7 +34,6 @@ public class LogoutController {
         String sessionId = httpSession.getId(); 
 //        System.out.println(request.getRequestedSessionId());
         securityContextLogoutHandler.logout(request, response, null);
-        DiaryService port = DiaryServiceConnection.getDairyServicePort();
         port.invalidateSession(nickName, sessionId);
         
         return "redirect:/";

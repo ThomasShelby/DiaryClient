@@ -19,13 +19,17 @@ import com.softserve.tc.diary.entity.User;
 import com.softserve.tc.diary.webservice.DiaryService;
 import com.softserve.tc.diaryclient.entity.SignupForm;
 import com.softserve.tc.diaryclient.validator.SignupValidator;
-import com.softserve.tc.diaryclient.webservice.diary.DiaryServiceConnection;
+import com.softserve.tc.diaryclient.webservice.diary.DiaryServicePortProvider;
 
 @Controller
 @RequestMapping("/signup")
 public class SignupController {
+	
         @Autowired
         private SignupValidator signupValidator;
+        
+    	@Autowired
+    	DiaryServicePortProvider diaryServicePortProvider;
         
         @RequestMapping(method = RequestMethod.GET)
         public String signup(ModelMap model) {
@@ -50,7 +54,7 @@ public class SignupController {
                 user.setPassword(signupForm.getPassword());
                 user.seteMail(signupForm.getEmail());
                 user.setRole("USER");
-                DiaryService port = DiaryServiceConnection.getDairyServicePort();
+                DiaryService port = diaryServicePortProvider.getPort();
                 port.createUser(user);
                 authenticateUser(user);
                 

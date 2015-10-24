@@ -1,8 +1,8 @@
 package com.softserve.tc.diaryclient.controller;
 
 import java.util.Random;
-import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,16 +10,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.gson.Gson;
 import com.softserve.tc.diary.entity.User;
 import com.softserve.tc.diary.webservice.DiaryService;
 import com.softserve.tc.diaryclient.service.MailSender;
-import com.softserve.tc.diaryclient.webservice.diary.DiaryServiceConnection;
+import com.softserve.tc.diaryclient.webservice.diary.DiaryServicePortProvider;
 
 @Controller
 public class ForgotAccountController {
 	
-	private static DiaryService port = DiaryServiceConnection.getDairyServicePort();
+	private DiaryService port;
+	
+	@Autowired
+	public ForgotAccountController(DiaryServicePortProvider diaryServicePortProvider) {
+		port = diaryServicePortProvider.getPort();
+	}
 	
 	@RequestMapping(value = "/forgotAccount", method = RequestMethod.GET)
 	public @ResponseBody String forgotAccountPOST(@RequestParam("email") String email, Model model) {

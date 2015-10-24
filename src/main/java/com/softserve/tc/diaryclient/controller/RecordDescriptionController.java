@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -18,14 +19,20 @@ import com.softserve.tc.diary.entity.User;
 import com.softserve.tc.diary.webservice.DiaryService;
 import com.softserve.tc.diaryclient.autosave.RecordJAXBParser;
 import com.softserve.tc.diaryclient.log.Log;
-import com.softserve.tc.diaryclient.webservice.diary.DiaryServiceConnection;
+import com.softserve.tc.diaryclient.webservice.diary.DiaryServicePortProvider;
 
 @Controller
 public class RecordDescriptionController {
 
 	private static Logger logger = Log.init(RecordDescriptionController.class.toString());
-	private static DiaryService port = DiaryServiceConnection.getDairyServicePort();
+	
+	private DiaryService port;
 
+	@Autowired
+	public RecordDescriptionController(DiaryServicePortProvider provider) {
+		port = provider.getPort();
+	}
+	
 	@RequestMapping(value = "/recordsDescription")
 	public String recordDescription(@RequestParam(value = "id_rec") String id_rec, ModelMap model) {
 		Record record = port.readByKey(id_rec);

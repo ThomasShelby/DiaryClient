@@ -1,3 +1,4 @@
+$(document).ready(function() {
 function Painter(ctx) {
     this.ctx = ctx;
     this.radius = 0;
@@ -83,11 +84,14 @@ function Caint(canvas) {
 		this.draw(e);
 	}.bind(this);
 	
+	var popup = document.getElementById("thirdBlock").getBoundingClientRect();
+	console.log(popup.left);
+	console.log(popup.top)
     this.draw = function(e) {
         var x = e.pageX;
-        var y = e.pageY
+        var y = e.pageY;
 
-        x -= canvas.offsetLeft+400;
+        x -= canvas.offsetLeft+(popup.left-20);
         y -= canvas.offsetTop;
 
         if (painter.painting) {
@@ -109,3 +113,5 @@ function Caint(canvas) {
 }
 
 new Caint(document.getElementById("canvas"));
+
+});

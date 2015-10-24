@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@page session="true"%>
 <div class="menu">
 
@@ -18,7 +19,14 @@
 			<li><a href="publicRecords">Public records</a></li>
 					
 		</ul>
-
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+			Adminstrator menu
+			<ul>
+				<li><a href="users">Users</a></li>
+				<li><a href="systemStatistic">SystemStatistic</a></li>
+				<li><a href="users-statistic">Users Statistic</a></li>
+			</ul>
+		</sec:authorize>
 	</c:if>
 	<c:if test="${pageContext.request.userPrincipal.name == null}">
 		<p></p>

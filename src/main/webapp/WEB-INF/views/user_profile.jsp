@@ -1,4 +1,5 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <tiles:insertDefinition name="defaultTemplate">
 	<tiles:putAttribute name="body">
@@ -13,7 +14,9 @@
 				<li><b>E-mail: </b>${user.eMail}</li>
 				<li><b>Date of birth: </b>${user.dateOfBirth}</li>
 			</ul>
-			<button onclick="location.href='edit?nickName=${user.nickName}'">Edit</button>
+			<c:if test="${pageContext.request.userPrincipal.name==user.nickName}">
+				<button onclick="location.href='edit?nickName=${user.nickName}'">Edit</button>
+			</c:if>
 			<button onclick="location.href='users'">Back</button>
 		</div>
 	</tiles:putAttribute>

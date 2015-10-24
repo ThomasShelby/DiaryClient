@@ -25,7 +25,6 @@ import com.softserve.tc.diaryclient.autosave.RecordJAXBParser;
 import com.softserve.tc.diaryclient.log.Log;
 import com.softserve.tc.diaryclient.service.UserFolderForPersonalData;
 import com.softserve.tc.diaryclient.webservice.diary.DiaryServiceCashLoader;
-import com.softserve.tc.diaryclient.webservice.diary.DiaryServiceConnection;
 import com.softserve.tc.diaryclient.webservice.diary.DiaryServicePortProvider;
 
 @Controller
@@ -36,10 +35,10 @@ public class AddRecordController {
 	private static Logger logger = Log.init(UserController.class.toString());
 	
 	@Autowired
-	public DiaryServiceCashLoader diaryServiceCashLoader;
+	DiaryServicePortProvider diaryServicePortProvider;
 	
 	@Autowired
-	DiaryServicePortProvider diaryServicePortProvider;
+	public DiaryServiceCashLoader diaryServiceCashLoader;
 
 	@RequestMapping(value = "/addRecord", method = RequestMethod.POST)
 	public String addRecordPost(@RequestParam("title") String title, @RequestParam("text") String text,

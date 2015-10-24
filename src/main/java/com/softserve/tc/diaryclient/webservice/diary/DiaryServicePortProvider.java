@@ -16,17 +16,16 @@ import com.softserve.tc.diaryclient.log.Log;
 public class DiaryServicePortProvider {
 
 	private static Logger logger = Log.init(DiaryServicePortProvider.class.getName());
-    DiaryService port;
+    static DiaryService port;
 
-	public DiaryServicePortProvider() {
+	private DiaryServicePortProvider() {
 		port = getDairyServicePort();
 	}
 	
-	public synchronized DiaryService getPort(){
+	public static synchronized DiaryService getPort(){
 		return port;
 	}
 	
-
 	private DiaryService getDairyServicePort() {
 
 		if (port != null) {

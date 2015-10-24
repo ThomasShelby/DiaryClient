@@ -15,19 +15,19 @@ import com.softserve.tc.diary.entity.User;
 import com.softserve.tc.diary.webservice.DiaryService;
 import com.softserve.tc.diaryclient.dao.UserStatisticDAO;
 import com.softserve.tc.diaryclient.entity.UserStatistic;
-import com.softserve.tc.diaryclient.service.UserStatisticService;
-import com.softserve.tc.diaryclient.webservice.diary.DiaryServiceConnection;
+import com.softserve.tc.diaryclient.webservice.diary.DiaryServicePortProvider;
 
 @Controller
 public class UserStatisticController {
     @Autowired
     UserStatisticDAO userStatDAO;
+    
     @Autowired
-    UserStatisticService userStatisticService ;
+    DiaryServicePortProvider diaryServicePortProvider;
     
     @RequestMapping(value = "/users-statistic")
     public String users(Model model) {
-        DiaryService port = DiaryServiceConnection.getDairyServicePort();
+        DiaryService port = diaryServicePortProvider.getPort();
     
         List<UserStatistic> usersList = userStatDAO.getAll();
         String json = new Gson().toJson(usersList);
@@ -35,7 +35,7 @@ public class UserStatisticController {
         
         User mostActiveUser = port.getMostActiveUser(); 
         model.addAttribute("mostActiveUser", mostActiveUser);
-        int numberOfRecords = userStatisticService.getUserAmountOfRecords(mostActiveUser.getNickName());
+        int numberOfRecords = port.getUserAmountOfRecords(mostActiveUser.getNickName());
         model.addAttribute("usersAmountOfRecords", numberOfRecords);
         
         Tag mostPopularTag = port.getMostPopularTag();
@@ -52,7 +52,7 @@ public class UserStatisticController {
     
     @RequestMapping(value = "/my-statistic", method = RequestMethod.GET)
     public String myStatistic(@RequestParam(value = "nickName",required=false) String nickName,Model model) {
-        DiaryService port = DiaryServiceConnection.getDairyServicePort();
+        DiaryService port = diaryServicePortProvider.getPort();
         if (nickName.isEmpty()){
             return "redirect:/login";
         }
@@ -61,7 +61,7 @@ public class UserStatisticController {
         UserStatistic clientUserStat = userStatDAO.findByNickName("Bob");
         model.addAttribute("userStatistic",clientUserStat);
         
-        int numberOfRecords = userStatisticService.getUserAmountOfRecords(nickName);
+        int numberOfRecords = port.getUserAmountOfRecords(nickName);
         model.addAttribute("numberOfRecords", numberOfRecords);
         
         /*List<com.softserve.tc.diary.entity.Record> records= port.getAllRecordsByDate(nickName,"2015-09-03 00:00:00");

@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.softserve.tc.diary.entity.Record;
-import com.softserve.tc.diary.entity.User;
 import com.softserve.tc.diary.webservice.DiaryService;
-import com.softserve.tc.diaryclient.webservice.diary.DiaryServiceConnection;
 import com.softserve.tc.diaryclient.webservice.diary.DiaryServicePortProvider;
 
 @Controller

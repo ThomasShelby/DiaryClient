@@ -13,7 +13,7 @@ public class DiaryServiceProperty {
 
 	public Properties properties;
 
-	private static final Logger logger = Log.init(DiaryServiceConnection.class.getName());
+	private static final Logger logger = Log.init(DiaryServiceProperty.class.getName());
 	
 	private static DiaryServiceProperty propertiesSingleton;
 	

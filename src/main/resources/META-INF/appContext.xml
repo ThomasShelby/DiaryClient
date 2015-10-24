@@ -66,8 +66,12 @@
 		scope="singleton" />
 
 	<bean id="cashDiaryService"
-		class="com.softserve.tc.diaryclient.webservice.diary.DiaryServiceCashLoader" 
+		class="com.softserve.tc.diaryclient.webservice.diary.DiaryServiceCashLoader"
 		scope="singleton" />
+		
+		<bean class="com.softserve.tc.diaryclient.service.CustomUserDetailsService" scope="prototype">
+    <property name="fundsTransferService" ref="fundsTransferService"/>
+</bean>
 
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

@@ -9,8 +9,22 @@
 <script src="resources/js/jquery-1.9.1.min.js"></script>
 <script src="resources/js/jquery.validate.js"></script>
 <script src="resources/js/login.js"></script>
+<script src="resources/js/bpopUp.js"></script>
+<script src="resources/js/ForgotAccount.js"></script>
 </head>
 <body onload='document.loginForm.username.focus();'>
+
+<!-- popUp forgot a password -->
+<div id="firstPopUp" class="popUpLogin">
+<button id="closeEmailForm" class="b-close" value="X"></button>
+<input id="email" type="email" name="email" />
+<input type="button" onclick="resultOfForgotAccount()" value="Submit"/>
+</div>
+
+<div id="secondPopUp" class="popUpLogin">
+<button id="closeEmailForm" class="b-close" value="X"></button>
+</div>
+
     <div id="login">
        <c:if test="${not empty error}">
         <div class="error-login">${error}</div>
@@ -25,6 +39,7 @@
             <input id="password" type='password' name='password' placeholder="password" />
             <input name='submit' type='submit' value='Log in' /><br>
             <label><input type="checkbox" name="remember" checked class="checkbox"/> Remember me</label>
+            <a id="forgotAccount" href="#"> Can't access your account?</a>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <div class="register">Not registered yet? <a href="/DiaryClient/signup">Register here</a></div>
         </form>

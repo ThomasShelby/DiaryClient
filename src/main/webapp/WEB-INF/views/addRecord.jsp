@@ -7,10 +7,36 @@
 <script src="resources/js/jquery.autocomplete.min.js" /></script>
 <script src="resources/js/autocompleteHashTag.js" /></script>
 <script src="resources/js/modalWindow.js" /></script>
+<script src="resources/js/addCanvas.js" /></script>
 
+<script type="text/javascript">
+$(document).ready(function() {
+	$('input:radio[name="canvas"]').change(
+		    function(){
+		        if (this.checked && this.value == 'canvas') {
+		        	$(document.getElementById("canvasDiv")).show();
+		        	$(document.getElementById("messageDiv")).hide();
+		        }else {
+		        	$(document.getElementById("canvasDiv")).hide();
+		        	$(document.getElementById("messageDiv")).show();
+		        }
+		    });
+	$("#butS").mousedown(function(){
+		var canvas = document.getElementById("canvas");
+		var context = canvas.getContext("2d");                    
+		var imageDataURL = canvas.toDataURL('image/png');
+		//console.log(imageDataURL);
+		document.getElementById('canvasData').value = imageDataURL;
+	});
+	
+});</script>
 <link rel="stylesheet" type="text/css" href="resources/css/autocomplete-style.css">
 <link rel="stylesheet" type="text/css" href="resources/css/addRecord.css">
-
+<style type = "text/css"> 
+#canvasDiv {
+	display:none;
+}
+</style>
 <div class="addRecord">
 	<!-- set action for this form (update or create record) -->
 	
@@ -70,14 +96,18 @@
     <!-- third block -->
     <div id="thirdBlock">
         <div class="leftV">
-	        Message:
+	        Message:<input type="radio" name="canvas" value="noCanvas" checked>
+	        <br>
+	        Canvas:<input type="radio" name="canvas" value="canvas">
         </div>
         <div class="rightV">
-        	
 					 <textarea id="text" type="text" class="autocomplete" name="text"
 						wrap="soft" oninput="lookingForHashTag('text')">${record.text}</textarea>
-	    
         </div>
+        <div id = "canvasDiv" class="rightV">   
+	        <canvas id="canvas" height="300px" width="595px"></canvas>
+	        <input type="hidden" name="canvasData" id="canvasData" value="" />
+	    </div>
     </div>
     
     
@@ -98,4 +128,3 @@
 	</center>
 	</form>
 </div>
-

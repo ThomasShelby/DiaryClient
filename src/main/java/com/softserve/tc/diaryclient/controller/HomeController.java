@@ -2,7 +2,6 @@ package com.softserve.tc.diaryclient.controller;
 
 
 import java.io.IOException;
-
 import java.util.List;
 import java.util.Locale;
 
@@ -10,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.json.JSONException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +25,7 @@ import com.softserve.tc.diary.entity.Record;
 import com.softserve.tc.diary.entity.User;
 import com.softserve.tc.diary.log.Log;
 import com.softserve.tc.diary.webservice.DiaryService;
+import com.softserve.tc.diaryclient.logout.Logout;
 import com.softserve.tc.diaryclient.webservice.diary.DiaryServiceConnection;
 
 import net.aksingh.owmjapis.CurrentWeather;
@@ -33,7 +34,9 @@ import net.aksingh.owmjapis.OpenWeatherMap.Units;
 
 @Controller
 public class HomeController {
-
+    @Autowired
+    Logout logout;
+    
     private Logger logger = Log.init(this.getClass().getName());
 
     public final String START_OF_DAY = " 00:00:00";
@@ -93,6 +96,8 @@ public class HomeController {
         } catch (IOException e) {
             logger.error(e);
         }
+        logout.getSessionInformation();
+        
         return "home";
     }
 

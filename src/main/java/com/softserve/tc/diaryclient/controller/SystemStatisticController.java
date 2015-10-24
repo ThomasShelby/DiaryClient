@@ -8,8 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.softserve.tc.diary.webservice.DiaryService;
 import com.softserve.tc.diaryclient.dao.LoginDurationDAO;
 import com.softserve.tc.diaryclient.dao.UserSessionDAO;
+import com.softserve.tc.diaryclient.webservice.diary.DiaryServiceConnection;
 
 @Controller
 public class SystemStatisticController {
@@ -28,14 +30,12 @@ public class SystemStatisticController {
         Map<Integer, Double> loginDuration = logDurDAO.getGenLoginDuration();
         model.addAttribute("loginDuration", loginDuration);  
         Map<Integer, Integer> sessionDuration = userSessDao.getSessionDuration();
-        model.addAttribute("sessionDuration", sessionDuration);  
+        model.addAttribute("sessionDuration", sessionDuration);
+        
+        DiaryService port = DiaryServiceConnection.getDairyServicePort();
+        int[][] recordsPerDay = port.getRecDate();
+        model.addAttribute("recordsPerDay", recordsPerDay);
 
         return "SystemStatistic";
     }
-    
-//    @RequestMapping(value = "/getLoginDate")
-//    public Map<Integer, Long> userProfile( Model model) {
-//        Map<Integer, Long> map = logDurDAO.getLoginDate();
-//     return map;
-//    }
 }

@@ -32,7 +32,7 @@ public class AddRecordController {
 
 	public static final String HASH_TAG_SIGH = "#";
 	private static DiaryService port = DiaryServiceConnection.getDairyServicePort();
-	private static Logger logger = Log.init(UserController.class.toString());
+	private static Logger logger = Log.init(AddRecordController.class.toString());
 
 	@RequestMapping(value = "/addRecord", method = RequestMethod.POST)
 	public String addRecordPost(@RequestParam("title") String title, @RequestParam("text") String text,
@@ -40,6 +40,7 @@ public class AddRecordController {
 			@RequestParam("file") MultipartFile file, Model model) {
 
 		User user = port.getUserByNickName(nick);
+		
 		Record record = null;
 		if (!file.isEmpty()) {
 			String fileName = file.getOriginalFilename();
@@ -72,7 +73,7 @@ public class AddRecordController {
         File xmlFile = new File(System.getProperty("catalina.home")
                 + File.separator + "tmpFiles"
                 + File.separator + "autosaved_records" + File.separator + nick
-                + record.getUuid() + "-tempRecord.xml");
+                 + "-tempRecord.xml");
         if (xmlFile.exists() && xmlFile.isFile()) {
             xmlFile.delete();
             logger.info("DELETED " + xmlFile.getAbsolutePath());
@@ -95,11 +96,10 @@ public class AddRecordController {
             RecordJAXBParser jaxb = new RecordJAXBParser();
             temporaryRecord =
                     jaxb.unmarshalTextFromFile(xmlFile.getAbsolutePath());
+            model.addAttribute("record", temporaryRecord);
         }
-		
 		com.softserve.tc.diary.entity.User user = port.getUserByNickName(userNickName);
 		model.addAttribute("user", user);
-		model.addAttribute("temporaryRecord", temporaryRecord);
 
 		return "addRecord";
 	}
@@ -113,12 +113,10 @@ public class AddRecordController {
 		while (matcher.find( )) {
 			hashTags.add(matcher.group());
 		}
-
 		return hashTags;
 	}
 
 	private void addHashTagToCash(List<String> hashTags) {
-
 		for (String hashTag : hashTags) {
 			DiaryServiceCashLoader loader = CashBeanGetter.getInstance();
 			loader.addToCashOfHashTags(hashTag);

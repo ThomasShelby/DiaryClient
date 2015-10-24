@@ -23,7 +23,7 @@ import com.softserve.tc.diaryclient.webservice.diary.DiaryServiceConnection;
 @Controller
 public class RecordDescriptionController {
 
-	private static Logger logger = Log.init(UserController.class.toString());
+	private static Logger logger = Log.init(RecordDescriptionController.class.toString());
 	private static DiaryService port = DiaryServiceConnection.getDairyServicePort();
 
 	@RequestMapping(value = "/recordsDescription")
@@ -59,10 +59,8 @@ public class RecordDescriptionController {
         } else {
             model.addAttribute("record", record);
         }
-        
+        model.addAttribute("label", "edit");
 		model.addAttribute("user", user);
-		
-		//model.addAttribute("temporaryRecord", temporaryRecord);
 		return "addRecord";
 	}
 

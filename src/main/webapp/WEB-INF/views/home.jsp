@@ -20,7 +20,6 @@
 				<div class="weather">
 					<b>Weather in: </b>${city_name}<br>
 					<img src="http://openweathermap.org/img/w/${weather_icon}.png" alt="weather_icon" /><br>
-					<b>Temperature: </b>${city_name}<br> 
 					<b>Temperature: </b>${temp} C<br> 
 					<b>Humidity:  </b>${humidity} %<br> 
 					<b>Wind: </b>${wind} m/s<br>

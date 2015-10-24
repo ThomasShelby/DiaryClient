@@ -49,7 +49,7 @@ form{
   padding:6% 4%;
 }
 
-input[type="text"],input[type="password"]{
+input[type="text"],input[type="password"], input[type="email"]{
   width:92%;
   background:#fff;
   margin-bottom:4%;
@@ -161,17 +161,53 @@ h1 a:hover {
 
 
 .popUpLogin { 
-    background-color:#fff;
-    border-radius:15px;
-    color:#000;
-    display:none; 
-    padding:20px;
-    min-width:400px;
-    min-height: 180px;
+  background:#f0f0f0;
+  border-radius:15px;
+  color:#000;
+  display:none; 
+  width:400px;
+  min-height: 230px;
+  text-align:center;
+}
+.popUpLogin h1{
+  background:#3399cc;
+  padding:20px 0;
+  font-size:140%;
+  font-weight:300;
+  text-align:center;
+  color:#fff;
+}
+.popUpLogin p{
+  font-size:140%;
+  font-weight:260;
+  text-align:center;
+  margin: 0 auto;
+    padding:20px 0;
 }
 .b-close{
-    cursor:pointer;
-    position:absolute;
-    right:10px;
-    top:5px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    text-align: center;
+    color: #fff;
+    background-color: #CC3D55;
+    height: 30px;
+    width: 30px;
+    border:0;
+    text-decoration: none;
 }
+.b-close:before{
+    font-family: Arial;
+    color: rgba(255, 255, 255, 0.9);
+    content: "x";
+    font-size: 20px;
+    text-shadow: 0 -1px rgba(0, 0, 0, 0.5);
+    outline: none;
+}
+
+.formEmail{
+	  background:#f0f0f0;
+  padding:6% 4%;
+}
+
+

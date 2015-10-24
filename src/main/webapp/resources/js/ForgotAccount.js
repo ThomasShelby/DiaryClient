@@ -1,9 +1,10 @@
 $(function(){
 	$('#forgotAccount').click(function(){
 	$('#firstPopUp').bPopup({
-		speed: 650,
-	    transition: 'slideIn',
-	   	transitionClose: 'slideBack',
+	modalClose: false,
+	speed: 650,
+    transition: 'slideIn',
+    transitionClose: 'slideBack'
 	});
 	});
 	});
@@ -31,12 +32,12 @@ $(function(){
 	   		 success: function(data){ 
 	   	     	var bPopup = $('#firstPopUp').bPopup();
 	   	    	bPopup.close();
-	   	    	$("#secondPopUp").html(data);
+	   	    	$("#responseEmail").text(data);
 	   	    	$('#secondPopUp').bPopup({
-	   	     	speed: 650,
-	   	         transition: 'slideIn',
-	   	   	    transitionClose: 'slideBack',
-	   	     	autoClose: 1500
+	   	    	speed: 650,
+	   	        transition: 'slideIn',
+	   		    transitionClose: 'slideBack',
+	   	     	autoClose: 3000
 	   	 	});
 	   		}
 	    })

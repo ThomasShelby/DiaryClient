@@ -1,5 +1,6 @@
 package com.softserve.tc.diaryclient.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +31,7 @@ public class SystemStatisticController {
     
     @RequestMapping(value = "/systemStatistic")
     public String systemStatistic(Model model) {
-        Map<Integer, Long> map = logDurDAO.getLoginDate();
+        Map<Date, Long> map = logDurDAO.getLoginDate();
         model.addAttribute("map", map);  
         List<Integer> list = logDurDAO.getAllLoginsCount();
         model.addAttribute("list", list);
@@ -39,7 +40,7 @@ public class SystemStatisticController {
         Map<Integer, Integer> sessionDuration = userSessDao.getSessionDuration();
         model.addAttribute("sessionDuration", sessionDuration);
         
-        int[][] recordsPerDay = port.getRecDate();
+        String[][] recordsPerDay = port.getRecDate();
         model.addAttribute("recordsPerDay", recordsPerDay);
 
         return "SystemStatistic";

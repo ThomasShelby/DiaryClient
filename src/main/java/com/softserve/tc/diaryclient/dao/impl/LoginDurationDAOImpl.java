@@ -1,8 +1,10 @@
 package com.softserve.tc.diaryclient.dao.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,21 +40,20 @@ public class LoginDurationDAOImpl extends BaseDAOImpl<LoginDuration>
     
     @Transactional
     @SuppressWarnings("unchecked")
-    public Map<Integer, Long> getLoginDate() {
+    public Map<Date, Long> getLoginDate() {
         List<Object[]> list = getEntityManager()
                 .createQuery(
-                        "Select EXTRACT(DAY FROM loginDate), COUNT(*) FROM LoginDuration "
-                                + "GROUP BY loginDate ORDER BY loginDate")
+                        "Select CAST(loginDate as date), COUNT(*) FROM LoginDuration GROUP BY loginDate ORDER BY loginDate")
                 .getResultList();
-        Map<Integer, Long> statsPerDate =
-                new HashMap<Integer, Long>(list.size());
+        Map<Date, Long> statsPerDate =new HashMap<Date, Long>(list.size());
         for (Object[] row : list) {
-            Integer logindate = (Integer) row[0];
+            Date logindate = (Date) row[0];
             Long count = (Long) row[1];
             statsPerDate.put(logindate, count);
         }
+        Map<Date, Long> treeMap = new TreeMap<Date, Long>(statsPerDate);
         
-        return statsPerDate;
+        return treeMap;
     }
     
     @Transactional

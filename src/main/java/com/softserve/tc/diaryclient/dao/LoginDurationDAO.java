@@ -1,5 +1,6 @@
 package com.softserve.tc.diaryclient.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -11,10 +12,10 @@ public interface LoginDurationDAO extends BaseDAO<LoginDuration> {
     
     void deleteByNickName(String nickName);
     
-    public Map<Integer, Long> getLoginDate();
+    Map<Date, Long> getLoginDate();
     
-    public List<Integer> getAllLoginsCount();
+    List<Integer> getAllLoginsCount();
     
-    public Map<Integer, Double> getGenLoginDuration();
+    Map<Integer, Double> getGenLoginDuration();
     
 }

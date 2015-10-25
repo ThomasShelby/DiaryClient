@@ -122,8 +122,8 @@ nv.addGraph({
 		chart.yAxis.tickFormat(d3.format(',d'));
         chart.xAxis.rotateLabels(-45);
         chart.xAxis.tickFormat(function (d) {
-            return moment(d, "DD") 
-                    .format("DD/10"); 
+            return moment(d, "YYYY/MM/DD") 
+                    .format("DD/MM/YY"); 
         });
         chart.dispatch.on('renderEnd', function () {
             console.log('Render Complete');

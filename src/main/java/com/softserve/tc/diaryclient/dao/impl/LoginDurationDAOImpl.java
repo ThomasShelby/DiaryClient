@@ -67,21 +67,22 @@ public class LoginDurationDAOImpl extends BaseDAOImpl<LoginDuration>
     
     @Transactional
     @SuppressWarnings("unchecked")
-    public Map<Integer, Double> getGenLoginDuration() {
+    public Map<Date, Double> getGenLoginDuration() {
         
         List<Object[]> list = getEntityManager()
                 .createQuery(
-                        "Select EXTRACT(DAY FROM loginDate), SUM(duration) FROM LoginDuration GROUP BY loginDate ORDER BY loginDate")
+                        "Select CAST(loginDate as date), SUM(duration) FROM LoginDuration GROUP BY loginDate ORDER BY loginDate")
                 .getResultList();
-        Map<Integer, Double> logDuration =
-                new HashMap<Integer, Double>(list.size());
+        Map<Date, Double> logDuration =
+                new HashMap<Date, Double>(list.size());
         for (Object[] row : list) {
-            Integer logindate = (Integer) row[0];
+            Date logindate = (Date) row[0];
             Double duration = (Double) row[1];
             logDuration.put(logindate, duration);
         }
+        Map<Date, Double> treeMap = new TreeMap<Date, Double>(logDuration);
         
-        return logDuration;
+        return treeMap;
     }
     
 }

@@ -45,15 +45,14 @@ public class LoginDurationDAOImpl extends BaseDAOImpl<LoginDuration>
                 .createQuery(
                         "Select CAST(loginDate as date), COUNT(*) FROM LoginDuration GROUP BY loginDate ORDER BY loginDate")
                 .getResultList();
-        Map<Date, Long> statsPerDate =new HashMap<Date, Long>(list.size());
+        Map<Date, Long> statsPerDate =new TreeMap<Date, Long>();
         for (Object[] row : list) {
             Date logindate = (Date) row[0];
             Long count = (Long) row[1];
             statsPerDate.put(logindate, count);
         }
-        Map<Date, Long> treeMap = new TreeMap<Date, Long>(statsPerDate);
         
-        return treeMap;
+        return statsPerDate;
     }
     
     @Transactional
@@ -74,15 +73,14 @@ public class LoginDurationDAOImpl extends BaseDAOImpl<LoginDuration>
                         "Select CAST(loginDate as date), SUM(duration) FROM LoginDuration GROUP BY loginDate ORDER BY loginDate")
                 .getResultList();
         Map<Date, Double> logDuration =
-                new HashMap<Date, Double>(list.size());
+                new TreeMap<Date, Double>();
         for (Object[] row : list) {
             Date logindate = (Date) row[0];
             Double duration = (Double) row[1];
             logDuration.put(logindate, duration);
         }
-        Map<Date, Double> treeMap = new TreeMap<Date, Double>(logDuration);
         
-        return treeMap;
+        return logDuration;
     }
     
 }

@@ -32,8 +32,9 @@ public class LogoutController {
         String nickName = request.getUserPrincipal().getName();
         HttpSession httpSession = request.getSession(false);
         String sessionId = httpSession.getId(); 
-//        System.out.println(request.getRequestedSessionId());
+
         securityContextLogoutHandler.logout(request, response, null);
+
         port.invalidateSession(nickName, sessionId);
         
         return "redirect:/";

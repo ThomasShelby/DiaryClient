@@ -17,7 +17,7 @@ public class ActiveUsersController {
     // @Autowired
     // Logout logout;
     
-    @RequestMapping(value = "/todayActiveUsers")
+    @RequestMapping(value = "/activeUsers")
     public String todayActiveUsers(Model model) {
         
         List<SpringActiveUser> springActiveUsers =
@@ -28,6 +28,6 @@ public class ActiveUsersController {
                 
         // logout.getSessionInformation();
         
-        return "todayActiveUsers";
+        return "activeUsers";
     }
 }

@@ -1,8 +1,9 @@
 package com.softserve.tc.diaryclient.dao.impl;
 
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,19 +38,17 @@ public class UserSessionDAOImpl extends BaseDAOImpl<UserSession>implements UserS
 
     @Transactional
     @SuppressWarnings("unchecked")
-    public Map<Integer, Integer> getSessionDuration() {
+    public Map<Date, Long> getSessionDuration() {
 
         List<Object[]> list = getEntityManager()
-                .createQuery(
-                        "select extract(day from endSession - startSession) as duration, extract(day from startSession) as startday from UserSession order by startday")
+                .createQuery("select CAST(startSession as date),SUM((((DATE_PART('day', endSession - startSession) * 24 +DATE_PART('hour', endSession - startSession)) * 60 + DATE_PART('minute', endSession - startSession)) * 60 + DATE_PART('second', endSession - startSession)))  as duration from UserSession group by startSession order by startSession")
                 .getResultList();
-        Map<Integer, Integer> sessionDuration = new HashMap<Integer, Integer>(list.size());
+        Map<Date, Long> sessionDuration = new TreeMap<Date, Long>();
         for (Object[] row : list) {
-            Integer duration = (Integer) row[0];
-            Integer startday = (Integer) row[1];
+            Date startday = (Date) row[0];
+            Long duration = (Long) row[1];
             sessionDuration.put(startday, duration);
         }
         return sessionDuration;
     }
-
 }

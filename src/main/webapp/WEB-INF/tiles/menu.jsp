@@ -24,6 +24,7 @@
 			<ul>
 				<li><a href="users">Users</a></li>
 				<li><a href="systemStatistic">SystemStatistic</a></li>
+				<li><a href="activeUsers">Active Users</a></li>
 				<li><a href="users-statistic">Users Statistic</a></li>
 			</ul>
 		</sec:authorize>

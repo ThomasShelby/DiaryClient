@@ -1,0 +1,29 @@
+#headRD{
+    width:80%;
+
+    margin-right: 20%;
+    padding:20px;
+}
+
+#upper{
+   font-size: 150%;
+}
+
+.textRecord{
+  text-indent: 50px;
+  font-size: 120%;
+}
+.title{
+    font-weight: 600;
+    text-align: center;
+}
+
+.inLineClass{
+    font-size: 120%;
+    font-weight:300;
+    vertical-align: middle;
+}
+.buttonRD{
+   float:left;
+	
+}

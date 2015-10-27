@@ -22,6 +22,6 @@
                 text = text.substring(0,400) + "   ..............";
     }
      c[i].innerHTML = text;
-     d[i].innerHTML = Date(date);
+     d[i].innerHTML = date;
     }
 }

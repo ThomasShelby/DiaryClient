@@ -5,7 +5,8 @@
 
 <tiles:insertDefinition name="defaultTemplate">
 	<tiles:putAttribute name="body">
-		<div class="body" scroll="yes">
+		<div class="body">
+<link rel="stylesheet" type="text/css" href="resources/css/recordDescription.css">
 		<c:if test="${result == true}">
 			<h1> Record successfully added</h1>
 		</c:if>
@@ -14,18 +15,43 @@
 		</c:if>
 		<c:if test="${record != null}">
 			<center>
-			<h2> Record Description</h2>
+			<h1><b> Record Description</b></h1>
+			<hr>
 			</center>
-			<ul type="square">
-				<li>uuid: ${record.uuid}</li>
-				<li>Title: ${record.title}</li>
-				<li>Author: ${user.nickName} </li>
-				<li>Created: ${record.createdTime} </li>
-				<li><a href="/images/tmpFiles/${user.nickName}/${record.supplement}" target="_blank"> Open file ${record.supplement} </a> </li>
-				<li><button onclick="location.href='publicRecords'">Back</button> </li>
-				<li><button onclick="openEditRecord('${record.uuid}')">edit</button> </li>
-				<li>Test: ${record.text}</li>
-			</ul>
+<div id="headRD">
+<div class="inLineClass">
+Author: <img src="/images/tmpFiles/${user.nickName}/${user.avatar}" width="50" height="40" alt="userAvatar"/>
+<span id="upper"><a href='userProfile?nickName=${user.nickName}'>${user.nickName}</a></span>
+</div>
+<div class="inLineClass">
+Record created: ${record.createdTime}
+</div>
+<div class="inLineClass">
+  Record status: ${record.visibility}
+</div>
+<c:if test="${record.supplement != null}">
+<div class="inLineClass">
+Open file: <a href="/images/tmpFiles/${user.nickName}/${record.supplement}" target="_blank">  ${record.supplement} </a>
+</div>
+</c:if>
+<hr>
+<center>
+<div class="title">
+ <span id="upper"> ${record.title}</span>
+ </div>
+ </center>
+ 			<hr>
+ <div class="textRecord"> ${record.text}   </div>
+ <center>
+<hr>
+ <button onclick="location.href='publicRecords'" class="buttonRD">Back</button>
+  <button onclick="openEditRecord('${record.uuid}')" class="buttonRD">Edit</button>
+<!--<c:if test="${user.nickName} == ${pageContext.request.userPrincipal.name}"> 
+
+ </c:if>-->
+ </center>
+
+</div>
 		</c:if>
 		</div>
 	</tiles:putAttribute>

@@ -27,8 +27,7 @@
 				</div>
 			</div>
      </br>
-			<div id="notes" class="hidden">
-		</div>
+			<div id="notes" class="hidden"></div>
 		</div>
 	</tiles:putAttribute>
 </tiles:insertDefinition>

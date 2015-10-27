@@ -73,7 +73,9 @@ YUI().use(
 									+data[i].text+"</p>"
 									+ "</div>";
 							}
+							if(txt != ""){
 							$("#notes").append(txt).removeClass("hidden");
+							}
 						}
 
 					}
@@ -88,7 +90,7 @@ YUI().use(
 			}
 			
 			function getSupplement(supplement){
-			if ((typeof supplement == 'undefined')){
+				if ((supplement == "") || (typeof supplement == 'undefined')){
 				return "";
 			}else{
 				return "<img src='/images/tmpFiles/mary/" 

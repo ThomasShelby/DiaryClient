@@ -6,7 +6,7 @@
 .content {
 	padding: 10px;
 	padding-bottom: 50px; /* Height of the footer element */
-	overflow: hiden;
+	overflow: auto;
 }
 
 .body {

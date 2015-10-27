@@ -1,6 +1,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%> 
 
+<script src="resources/js/jquery.autocomplete.min.js" /></script>
+<script src="resources/js/autocompleteHashTag.js" /></script>
+<link rel="stylesheet" type="text/css" href="resources/css/filter-style.css"> 
+<link rel="stylesheet" type="text/css" href="resources/css/autocomplete-style.css"> 
 <div id="filter">
 <center>
 	<form action="hashTag" method="get">
@@ -12,23 +16,3 @@
 </center>
 </div>
 	    
-   <!--  <center>
-     <div id="sorting">
-     Sort By Date:
-        <input type="button" value="&#8593" onclick="history.back()" />
-        <input type="button" value="&#8595" />
-     Sort By alphabet:
-     <input type="button" value="&#8593" onclick="history.back()" />
-     <input type="button" value="&#8595" />
-    </div>
-    </center>  
-
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
-    $("#search").click(function(){
-        $("#sorting").slideDown("slow");
-    });
-});
-</script>-->

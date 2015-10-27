@@ -20,7 +20,9 @@
 			<li><a href="publicRecords">Public records</a></li>
 				
 			<li><a id="followedUsers" href="followedUsers?nickName=${pageContext.request.userPrincipal.name}">Users with I followed</a></li>
-				
+			
+			<li><a href="subscribers?nickName=${pageContext.request.userPrincipal.name}">My subsribers</a></li>	
+		
 		</ul>
 		<sec:authorize access="hasRole('ROLE_ADMIN')">
 			Adminstrator menu

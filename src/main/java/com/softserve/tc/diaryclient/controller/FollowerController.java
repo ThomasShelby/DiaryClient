@@ -43,6 +43,16 @@ private static Logger logger = Log.init(FollowerController.class.toString());
         return "followedUsers";
     }
     
+    @RequestMapping(value = "/subscribers")
+    public String subscribers (@RequestParam(value = "nickName") String nickName, Model model) {
+        logger.info("Get subscribers");
+        DiaryService port = diaryServicePortProvider.getPort();
+        User user=port.getUserByNickName(nickName);
+        List<User> subscribersList = port.getAllUserFollowers(user.getUuid());
+        model.addAttribute("subscribersList", subscribersList);
+        return "subscribers";
+    }
+    
     @RequestMapping(value = "/follow")
     public String follow(@RequestParam(value = "nickName") String nickName, HttpServletRequest request) {
         logger.info("Follow user "+nickName);

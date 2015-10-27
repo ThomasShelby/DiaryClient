@@ -22,12 +22,12 @@ public class SystemStatisticController {
     @Autowired
     UserSessionDAO userSessDao;
     
-	private DiaryService port;
-	
-	@Autowired
-	public SystemStatisticController(DiaryServicePortProvider diaryServicePortProvider) {
-		port = diaryServicePortProvider.getPort();
-	}
+  private DiaryService port;
+  
+  @Autowired
+  public SystemStatisticController(DiaryServicePortProvider diaryServicePortProvider) {
+    port = DiaryServicePortProvider.getPort();
+  }
     
     @RequestMapping(value = "/systemStatistic")
     public String systemStatistic(Model model) {

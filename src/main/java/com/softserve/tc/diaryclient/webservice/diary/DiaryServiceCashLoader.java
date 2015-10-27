@@ -3,6 +3,7 @@ package com.softserve.tc.diaryclient.webservice.diary;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.softserve.tc.diary.entity.Tag;
 import com.softserve.tc.diary.webservice.DiaryService;
 import com.softserve.tc.diaryclient.controller.UserController;
 import com.softserve.tc.diaryclient.log.Log;
@@ -37,7 +38,12 @@ public class DiaryServiceCashLoader {
 		}
 	}
 
-	public List<String> getListOfHashTagsFromCash() {
-		return listOfHahses;
+	public List<Tag> getListOfHashTagsFromCash() {
+	  
+	  List<Tag> result = new ArrayList<Tag>();
+	  for (String string : listOfHahses) {
+      result.add(new Tag(string));
+    }
+		return result;
 	}
 }

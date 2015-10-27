@@ -16,7 +16,7 @@ import com.softserve.tc.diaryclient.log.Log;
 public class DiaryServicePortProvider {
 
 	private static Logger logger = Log.init(DiaryServicePortProvider.class.getName());
-    static DiaryService port;
+  private static DiaryService port;
 
 	private DiaryServicePortProvider() {
 		port = getDairyServicePort();

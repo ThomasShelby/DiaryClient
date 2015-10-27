@@ -19,10 +19,15 @@ public class PublicRecordController {
 	
 	@Autowired
 	DiaryServicePortProvider diaryServicePortProvider;
+	
+	private DiaryService port;
+	
+	public PublicRecordController() {
+	  port = DiaryServicePortProvider.getPort();
+  }
 
 	@RequestMapping(value = "/publicRecords")
 	public String records(ModelMap model) {
-		DiaryService port = diaryServicePortProvider.getPort();
 		List<Record> list = port.getAllPublicRecords();
 		model.addAttribute("recordsList", list);
 		return "publicRecords";
@@ -30,7 +35,6 @@ public class PublicRecordController {
 
 	@RequestMapping(value = "/hashTag", method = RequestMethod.GET)
 	public String recordsByHahTag(@RequestParam(value = "hashTag") String hashTag, Model model) {
-		DiaryService port = diaryServicePortProvider.getPort();
 		List<Record> list = port.getAllPublicRecordsByHashTag(hashTag);
 		model.addAttribute("recordsList", list);
 		return "publicRecords";	

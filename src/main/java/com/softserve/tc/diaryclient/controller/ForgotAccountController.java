@@ -2,6 +2,7 @@ package com.softserve.tc.diaryclient.controller;
 
 import java.util.Random;
 
+import org.jasypt.util.password.PasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,8 +32,8 @@ public class ForgotAccountController {
 		String result = null;
 		if (user != null) {
 			String newPassword = randomPassword();
-			user.setPassword(newPassword);
-			port.updateUserWithoutImage(user);
+
+			port.updateUserPassword(user, newPassword);;
 			String [] message = messageForgotAccount(user.getNickName(), newPassword);
             MailSender mail = MailSender.getInstance();
             mail.setParameters(message[0], message[1], email);

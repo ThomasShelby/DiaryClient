@@ -3,6 +3,8 @@ package com.softserve.tc.diaryclient.controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,8 +25,8 @@ import com.softserve.tc.diaryclient.webservice.diary.DiaryServicePortProvider;
 public class UserController {
     private static Logger logger = Log.init(UserController.class.toString());
     
-	@Autowired
-	DiaryServicePortProvider diaryServicePortProvider;
+    @Autowired
+    DiaryServicePortProvider diaryServicePortProvider;
     
     @RequestMapping(value = "/users")
     public String users(Model model) {
@@ -40,7 +42,7 @@ public class UserController {
             Model model) {
         DiaryService port = diaryServicePortProvider.getPort();
         User user = port.getUserByNickName(nickName);
-        List<Record> recordList=port.getAllPublicRecordsByNickName(nickName);
+        List<Record> recordList = port.getAllPublicRecordsByNickName(nickName);
         model.addAttribute("recordList", recordList);
         model.addAttribute("followed", followed);
         model.addAttribute("user", user);
@@ -81,5 +83,5 @@ public class UserController {
         port.deleteUser(port.getUserByNickName(nickName));
         return "redirect:/users";
     }
-    
+   
 }

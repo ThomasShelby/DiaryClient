@@ -1,0 +1,38 @@
+h1 {
+  color: #36C;
+  font-weight: normal;
+  letter-spacing: 2px;
+  margin-bottom: 1em;
+}
+
+#notes {
+  float: left;
+  width: 600px;
+  background-color: #3399cc;
+  border: 2px solid;
+  border-color: #295C75;
+  font-family: cursive;
+   padding: 20px;
+}
+
+
+.note {
+  background-color: #FFFFFF;
+  border-color: #000000;
+  border: 2px solid;
+  padding: 5px;
+}
+
+.createdTime {
+font-size:small;
+color: #A99D9D;
+
+}
+
+#rightcolumn {
+  color: #36C;
+  font-weight: normal;
+  letter-spacing: 2px;
+  margin-bottom: 1em;
+  text-transform: lowercase;
+}

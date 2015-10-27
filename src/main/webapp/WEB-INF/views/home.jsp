@@ -9,6 +9,7 @@
 			<script src="http://yui.yahooapis.com/3.18.1/build/yui/yui-min.js"></script>
 			<script src="resources/js/jquery-1.9.1.min.js"></script>
 			<script src="resources/js/calendar-and-records.js"></script>
+			<link rel="stylesheet" type="text/css" href="resources/css/home.css">
 			<div id="demo" class="yui3-skin-sam yui3-g">
 				<div id="leftcolumn" class="yui3-u">
 					<div id="mycalendar"></div>
@@ -17,18 +18,17 @@
 					<div id="links" style="padding-left: 20px;">
 						Selected date: <span id="selecteddate"></span>
 					</div>
-				<div class="weather">
-					<b>Weather in: </b>${city_name}<br>
-					<img src="http://openweathermap.org/img/w/${weather_icon}.png" alt="weather_icon" /><br>
-					<b>Temperature: </b>${temp} C<br> 
-					<b>Humidity:  </b>${humidity} %<br> 
-					<b>Wind: </b>${wind} m/s<br>
+					<div class="weather">
+						<b>Weather in: </b>${city_name}<br> <img
+							src="http://openweathermap.org/img/w/${weather_icon}.png"
+							alt="weather_icon" /><br> <b>Temperature: </b>${temp} C<br>
+						<b>Humidity: </b>${humidity} %<br> <b>Wind: </b>${wind} m/s<br>
+					</div>
 				</div>
-				</div>
-				
 			</div>
-			<h2 style="color: blue; text-align: center">Records</h2>
-			<table id="table" class="hidden"></table>
+     </br>
+			<div id="notes" class="hidden">
+		</div>
 		</div>
 	</tiles:putAttribute>
 </tiles:insertDefinition>

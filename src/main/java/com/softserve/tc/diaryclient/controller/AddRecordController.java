@@ -5,6 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,6 +29,7 @@ import com.softserve.tc.diary.entity.User;
 import com.softserve.tc.diary.webservice.DiaryService;
 import com.softserve.tc.diaryclient.autosave.RecordJAXBParser;
 import com.softserve.tc.diaryclient.log.Log;
+import com.softserve.tc.diaryclient.service.MailSender;
 import com.softserve.tc.diaryclient.webservice.diary.DiaryServiceCashLoader;
 import com.softserve.tc.diaryclient.webservice.diary.DiaryServicePortProvider;
 
@@ -50,10 +52,10 @@ public class AddRecordController {
 
 	@RequestMapping(value = "/addRecord", method = RequestMethod.POST)
 	public String addRecordPost(@RequestParam("title") String title, @RequestParam("text") String text,
-			@RequestParam("status") String status, @RequestParam("nick") String nick,
+			@RequestParam("status") String status, @RequestParam("nick") final String nick,
 			@RequestParam("file") MultipartFile file,@RequestParam("canvasData") String canvasData, Model model) {
 
-		User user = port.getUserByNickName(nick);
+		final User user = port.getUserByNickName(nick);
 
 		Record record = null;
 		if (!file.isEmpty()) {
@@ -84,15 +86,6 @@ public class AddRecordController {
 			addHashTagToCash(hashTags);
 		}
 
-		File xmlFile = new File(System.getProperty("catalina.home")
-				+ File.separator + "tmpFiles"
-				+ File.separator + "autosaved_records" + File.separator + nick
-				+ "-tempRecord.xml");
-		if (xmlFile.exists() && xmlFile.isFile()) {
-			xmlFile.delete();
-			logger.info("DELETED " + xmlFile.getAbsolutePath());
-		}
-
 		try{
 			//logger.info(canvasData);
 			int metaPngData = 22;
@@ -112,7 +105,34 @@ public class AddRecordController {
 		}catch(Exception e) {  
 			logger.info("unable to save image from canvas");
 		}
+		
+        if (status.equals("PUBLIC")) {
+            new Thread(){
+                public void run (){
+            port.markUserWithNewRecord(user.getUuid());
+            MailSender mail = MailSender.getInstance();
+            List<User> followers = port.getAllUserFollowers(user.getUuid());
+            System.out.println(followers);
+            Iterator<User> followerIterator = followers.iterator();
+            while (followerIterator.hasNext()) {
+                User follower=followerIterator.next();
+                mail.setParameters("The Diary. News", "Hi, " + follower.getNickName() + ".\n" + nick
+                        + " added new public records.", follower.geteMail());
+                mail.send();
+            }
+                }
+            }.start();
+        }
 
+        File xmlFile = new File(System.getProperty("catalina.home")
+                + File.separator + "tmpFiles"
+                + File.separator + "autosaved_records" + File.separator + nick
+                + "-tempRecord.xml");
+        if (xmlFile.exists() && xmlFile.isFile()) {
+            xmlFile.delete();
+            logger.info("DELETED " + xmlFile.getAbsolutePath());
+        }
+        
 		return "recordsDescription";
 	}
 

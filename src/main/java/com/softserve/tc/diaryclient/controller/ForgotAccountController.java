@@ -34,8 +34,10 @@ public class ForgotAccountController {
 			user.setPassword(newPassword);
 			port.updateUserWithoutImage(user);
 			String [] message = messageForgotAccount(user.getNickName(), newPassword);
-			MailSender mail = MailSender.getInstance();
-			mail.send(message[0], message[1], email);
+            MailSender mail = MailSender.getInstance();
+            mail.setParameters(message[0], message[1], email);
+	        Thread t = new Thread(mail);
+	        t.start(); 
 			result = "message was successfully sended";
 		} else {
 			result = "incorect email or this email not not supported for any account";

@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<%@page session="true"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ page session="true"%>
+<script src="resources/js/follower.js" /></script> 
 <div class="menu">
 
 	<c:if test="${pageContext.request.userPrincipal.name != null}">
@@ -17,7 +18,9 @@
 			<li><a href="settings">Settings</a></li>
 			
 			<li><a href="publicRecords">Public records</a></li>
-					
+				
+			<li><a id="followedUsers" href="followedUsers?nickName=${pageContext.request.userPrincipal.name}">Users with I followed</a></li>
+				
 		</ul>
 		<sec:authorize access="hasRole('ROLE_ADMIN')">
 			Adminstrator menu

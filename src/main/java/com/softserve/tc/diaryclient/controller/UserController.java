@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.softserve.tc.diary.entity.Record;
 import com.softserve.tc.diary.entity.User;
 import com.softserve.tc.diary.webservice.DiaryService;
 import com.softserve.tc.diaryclient.log.Log;
@@ -35,10 +36,14 @@ public class UserController {
     
     @RequestMapping(value = "/userProfile")
     public String userProfile(@RequestParam(value = "nickName") String nickName,
+            @RequestParam(value = "followed", required = false) String followed,
             Model model) {
         DiaryService port = diaryServicePortProvider.getPort();
-        User us = port.getUserByNickName(nickName);
-        model.addAttribute("user", us);
+        User user = port.getUserByNickName(nickName);
+        List<Record> recordList=port.getAllPublicRecordsByNickName(nickName);
+        model.addAttribute("recordList", recordList);
+        model.addAttribute("followed", followed);
+        model.addAttribute("user", user);
         return "user_profile";
     }
     

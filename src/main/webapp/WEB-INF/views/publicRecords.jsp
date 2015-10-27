@@ -17,13 +17,15 @@
     <tbody>
     <c:forEach items="${recordsList}" var="records">
       <tr><td><a href='recordsDescription?id_rec=${records.uuid}'>${records.title}</a></td>
-      <td>${records.createdTime}</td>
+      <td name="createdTime">${records.createdTime}</td>
       <td name="textMessage" > ${records.text}</td></tr>
 	</c:forEach>
     </tbody>
   </table>
   </div>
-  <script>window.onload =  substringFunction();</script>
+  <script>
+  window.onload =  substringFunction();
+  </script>
 </tiles:putAttribute>
 </tiles:insertDefinition>
 

@@ -10,11 +10,15 @@
 		</div>
 		<div class="name">The Diary</div>
 	</div>
+	<sec:authorize access="isAuthenticated()">
+	<div class="aligncenter">
+		<div class="onlineusers">Online users: <spam id="onlineUser" ></spam></div>
+	</div>
+	</sec:authorize>
 	<div class="alignright">
 		<!-- <div class="msg">${msg}</div> -->
 		<div class="username">
 			<sec:authorize access="isAuthenticated()">
-							<div id="onlineUser" ></div>
 				<c:url value="/logout" var="logoutUrl" />
 				<form action="${logoutUrl}" method="post" id="logoutForm">
 					<input type="hidden" name="${_csrf.parameterName}"
@@ -47,9 +51,9 @@
 		$(function(){
 			setInterval(function(){
 			$.get("/DiaryClient/authenticated",function(data){
-			$("#onlineUser").html("Online users: "+data);				
+			$("#onlineUser").html(data);				
 			})
-			}, 1000);
+			}, 5000);
 		});
 		</script>
 </header>

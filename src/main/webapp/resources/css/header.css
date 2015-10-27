@@ -27,6 +27,16 @@ header {
     top: 12px;
     right: 300px;
 }
+.onlineusers {
+    width: 30%;
+    font-size: 150%;
+    font-weight:200;
+    float: center;
+    position: absolute;
+    left: 600px;
+    top: 32px;
+    color: FFFF99;
+}
 .btn {
     float: right;
     position: relative;
@@ -70,9 +80,14 @@ button{
 }
 .alignleft {
     float: left;
-    width:50%;
+    width:20%;
+}
+.aligncenter {
+	display: block;
+	margin-left: auto;
+	margin-right: auto
 }
 .alignright {
     float: right;
-    width:50%;
+    width:40%;
 }

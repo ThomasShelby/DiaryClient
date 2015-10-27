@@ -6,6 +6,15 @@
 	function substringFunction() {
     var c = document.getElementsByName('textMessage');
     var d = document.getElementsByName('createdTime');
+    var options = {
+    		  year: 'numeric',
+    		  month: 'long',
+    		  day: 'numeric',
+    		  weekday: 'long',
+    		  hour: 'numeric',
+    		  minute: 'numeric',
+    		  second: 'numeric'
+    		};
         for (i = 0; i < c.length; i++) {
             var text = c[i].innerHTML;
             var date = d[i].innerHTML;

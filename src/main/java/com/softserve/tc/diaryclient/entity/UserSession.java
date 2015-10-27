@@ -44,7 +44,7 @@ public class UserSession {
 		this.sessionNumber = sessionNumber;
 		this.startSession = startSession;
 	}
-
+	
 	public String getUuid() {
 		return uuid;
 	}

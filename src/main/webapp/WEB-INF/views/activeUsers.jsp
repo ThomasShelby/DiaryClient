@@ -7,17 +7,18 @@
     <tiles:putAttribute name="body">
     <script src="resources/js/jquery-1.9.1.min.js"></script>
 
-<!-- //<script> 
-//var activeUsers=[]; -->
 <style>
 #activeUsers, #activeUsers th,#activeUsers td {
     border: 2px solid black;
 }
 </style>
-<table id="activeUsers" style="
+
+<!-- <script src="resources/js/reloadActiveUsers.js" /></script> -->
+
+<table id="activeUsers" class="hidden" style="
     font-family: arial;
     margin-left: 200px;">
-    <caption>Who is active</caption>
+    <caption>Who is online</caption>
     <thead>
       <tr>
       <th>Avatar</th>
@@ -36,7 +37,37 @@
     </tbody>
   </table>
 	   
-<!-- //</script> -->   
+<script type="text/javascript">
+    function reloadActiveUsers() {
+        $.ajax({
+        	type : 'GET',
+            url : 'activeUsers1',
+            dataType : 'json',
+            
+            success : function(data) {
+            	
+            	cap="<caption>Who is online</caption><thead><tr><th>Avatar</th><th>Nick Name</th><th>Session ID</th></tr></thead>";
+            	txt="";
+            	for (var  i=0; i<data.length;i++) {
+            		   txt+=
+   '<tr><td><div><img src="/images/tmpFiles/'+data[i].username+'/'+data[i].avatar+'" alt="user avatar" style="width:40px;height:40px;"/></div></td>'       			   
+            			   
+            		            +"<td>"+data[i].username+"</td>"
+            		            +"<td>"+data[i].session+"</td></tr>";
+            		   }
+            	$("#activeUsers").empty();
+            	$("#activeUsers").append(cap);
+            	$("#activeUsers").append(txt); 	
+                	
+            }
+        });
+    }
+</script>
+ 
+<script type="text/javascript">
+    var interval = 0;
+    interval = setInterval(reloadActiveUsers, 10000);
+</script>  
     
     
     </tiles:putAttribute>

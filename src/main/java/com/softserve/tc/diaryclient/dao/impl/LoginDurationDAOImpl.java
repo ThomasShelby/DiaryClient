@@ -43,7 +43,7 @@ public class LoginDurationDAOImpl extends BaseDAOImpl<LoginDuration>
     public Map<Date, Long> getLoginDate() {
         List<Object[]> list = getEntityManager()
                 .createQuery(
-                        "Select CAST(loginDate as date), COUNT(*) FROM LoginDuration GROUP BY loginDate ORDER BY loginDate")
+                        "Select CAST(loginDate as date), COUNT(*) FROM LoginDuration GROUP BY CAST(loginDate as date) ORDER BY CAST(loginDate as date)")
                 .getResultList();
         Map<Date, Long> statsPerDate =new TreeMap<Date, Long>();
         for (Object[] row : list) {
@@ -70,7 +70,7 @@ public class LoginDurationDAOImpl extends BaseDAOImpl<LoginDuration>
         
         List<Object[]> list = getEntityManager()
                 .createQuery(
-                        "Select CAST(loginDate as date), SUM(duration) FROM LoginDuration GROUP BY loginDate ORDER BY loginDate")
+                        "Select CAST(loginDate as date), SUM(duration) FROM LoginDuration GROUP BY CAST(loginDate as date) ORDER BY CAST(loginDate as date)")
                 .getResultList();
         Map<Date, Double> logDuration =
                 new TreeMap<Date, Double>();

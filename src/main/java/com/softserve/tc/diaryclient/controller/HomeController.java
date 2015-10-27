@@ -25,7 +25,6 @@ import com.softserve.tc.diary.entity.Record;
 import com.softserve.tc.diary.entity.User;
 import com.softserve.tc.diary.log.Log;
 import com.softserve.tc.diary.webservice.DiaryService;
-import com.softserve.tc.diaryclient.logout.Logout;
 import com.softserve.tc.diaryclient.webservice.diary.DiaryServicePortProvider;
 
 import net.aksingh.owmjapis.CurrentWeather;
@@ -34,8 +33,6 @@ import net.aksingh.owmjapis.OpenWeatherMap.Units;
 
 @Controller
 public class HomeController {
-    @Autowired
-    Logout logout;
     
     private Logger logger = Log.init(this.getClass().getName());
 

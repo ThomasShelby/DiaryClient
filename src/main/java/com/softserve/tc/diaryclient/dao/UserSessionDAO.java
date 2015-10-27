@@ -1,6 +1,6 @@
 package com.softserve.tc.diaryclient.dao;
 
-import java.sql.Timestamp;
+
 import java.util.Date;
 import java.util.Map;
 
@@ -14,6 +14,6 @@ public interface UserSessionDAO extends BaseDAO<UserSession> {
     public UserSession findBySession(String session);
             
     void deleteByNickName(String nickName);
-    
-    public Map<Integer, Integer> getSessionDuration();
+
+    Map<Date, Long> getSessionDuration();
 }

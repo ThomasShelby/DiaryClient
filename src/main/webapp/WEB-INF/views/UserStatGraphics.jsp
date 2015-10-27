@@ -10,7 +10,7 @@
 <script src="resources/js/graphicMap.js" /></script>
 <script src="resources/js/graphicUsersActivity.js" /></script>
 
-<!-- google map -->
+<!-- google chart map -->
 <input type="text" id="country" name="country">
 <button onclick="getAllAddresses()">show Map</button>
 <div id="chart_div"></div> 

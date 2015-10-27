@@ -37,7 +37,7 @@ public class SystemStatisticController {
         model.addAttribute("list", list);
         Map<Date, Double> loginDuration = logDurDAO.getGenLoginDuration();
         model.addAttribute("loginDuration", loginDuration);  
-        Map<Integer, Integer> sessionDuration = userSessDao.getSessionDuration();
+        Map<Date, Long> sessionDuration = userSessDao.getSessionDuration();
         model.addAttribute("sessionDuration", sessionDuration);
         
         String[][] recordsPerDay = port.getRecDate();

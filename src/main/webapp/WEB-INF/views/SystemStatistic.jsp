@@ -116,9 +116,10 @@ nv.addGraph({
         var chart = nv.models.multiBarChart() 
         .width(width)
         .height(height) 
+        .margin({top: 0, right: 40, bottom: 130, left: 160})
         .showControls(true) 
         .reduceXTicks(false) 
-        .color( [d3.rgb("#08306b"), d3.rgb("#4292c6")])
+        .color( [d3.rgb("#08306b"), d3.rgb("#f81111")])
 		chart.yAxis.tickFormat(d3.format(',d'));
         chart.xAxis.rotateLabels(-45);
         chart.xAxis.tickFormat(function (d) {

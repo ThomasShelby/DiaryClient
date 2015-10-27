@@ -17,5 +17,4 @@ public interface LoginDurationDAO extends BaseDAO<LoginDuration> {
     List<Integer> getAllLoginsCount();
     
     Map<Date, Double> getGenLoginDuration();
-    
 }

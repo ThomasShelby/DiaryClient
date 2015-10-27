@@ -48,12 +48,14 @@
 			</div>
 		</sec:authorize>
 		<script>
-		$(function(){
-			setInterval(function(){
+		var refreshOnlineUser = function(){
 			$.get("/DiaryClient/authenticated",function(data){
-			$("#onlineUser").html(data);				
-			})
-			}, 5000);
+				$("#onlineUser").html(data);				
+				})
+				};
+		$(function(){
+			refreshOnlineUser();
+			setInterval(refreshOnlineUser, 10000);
 		});
 		</script>
 </header>

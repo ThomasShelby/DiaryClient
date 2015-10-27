@@ -2,7 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     <session-config>
         <session-timeout>
-            5
+            15	
         </session-timeout>
     </session-config>
   <servlet>
@@ -24,6 +24,11 @@
   </listener>
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+    <listener>
+     <listener-class>
+      com.softserve.tc.diaryclient.logout.LogoutListener
+     </listener-class>
   </listener>
   <context-param>
     <param-name>contextConfigLocation</param-name>

@@ -84,7 +84,7 @@ public class UserSessionDAOImpl extends BaseDAOImpl<UserSession>implements UserS
     public Map<Date, Long> getSessionDuration() {
 
         List<Object[]> list = getEntityManager()
-                .createQuery("select CAST(startSession as date),SUM((((DATE_PART('day', endSession - startSession) * 24 +DATE_PART('hour', endSession - startSession)) * 60 + DATE_PART('minute', endSession - startSession)) * 60 + DATE_PART('second', endSession - startSession)))  as duration from UserSession group by startSession order by startSession")
+                .createQuery("select CAST(startSession as date),SUM((((DATE_PART('day', endSession - startSession) * 24 +DATE_PART('hour', endSession - startSession)) * 60 + DATE_PART('minute', endSession - startSession)) * 60 + DATE_PART('second', endSession - startSession)))  as duration from UserSession group by CAST(startSession as date) order by CAST(startSession as date)")
                 .getResultList();
         Map<Date, Long> sessionDuration = new TreeMap<Date, Long>();
         for (Object[] row : list) {

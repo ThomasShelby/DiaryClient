@@ -14,7 +14,7 @@
 	<!-- enable use-expressions -->
 	<http use-expressions="true">
 		<session-management>
-        	<concurrency-control max-sessions="10" session-registry-alias="sessionRegistry"/>
+        	<concurrency-control max-sessions="1" session-registry-alias="sessionRegistry"/>
     	</session-management>
 		<intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/addRecord**" access="hasRole('ROLE_USER')" />

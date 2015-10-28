@@ -26,7 +26,6 @@ public class AutocompleteController {
   public @ResponseBody
   String getTags(@RequestParam String tag) {
 
-    System.out.println(tag);
     if (tag.startsWith("#")) {
       //get data directly from service
       //DiaryService port = DiaryServiceConnection.getDairyServicePort();

@@ -45,10 +45,14 @@ Open file: <a href="/images/tmpFiles/${user.nickName}/${record.supplement}" targ
  <center>
 <hr>
  <button onclick="location.href='publicRecords'" class="buttonRD">Back</button>
-  <button onclick="openEditRecord('${record.uuid}')" class="buttonRD">Edit</button>
+
 <!--<c:if test="${user.nickName} == ${pageContext.request.userPrincipal.name}"> 
 
  </c:if>-->
+
+<c:if test="${(user.nickName == pageContext.request.userPrincipal.name)}">
+  <button onclick="openEditRecord('${record.uuid}')" class="buttonRD">Edit</button>
+ </c:if> 
  </center>
 
 </div>

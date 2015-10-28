@@ -29,20 +29,3 @@
   </script>
 </tiles:putAttribute>
 </tiles:insertDefinition>
-
-<!--  	<h1>Public Records:</h1>
-			<c:forEach items="${recordsList}" var="records">
-				<dl>
-					<dt>
-						<a href='recordsDiscription?id_rec=${records.uuid}'>${records.title}</a>
-					</dt>
-					<dd>
-						<form name="result">
-						  <input size=150 TYPE="text" NAME="message" value="${records.text}">	
-							</input>
-						</form>
-					</dd>
-				</dl>
-			</c:forEach>
-		</div>-->
-

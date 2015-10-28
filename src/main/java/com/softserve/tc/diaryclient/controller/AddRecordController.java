@@ -45,7 +45,8 @@ public class AddRecordController {
 
 	private static Logger logger = Log.init(AddRecordController.class.toString());
 
-	@Autowired
+	@SuppressWarnings("static-access")
+    @Autowired
 	public AddRecordController(DiaryServicePortProvider provider) {
 		port = provider.getPort();
 	}
@@ -116,8 +117,8 @@ public class AddRecordController {
             Iterator<User> followerIterator = followers.iterator();
             while (followerIterator.hasNext()) {
                 User follower=followerIterator.next();
-                mail.setParameters("The Diary. News", "Hi, " + follower.getNickName() + ".\n" + nick
-                        + " added new public records.", follower.geteMail());
+                mail.setParameters("The Diary. News", "Hi, " + follower.getNickName() + ".\nUser " + nick
+                        + " added new public record.", follower.geteMail());
                 mail.send();
             }
                 }

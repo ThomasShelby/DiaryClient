@@ -16,8 +16,7 @@ import com.softserve.tc.diaryclient.service.ActiveUserService;
 public class ActiveUsersController {
     @Autowired
     private ActiveUserService activeUserService;
-    // @Autowired
-    // Logout logout;
+    
     
     @RequestMapping(value = "/activeUsers")
     public String todayActiveUsers(Model model) {
@@ -27,8 +26,6 @@ public class ActiveUsersController {
                 
         model.addAttribute("activeUsers",
                 springActiveUsers);
-                
-        // logout.getSessionInformation();
         
         return "activeUsers";
     }
@@ -39,8 +36,6 @@ public class ActiveUsersController {
         List<SpringActiveUser> springActiveUsers =
                 activeUserService.getSpringActiveUsers();
                 
-        // logout.getSessionInformation();
-        
         return new Gson().toJson(springActiveUsers);
     }
 }

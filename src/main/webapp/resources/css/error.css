@@ -50,3 +50,11 @@ body{
   font-size:200pt;
   font-weight:300;
 }
+.stack {
+  color:#000000;
+  text-decoration:none;
+  padding:10px 20px;
+  font-size:13px;
+  font-family: arial, serif;
+  text-align: left;
+}

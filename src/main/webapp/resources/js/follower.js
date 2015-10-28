@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    setInterval(fun,10000);
+    setInterval(fun,2000);
 });
 
 var fun = function check() {

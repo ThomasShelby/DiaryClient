@@ -92,7 +92,7 @@ function Caint(canvas) {
         var y = e.pageY;
 
         x -= canvas.offsetLeft+(popup.left-20);
-        y -= canvas.offsetTop;
+        y -= canvas.offsetTop+(popup.top-20);
 
         if (painter.painting) {
             painter.drawLine(x, y);

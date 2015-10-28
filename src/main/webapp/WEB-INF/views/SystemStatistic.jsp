@@ -34,9 +34,9 @@
             fill-opacity: .8;
         }
     </style>
-<button class="chart-button logins-per-day" onclick="showLoginPerDayStatistics()" style="display:none;">Logins per day</button>
-<button class="chart-button duration-per-day" onclick="showDurationPerDayStatistics()">Duration per day</button>
-<button class="chart-button session-duration-per-day" onclick="showSessionDurationPerDayStatistics()" style="display:none;">Session duration per day</button>
+<button class="chart-button logins-per-day" onclick="showLoginPerDayStatistics()" style="display:none;">Show Logins and records per day</button>
+<button class="chart-button duration-per-day" onclick="showDurationPerDayStatistics()">Show Duration per day</button>
+<button class="chart-button session-duration-per-day" onclick="showSessionDurationPerDayStatistics()" style="display:none;">Show Session duration per day</button>
 <div id="chart">
    	<svg></svg>
 </div>

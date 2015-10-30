@@ -55,7 +55,7 @@
 				};
 		$(function(){
 			refreshOnlineUser();
-			setInterval(refreshOnlineUser, 10000);
+			setInterval(refreshOnlineUser, 180000);
 		});
 		</script>
 </header>

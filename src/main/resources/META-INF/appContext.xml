@@ -56,7 +56,7 @@
 	<bean id="securityContextLogoutHandler" class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler">
 	</bean>
 	
-	<bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl" />
+	<bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl" />	
 
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory"></property>
@@ -68,7 +68,7 @@
 
 	<bean id="diaryServicePortProvider"
 		class="com.softserve.tc.diaryclient.webservice.diary.DiaryServicePortProvider"
-		scope="singleton" />
+				scope="singleton" />
 
 	<bean id="cashDiaryService"
 		class="com.softserve.tc.diaryclient.webservice.diary.DiaryServiceCashLoader"
@@ -83,6 +83,6 @@
 
 		<!-- setting maximum upload size -->
 		<property name="maxUploadSize" value="10000000" />
-
 	</bean>
+	
 </beans>

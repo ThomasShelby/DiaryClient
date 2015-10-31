@@ -3,10 +3,10 @@ package com.softserve.tc.diaryclient.controller;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -37,25 +37,27 @@ public class UserController {
     }
     
     @RequestMapping(value = "/userProfile")
-    public String userProfile(@RequestParam(value = "nickName") String nickName,
+    public String userProfile(@AuthenticationPrincipal org.springframework.security.core.userdetails.User userDetails,
             @RequestParam(value = "followed", required = false) String followed,
             Model model) {
         DiaryService port = diaryServicePortProvider.getPort();
-        User user = port.getUserByNickName(nickName);
+        String nickName = userDetails.getUsername();
+        User receivedUser = port.getUserByNickName(nickName);
         List<Record> recordList = port.getAllPublicRecordsByNickName(nickName);
         model.addAttribute("recordList", recordList);
         model.addAttribute("followed", followed);
-        model.addAttribute("user", user);
+        model.addAttribute("user", receivedUser);
         return "user_profile";
     }
     
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String editProfile(
-            @RequestParam(value = "nickName", required = true) String nickName,
+            @AuthenticationPrincipal org.springframework.security.core.userdetails.User userDetails,
             Model model) {
         DiaryService port = diaryServicePortProvider.getPort();
-        User user = port.getUserByNickName(nickName);
-        model.addAttribute("user", user);
+        String nickName = userDetails.getUsername();
+        User receivedUser = port.getUserByNickName(nickName);
+        model.addAttribute("user", receivedUser);
         return "editUser";
     }
     

@@ -20,7 +20,7 @@
 				<li><b>Date of birth: </b>${user.dateOfBirth}</li>
 			</ul>
 			<c:if test="${pageContext.request.userPrincipal.name == user.nickName}">
-				<button onclick="location.href='edit?nickName=${user.nickName}'">Edit</button>
+				<button onclick="location.href='edit'">Edit</button>
 			</c:if>
 			<c:if test="${pageContext.request.userPrincipal.name != user.nickName}">
 				<c:choose>

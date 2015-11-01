@@ -16,7 +16,7 @@
     <style>
         .chart-button {
             width: auto;
-            float: left;
+            float: right;
         }
         text {
             font: 12px sans-serif;
@@ -163,7 +163,7 @@ nv.addGraph({
         var chart = nv.models.multiBarChart() 
         .width(width)
         .height(height) 
-        .margin({top: 0, right: 40, bottom: 130, left: 160})
+        .margin({top: 0, right: 40, bottom: 130, left: 200})
         .showControls(true) 
         .reduceXTicks(false) 
         .color( [d3.rgb("#08306b"), d3.rgb("#f81111")])

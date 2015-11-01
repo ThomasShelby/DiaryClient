@@ -75,7 +75,7 @@ public class UserController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "redirect:/userProfile?nickName=" + user.getNickName();
+        return "redirect:/userProfile";
     }
     
     @RequestMapping(value = "/delete", method = RequestMethod.GET)

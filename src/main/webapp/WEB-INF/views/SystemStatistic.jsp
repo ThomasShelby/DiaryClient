@@ -34,9 +34,9 @@
             fill-opacity: .8;
         }
     </style>
-<button class="chart-button logins-per-day" onclick="showLoginPerDayStatistics()" style="display:none;">Show Logins and records per day</button>
-<button class="chart-button duration-per-day" onclick="showDurationPerDayStatistics()">Show Duration per day</button>
-<button class="chart-button session-duration-per-day" onclick="showSessionDurationPerDayStatistics()" style="display:none;">Show Session duration per day</button>
+<button class="chart-button logins-per-day" onclick="showLoginAndRecordPerDayStatistics()" style="display:none;">Show logins and records per day</button>
+<button class="chart-button duration-per-day" onclick="showLoginDurationPerDayStatistics()">Show login duration per day</button>
+<button class="chart-button session-duration-per-day" onclick="showSessionDurationPerDayStatistics()" style="display:none;">Show session duration per day</button>
 <div id="chart">
    	<svg></svg>
 </div>
@@ -45,72 +45,119 @@
 
 <script> 
 
-function showLoginPerDayStatistics(){
+function showLoginAndRecordPerDayStatistics(){
 	$(".logins-per-day").hide();
 	$(".session-duration-per-day").hide();
 	$(".duration-per-day").show();
-	renderChart(test_data);
+	loginsAndRecordsStartHandler();
 };
-function showDurationPerDayStatistics(){
+
+function showLoginDurationPerDayStatistics(){
 	$(".logins-per-day").hide();
 	$(".duration-per-day").hide();
 	$(".session-duration-per-day").show();
-	renderChart(loginDurationData);
+	$.get("/DiaryClient/systemStatistic/login_duration", loginDurationHandler);
 };
+
 function showSessionDurationPerDayStatistics(){
 	$(".duration-per-day").hide();
 	$(".session-duration-per-day").hide();
 	$(".logins-per-day").show();
-    renderChart(sessionDurationData);
+	$.get("/DiaryClient/systemStatistic/session_duration", sessionDurationHandler);
 };
 
-var test_data = [{
-    "key": "Logins per day",
-    "values": [
-       <c:forEach items="${map}" var="entry">
-        {
-            "x": "${entry.key}",
-            "y": "${entry.value}"
-        },
-        </c:forEach>
-    ]
-}, {
-    "key": "Records per day",
-    "values": [
 
-	<c:forEach var = "valueArray" items = "${recordsPerDay}">
-	{
-		"x": "${valueArray[0]}",
-		"y": "${valueArray[1]}"
-	},
-	</c:forEach>
-]       
-}];
-var loginDurationData = [{
-    "key": "Durations per day",
-    "values": [
-       <c:forEach items="${loginDuration}" var="entry">
-        {
-            "x": "${entry.key}",
-            "y": "${entry.value}"
-        },
-        </c:forEach>
-    ]
-}];
-var sessionDurationData = [{
-    "key": "Session durations per day",
-    "values": [
-       <c:forEach items="${sessionDuration}" var="entry">
-        {
-            "x": "${entry.key}",
-            "y": "${entry.value}"
-        },
-        </c:forEach>
-    ]
-}];
+var loginsAndRecordsData = [{"key": "Logins per day"} , {"key": "Records per day"}];
+var loginDurationData = [{"key": "Login durations per day"}];
+var sessionDurationData = [{"key": "Session durations per day"}];
+
+
+var loginsAndRecordsStartHandler = function(){
+	var promises = [
+	        		$.get("/DiaryClient/systemStatistic/logins", loginsHandler),
+	        		$.get("/DiaryClient/systemStatistic/records", recordsHandler)
+	        	];
+	        	
+	        	$.when.apply($, promises)
+	        	.then(function(){
+	        		renderChart(loginsAndRecordsData);
+	        	});
+}
+
+var sessionDurationHandler = function(data){
+	var durations = data;
+
+	var sessionDuration = [];
+	
+	console.log(data);
+	$.each(durations, function(key, value){
+		sessionDuration.push(
+			{
+			"x" : key,
+			"y" : value
+			}
+		);
+	});
+	sessionDurationData[0].values = sessionDuration;
+	renderChart(sessionDurationData);
+};
+
+var loginDurationHandler = function(data){
+	var durations = data;
+
+	var loginDuration = [];
+	
+	console.log(data);
+	$.each(durations, function(key, value){
+		loginDuration.push(
+			{
+			"x" : key,
+			"y" : value
+			}
+		);
+	});
+	loginDurationData[0].values = loginDuration;
+	renderChart(loginDurationData);
+};
+
+
+var loginsHandler = function(data){
+	var logins = data;
+	var loginsValues = [];
+
+	$.each(logins, function(key, value){
+		loginsValues.push(
+			{
+			"x" : key,
+			"y" : value
+			}
+		);
+	});
+    console.log(loginsValues);
+	loginsAndRecordsData[0].values = loginsValues;
+}
+
+
+var recordsHandler = function(data){
+	var records = data;
+	var recordsValues = [];
+	
+	$.each(records, function(key, value){
+		recordsValues.push(
+			{
+			"x" : key,
+			"y" : value
+			}
+		);
+	});
+	loginsAndRecordsData[1].values = recordsValues;
+}
+
 function renderChart(data){
 nv.addGraph({
     generate: function () {
+    	d3.selectAll("svg > *").remove();
+    	
         var width = nv.utils.windowSize().width,
                 height = nv.utils.windowSize().height;
         var chart = nv.models.multiBarChart() 
@@ -123,7 +170,7 @@ nv.addGraph({
 		chart.yAxis.tickFormat(d3.format(',d'));
         chart.xAxis.rotateLabels(-45);
         chart.xAxis.tickFormat(function (d) {
-            return moment(d, "YYYY/MM/DD") 
+            return moment(d, "YYYY-MM-DDTHH:mm:ss.SSSZ") 
                     .format("DD/MM/YY"); 
         });
         chart.dispatch.on('renderEnd', function () {
@@ -148,7 +195,10 @@ nv.addGraph({
     }
 });
 };
-renderChart(test_data);
+
+
+loginsAndRecordsStartHandler();
+
 </script>
 
     </tiles:putAttribute>

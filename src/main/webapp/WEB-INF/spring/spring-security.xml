@@ -8,18 +8,29 @@
     http://www.springframework.org/schema/context 
     http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
+	<!-- <beans:import resource="classpath:META-INF/appContext.xml"/> -->
+
+
 	<http pattern="/css/**" security="none" />
 	<http pattern="/js/**" security="none" />
 
 	<!-- enable use-expressions -->
 	<http use-expressions="true">
-		<session-management>
-        	<concurrency-control max-sessions="1" session-registry-alias="sessionRegistry"/>
+		<session-management invalid-session-url="/login"> 
+        	<concurrency-control expired-url="/login" max-sessions="1" session-registry-alias="sessionRegistry"/>
     	</session-management>
-		<intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')" />
-		<intercept-url pattern="/addRecord**" access="hasRole('ROLE_USER')" />
-		<intercept-url pattern="/home**" access="hasRole('ROLE_USER')" />
-		<intercept-url pattern="/my-statistic**" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN') and isAuthenticated()" />
+		<intercept-url pattern="/addRecord**" access="hasRole('ROLE_USER') and isAuthenticated()" />
+		<intercept-url pattern="/home**" access="hasRole('ROLE_USER') and isAuthenticated()" />
+		<intercept-url pattern="/my-statistic**" access="hasRole('ROLE_USER') and isAuthenticated()" />
+		<intercept-url pattern="/userProfile**" access="hasRole('ROLE_USER') and isAuthenticated()" />
+		<intercept-url pattern="/followedUsers**" access="hasRole('ROLE_USER') and isAuthenticated()" />
+		<intercept-url pattern="/subscribers**" access="hasRole('ROLE_USER') and isAuthenticated()" />
+		<intercept-url pattern="/users**" access="hasRole('ROLE_ADMIN') and isAuthenticated()" />
+		<intercept-url pattern="/systemStatistic**" access="hasRole('ROLE_ADMIN') and isAuthenticated()" />
+		<intercept-url pattern="/activeUsers**" access="hasRole('ROLE_ADMIN') and isAuthenticated()" />
+		<intercept-url pattern="/users-statistic**" access="hasRole('ROLE_ADMIN') and isAuthenticated()" />
+		<intercept-url pattern="/userStatcGraphic**" access="hasRole('ROLE_ADMIN') and isAuthenticated()" />
 		<!-- access denied page -->
 		<access-denied-handler error-page="/403" />
 		<form-login login-page="/login" default-target-url="/home"
@@ -27,12 +38,13 @@
 			authentication-success-handler-ref="authSuccessHandler"
 			password-parameter="password" />
 		<http-basic />
-		<logout logout-success-url="/" invalidate-session="true"/>
 		<remember-me key="remember" />
 		<!-- enable csrf protection -->
 		<csrf />
+		
+		<custom-filter ref="logoutFilter" position="LOGOUT_FILTER"/>
 	</http>
-
+		
 	<authentication-manager>
 		<authentication-provider user-service-ref="CustomUserDetailsService">
 			<password-encoder hash="md5" />
@@ -42,5 +54,19 @@
 		class="com.softserve.tc.diaryclient.service.CustomUserDetailsService" />
 	<beans:bean name="AuthenticationSuccessHandlerImpl"
 		 id="authSuccessHandler"
-		class="com.softserve.tc.diaryclient.service.AuthenticationSuccessHandlerImpl" />
-	</beans:beans>
+		 class="com.softserve.tc.diaryclient.service.AuthenticationSuccessHandlerImpl"  />
+	
+	<beans:bean id="logoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
+		<beans:constructor-arg index="0" value="/login" />
+		 <beans:constructor-arg index="1">
+			<beans:list> 
+	        	<beans:bean id="myLogoutHandler" class="com.softserve.tc.diaryclient.logout.UserLogoutHandler">
+	        		<!-- 	<beans:constructor-arg ref="diaryServicePortProvider"></beans:constructor-arg> -->
+	        	</beans:bean>
+<!-- 	        	 <beans:bean id="securityContextLogoutHandler" class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler" /> -->
+	        </beans:list>
+		 </beans:constructor-arg>
+		  <beans:property name="filterProcessesUrl" value="/logout" />
+	</beans:bean>
+	
+</beans:beans>

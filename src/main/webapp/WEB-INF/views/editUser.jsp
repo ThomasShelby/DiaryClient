@@ -5,6 +5,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
+
 <tiles:insertDefinition name="defaultTemplate">
 	<tiles:putAttribute name="body">
 		<div class="body">
@@ -65,7 +66,7 @@
 					<tr>
 						<td><label for="dateOfBirth">Date of birth</label></td>
 						<td><input id="dateOfBirth" type="text" name="dateOfBirth"
-							value="${user.dateOfBirth}" /></td>
+							value="${user.dateOfBirth}" autocomplete="off"/></td>
 					</tr>
 					<tr>
 						<td>File to upload:</td>
@@ -77,3 +78,14 @@
 		</div>
 	</tiles:putAttribute>
 </tiles:insertDefinition>
+
+ <script>
+  $(function() {
+    $( "#dateOfBirth" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: 'yy-mm-dd',
+      yearRange: "-120:+0",
+    });
+  });
+  </script>

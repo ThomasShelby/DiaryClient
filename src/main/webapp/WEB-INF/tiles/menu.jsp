@@ -9,11 +9,11 @@
 	<ul>
 			<li><a href="home">Home </a></li>
 				
-			<li><a href="userProfile?nickName=${pageContext.request.userPrincipal.name}">My Profile</a></li>
+			<li><a href="userProfile?nickName=${pageContext.request.userPrincipal.name}">>My Profile</a></li>
 					
 			<li><a href="#" onclick="openAddRecord()">Add record</a></li>
 			
-			<li><a href="my-statistic?nickName=${pageContext.request.userPrincipal.name}">My Statistic</a></li>
+			<li><a href="my-statistic">My Statistic</a></li>
 					
 			<li><a href="settings">Settings</a></li>
 			
@@ -28,7 +28,7 @@
 			Adminstrator menu
 			<ul>
 				<li><a href="users">Users</a></li>
-				<li><a href="systemStatistic">SystemStatistic</a></li>
+				<li><a href="systemStatisticPage">SystemStatistic</a></li>
 				<li><a href="activeUsers">Active Users</a></li>
 				<li><a href="users-statistic">Users Statistic</a></li>
 				<li><a href="userStatcGraphic">Users activity graphics</a></li>

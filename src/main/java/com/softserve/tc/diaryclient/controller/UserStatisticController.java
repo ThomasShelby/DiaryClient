@@ -3,6 +3,7 @@ package com.softserve.tc.diaryclient.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,13 +52,14 @@ public class UserStatisticController {
     }
     
     @RequestMapping(value = "/my-statistic", method = RequestMethod.GET)
-    public String myStatistic(@RequestParam(value = "nickName",required=false) String nickName,Model model) {
-        DiaryService port = diaryServicePortProvider.getPort();
+    public String myStatistic(@AuthenticationPrincipal org.springframework.security.core.userdetails.User userDetails,Model model) {
+    DiaryService port = diaryServicePortProvider.getPort();
+        String nickName = userDetails.getUsername();
+        User receivedUser = port.getUserByNickName(nickName);
         if (nickName.isEmpty()){
             return "redirect:/login";
         }
-        User us = port.getUserByNickName(nickName);
-        model.addAttribute("user", us);
+        model.addAttribute("user", receivedUser);
         UserStatistic clientUserStat = userStatDAO.findByNickName(nickName);
         model.addAttribute("userStatistic",clientUserStat);
         

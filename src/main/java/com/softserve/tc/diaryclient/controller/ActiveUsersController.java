@@ -17,8 +17,7 @@ public class ActiveUsersController {
     @Autowired
     private ActiveUserService activeUserService;
     
-    
-    @RequestMapping(value = "/activeUsers")
+    @RequestMapping(value = "/listOfActiveUsers")
     public String todayActiveUsers(Model model) {
         
         List<SpringActiveUser> springActiveUsers =
@@ -26,8 +25,8 @@ public class ActiveUsersController {
                 
         model.addAttribute("activeUsers",
                 springActiveUsers);
-        
-        return "activeUsers";
+                
+        return "listOfActiveUsers";
     }
     
     @RequestMapping(value = "/activeUsers1")

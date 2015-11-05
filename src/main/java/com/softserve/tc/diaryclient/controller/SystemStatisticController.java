@@ -11,6 +11,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.softserve.tc.diary.webservice.DiaryService;
@@ -39,14 +40,14 @@ public class SystemStatisticController {
   }
     
     @RequestMapping(value = "/systemStatistic/logins")
-    public @ResponseBody Map<Date, Long> getLogins() {
-        Map<Date, Long> loginDateMap = logDurDAO.getLoginDate();
+    public @ResponseBody Map<Date, Long> getLogins(  @RequestParam(value = "month") int month) {
+        Map<Date, Long> loginDateMap = logDurDAO.getLoginDate(month);
         return loginDateMap;
     }
     
     @RequestMapping(value = "/systemStatistic/records")
-    public @ResponseBody Map<Date, Long> getRecords() {
-        String[][] recordsPerDay = port.getRecDate();
+    public @ResponseBody Map<Date, Long> getRecords( @RequestParam(value = "month") int month) {
+        String[][] recordsPerDay = port.getRecDate(month);
         Map<Date, Long> recordsDateMap = new LinkedHashMap<Date, Long>();
             for(int i = 0;i < recordsPerDay.length;i++){
                 Date key = null;

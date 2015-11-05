@@ -9,7 +9,7 @@
 	<ul>
 			<li><a href="home">Home </a></li>
 				
-			<li><a href="userProfile">My Profile</a></li>
+			<li><a href="userProfile?nickName=${pageContext.request.userPrincipal.name}">>My Profile</a></li>
 					
 			<li><a href="#" onclick="openAddRecord()">Add record</a></li>
 			
@@ -19,16 +19,16 @@
 			
 			<li><a href="publicRecords">Public records</a></li>
 				
-			<li><a id="followedUsers" href="followedUsers">Users wich I follow</a></li>
+			<li><a id="followedUsers" href="followedUsers?nickName=${pageContext.request.userPrincipal.name}">Users wich I follow</a></li>
 			
-			<li><a href="subscribers">My subsribers</a></li>	
+			<li><a href="subscribers?nickName=${pageContext.request.userPrincipal.name}">My subsribers</a></li>	
 		
 		</ul>
 		<sec:authorize access="hasRole('ROLE_ADMIN')">
 			Adminstrator menu
 			<ul>
 				<li><a href="users">Users</a></li>
-				<li><a href="systemStatistic">SystemStatistic</a></li>
+				<li><a href="systemStatisticPage">SystemStatistic</a></li>
 				<li><a href="activeUsers">Active Users</a></li>
 				<li><a href="users-statistic">Users Statistic</a></li>
 				<li><a href="userStatcGraphic">Users activity graphics</a></li>

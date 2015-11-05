@@ -1,7 +1,7 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <html>
     <head>
-<script src="resources/js/jquery-1.9.1.min.js"></script>
+
 <script src="resources/js/modalWindow.js"></script>	
 
 

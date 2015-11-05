@@ -22,16 +22,16 @@ import com.softserve.tc.diaryclient.entity.UserSession;
 import com.softserve.tc.diaryclient.webservice.diary.DiaryServicePortProvider;
 
 public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHandler {
-	
+    
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         //do what you want with 
        authentication = SecurityContextHolder.getContext().getAuthentication();
        DiaryService port = DiaryServicePortProvider.getPort();
        String session = port.updateSession(authentication.getName(), request.getSession(false).getId());
        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(
-				"/META-INF/appContext.xml");
-		UserSessionDAO userSessionDAO = (UserSessionDAO)context.getBean("userSessionDAO");
-		userSessionDAO.create(new UserSession(authentication.getName(), session, new Date()));
+                "/META-INF/appContext.xml");
+        UserSessionDAO userSessionDAO = (UserSessionDAO)context.getBean("userSessionDAO");
+        userSessionDAO.create(new UserSession(authentication.getName(), session, new Date()));
        response.sendRedirect("home");
     }
        

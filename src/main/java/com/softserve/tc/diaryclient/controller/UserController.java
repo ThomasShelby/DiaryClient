@@ -37,16 +37,15 @@ public class UserController {
     }
     
     @RequestMapping(value = "/userProfile")
-    public String userProfile(@AuthenticationPrincipal org.springframework.security.core.userdetails.User userDetails,
+    public String userProfile(@RequestParam(value = "nickName") String nickName,
             @RequestParam(value = "followed", required = false) String followed,
             Model model) {
         DiaryService port = diaryServicePortProvider.getPort();
-        String nickName = userDetails.getUsername();
-        User receivedUser = port.getUserByNickName(nickName);
+        User user = port.getUserByNickName(nickName);
         List<Record> recordList = port.getAllPublicRecordsByNickName(nickName);
         model.addAttribute("recordList", recordList);
         model.addAttribute("followed", followed);
-        model.addAttribute("user", receivedUser);
+        model.addAttribute("user", user);
         return "user_profile";
     }
     
@@ -75,7 +74,7 @@ public class UserController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "redirect:/userProfile?nickName=" + user.getNickName();
+        return "redirect:/userProfile";
     }
     
     @RequestMapping(value = "/delete", method = RequestMethod.GET)

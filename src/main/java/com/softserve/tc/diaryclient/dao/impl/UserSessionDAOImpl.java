@@ -50,33 +50,33 @@ public class UserSessionDAOImpl extends BaseDAOImpl<UserSession>implements UserS
     
     @Transactional
     public Map<String, Integer> getCountActiveusers(String mapping, Date selectedDate) {
-    	Map<String, Integer> map = new HashMap<String, Integer>();
-    	List<Object[]> list = null;
-    	if (mapping.equals("hourly")) {
-    		list = getEntityManager()
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        List<Object[]> list = null;
+        if (mapping.equals("hourly")) {
+            list = getEntityManager()
                   .createQuery("SELECT EXTRACT(HOUR FROM startSession), COUNT(*) FROM UserSession "
                   + "WHERE DATE(startSession) = DATE('" + selectedDate + "') GROUP BY EXTRACT(HOUR FROM startSession)"
                   + " order by EXTRACT(HOUR FROM startSession)").getResultList();
-    	}
-    	else if (mapping.equals("weekly")) {
-    		list = getEntityManager().createQuery(
-    				"SELECT EXTRACT(DOW FROM startSession), COUNT(*) FROM UserSession"
-    				+ " WHERE EXTRACT(WEEK FROM DATE('"+ selectedDate +"')) = EXTRACT(WEEK FROM startSession)"
-    				+ " group by EXTRACT(DOW FROM startSession)").getResultList();
-    	}
-    	else if (mapping.equals("monthly")) {
-    		list = getEntityManager().createQuery(
-    				"SELECT EXTRACT(DAY FROM startSession), COUNT(*) FROM UserSession WHERE "
-    				+ "EXTRACT(MONTH from DATE('"+ selectedDate +"')) = EXTRACT(MONTH from startSession) "
-    				+ "GROUP BY EXTRACT(DAY FROM startSession)").getResultList();
-    	}
-		for (Object[] row : list) {
+        }
+        else if (mapping.equals("weekly")) {
+            list = getEntityManager().createQuery(
+                    "SELECT EXTRACT(DOW FROM startSession), COUNT(*) FROM UserSession"
+                    + " WHERE EXTRACT(WEEK FROM DATE('"+ selectedDate +"')) = EXTRACT(WEEK FROM startSession)"
+                    + " group by EXTRACT(DOW FROM startSession)").getResultList();
+        }
+        else if (mapping.equals("monthly")) {
+            list = getEntityManager().createQuery(
+                    "SELECT EXTRACT(DAY FROM startSession), COUNT(*) FROM UserSession WHERE "
+                    + "EXTRACT(MONTH from DATE('"+ selectedDate +"')) = EXTRACT(MONTH from startSession) "
+                    + "GROUP BY EXTRACT(DAY FROM startSession)").getResultList();
+        }
+        for (Object[] row : list) {
             String key = String.valueOf(row[0]);
             Integer value = Integer.valueOf(String.valueOf(row[1]));
             map.put(key, value);
           }
-    	
-    	return map;
+        
+        return map;
     }
 
     @Transactional

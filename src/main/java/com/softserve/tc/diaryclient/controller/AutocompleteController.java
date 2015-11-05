@@ -32,7 +32,7 @@ public class AutocompleteController {
       //data = port.getListTagsBPrefix(tag);
 
       //get data (hashes) from client cash
-      data = diaryServiceCashLoader.getListOfHashTagsFromCash();
+      data = diaryServiceCashLoader.getListOfHashTags();
 
       return new Gson().toJson(simulateSearchResult(tag));	
     }

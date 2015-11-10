@@ -12,7 +12,7 @@ public interface LoginDurationDAO extends BaseDAO<LoginDuration> {
     
     void deleteByNickName(String nickName);
     
-    Map<Date, Long> getLoginDate();
+    Map<Date, Long> getLoginDate(int month);
     
     List<Integer> getAllLoginsCount();
     

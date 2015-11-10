@@ -64,4 +64,14 @@
     <servlet-name>xmlToHtmlServlet</servlet-name>
     <url-pattern>/xmlToHtmlServlet</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <description></description>
+    <display-name>unsavedRecordsServlet</display-name>
+    <servlet-name>unsavedRecordsServlet</servlet-name>
+    <servlet-class>com.softserve.tc.diaryclient.autosave.servlet.UnsavedRecordsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>unsavedRecordsServlet</servlet-name>
+    <url-pattern>/unsavedRecords</url-pattern>
+  </servlet-mapping>
 </web-app>

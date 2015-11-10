@@ -40,10 +40,10 @@ public class LoginDurationDAOImpl extends BaseDAOImpl<LoginDuration>
     
     @Transactional
     @SuppressWarnings("unchecked")
-    public Map<Date, Long> getLoginDate() {
+    public Map<Date, Long> getLoginDate(int month) {
         List<Object[]> list = getEntityManager()
                 .createQuery(
-                        "Select CAST(loginDate as date), COUNT(*) FROM LoginDuration GROUP BY CAST(loginDate as date) ORDER BY CAST(loginDate as date)")
+                        "Select CAST(loginDate as date), COUNT(*) FROM LoginDuration WHERE DATE(loginDate) BETWEEN '2015-"+ month +"-01 00:00:00.000000' AND '2015-"+ month +"-31 23:59:59.999999' GROUP BY CAST(loginDate as date) ORDER BY CAST(loginDate as date)")
                 .getResultList();
         Map<Date, Long> statsPerDate =new TreeMap<Date, Long>();
         for (Object[] row : list) {

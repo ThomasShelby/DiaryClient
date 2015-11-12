@@ -56,7 +56,6 @@ public class SystemStatisticController {
                 try {
                     key = sdf.parse(recordsPerDay[i][0]);
                 } catch (ParseException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
                 if(recordsPerDay[i][1] == null || recordsPerDay[i][1].isEmpty()){

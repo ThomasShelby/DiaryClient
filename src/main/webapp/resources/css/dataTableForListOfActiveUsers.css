@@ -5,9 +5,13 @@
 table.dataTable {
 	margin: 0 auto;
 	clear: both;
-	width: 100%;
+	width: 100% !important;
 	border: 2px ridge;
-    border-color: blueviolet;
+	border-color: #E0E0E0;
+}
+
+table.dataTable tbody {
+	word-break: break-word;
 }
 
 table.dataTable thead th {

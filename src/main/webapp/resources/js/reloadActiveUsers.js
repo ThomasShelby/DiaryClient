@@ -39,7 +39,7 @@ var reloadActiveUsers=function(tabl1){
 			tabl1.clear().draw();
 			for (var  i=0; i<data.length;i++) {
 	var avatarImage='<div><img src="/images/tmpFiles/'+data[i].username+'/'+data[i].avatar+'" alt="user avatar" style="width:40px;height:40px;"/></div>'
-	tabl1.row.add( [avatarImage,data[i].username,data[i].firstName,data[i].secondName,data[i].eMail,data[i].session] ).draw( false );
+	tabl1.row.add( [avatarImage,data[i].username,data[i].firstName,data[i].secondName,data[i].eMail,data[i].session,data[i].ipAddress] ).draw( false );
 			}
 		},
 		error: function(data){

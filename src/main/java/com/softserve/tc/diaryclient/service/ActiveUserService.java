@@ -9,14 +9,19 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
+import com.softserve.tc.diaryclient.dao.UserSessionDAO;
 import com.softserve.tc.diaryclient.dao.impl.UserDAOImpl;
 import com.softserve.tc.diaryclient.entity.SpringActiveUser;
+import com.softserve.tc.diaryclient.entity.UserSession;
 
 @Service
 public class ActiveUserService {
     
     @Autowired
     public SessionRegistry sessionRegistry;
+    
+    @Autowired
+    private UserSessionDAO userSessionDAO;
     
     // Getting Avatar, FirstName, SecondName, Email from
     // activeUsersFromDB for user from sessionRegistry
@@ -90,6 +95,12 @@ public class ActiveUserService {
                     .seteMail(geteMail(username,
                             activeUsersFromDB));
                             
+            UserSession session = userSessionDAO
+                    .findBySession(sessionInformation.getSessionId());
+            if (session != null) {
+                springActiveUser.setIpAddress(session.getIpAddress());
+            }
+            
             springActiveUsers.add(springActiveUser);
         }
         return springActiveUsers;

@@ -25,7 +25,8 @@
 			<option value='FirstName'>FirstName</option>
 			<option value='LastName'>LastName</option>
 			<option value='Email'>Email</option>
-			<option value='SessionID'>SessionID</option>
+			<option value='SessionID'>Session ID</option>
+			<option value='IpAddress'>IP Address</option>
 		</select>
 	</form>
 	
@@ -39,6 +40,7 @@
       <th>Last Name</th>
       <th>Email</th>
       <th>Session ID</th>
+      <th>IP Address</th>
       </tr>
     </thead>
     <tbody>
@@ -49,7 +51,8 @@
       <td>${aU.firstName}</td>
       <td>${aU.secondName}</td>
       <td>${aU.eMail}</td>
-      <td>${aU.session}</td> 
+      <td>${aU.session}</td>
+      <td>${aU.ipAddress}</td>
       </tr>
 	</c:forEach>
     </tbody>

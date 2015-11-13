@@ -38,7 +38,7 @@ public class UserSessionDAOTest {
     @Before
     public void beforeTest() throws SQLException {
         testRecord =
-                new UserSession("testRec", "kidygfr", new Date());
+                new UserSession("testRec", "kidygfr", new Date(), "127.0.0.1");
     }
     
     @After

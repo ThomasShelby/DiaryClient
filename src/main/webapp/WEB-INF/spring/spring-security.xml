@@ -28,7 +28,7 @@
 		<intercept-url pattern="/subscribers**" access="hasRole('ROLE_USER') and isAuthenticated()" />
 		<intercept-url pattern="/users**" access="hasRole('ROLE_ADMIN') and isAuthenticated()" />
 		<intercept-url pattern="/systemStatistic**" access="hasRole('ROLE_ADMIN') and isAuthenticated()" />
-		<intercept-url pattern="/activeUsers**" access="hasRole('ROLE_ADMIN') and isAuthenticated()" />
+		<intercept-url pattern="/listOfActiveUsers**" access="hasRole('ROLE_ADMIN') and isAuthenticated()" />
 		<intercept-url pattern="/users-statistic**" access="hasRole('ROLE_ADMIN') and isAuthenticated()" />
 		<intercept-url pattern="/userStatcGraphic**" access="hasRole('ROLE_ADMIN') and isAuthenticated()" />
 		<!-- access denied page -->

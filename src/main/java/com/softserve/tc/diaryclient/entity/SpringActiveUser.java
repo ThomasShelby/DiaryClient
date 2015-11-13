@@ -7,6 +7,7 @@ public class SpringActiveUser extends User {
     private String firstName;
     private String secondName;
     private String eMail;
+    private String ipAddress;
     
     public String getSession() {
         return session;
@@ -46,6 +47,14 @@ public class SpringActiveUser extends User {
     
     public void seteMail(String eMail) {
         this.eMail = eMail;
+    }
+    
+    public String getIpAddress() {
+        return ipAddress;
+    }
+    
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
     }
     
 }

@@ -12,80 +12,85 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 public class UserSession {
-	
-	@Id
+    
+    @Id
     private String uuid;
-	
-	@NotNull
-	@Column(name="nick_name")
-	private String nickName;
-
-	@NotNull
-	@Column(name="session_number")
-	private String sessionNumber;
-	
-	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="start_session")
-	private Date startSession;
-	
-	@Column(name="end_session")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date endSession;
-	
-	public UserSession() {
-		super();
-	}
-	
-	public UserSession(String nickName, String sessionNumber, Date startSession) {
-		super();
-		this.uuid = UUID.randomUUID().toString();
-		this.nickName = nickName;
-		this.sessionNumber = sessionNumber;
-		this.startSession = startSession;
-	}
-	
-	public String getUuid() {
-		return uuid;
-	}
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-
-	public String getNickName() {
-		return nickName;
-	}
-
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
-	}
-
-	public String getSessionNumber() {
-		return sessionNumber;
-	}
-
-	public void setSessionNumber(String sessionNumber) {
-		this.sessionNumber = sessionNumber;
-	}
-
-	public Date getStartSession() {
-		return startSession;
-	}
-
-	public void setStartSession(Date startSession) {
-		this.startSession = startSession;
-	}
-
-	public Date getEndSession() {
-		return endSession;
-	}
-
-	public void setEndSession(Date endSession) {
-		this.endSession = endSession;
-	}
-
-	@Override
+    
+    @NotNull
+    @Column(name = "nick_name")
+    private String nickName;
+    
+    @NotNull
+    @Column(name = "session_number")
+    private String sessionNumber;
+    
+    @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "start_session")
+    private Date startSession;
+    
+    @Column(name = "end_session")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date endSession;
+    
+    @Column(name = "ip_address")
+    private String ipAddress;
+    
+    public UserSession() {
+        super();
+    }
+    
+    public UserSession(String nickName, String sessionNumber,
+            Date startSession, String ipAddress) {
+        super();
+        this.uuid = UUID.randomUUID().toString();
+        this.nickName = nickName;
+        this.sessionNumber = sessionNumber;
+        this.startSession = startSession;
+        this.setIpAddress(ipAddress);
+    }
+    
+    public String getUuid() {
+        return uuid;
+    }
+    
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+    
+    public String getNickName() {
+        return nickName;
+    }
+    
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+    
+    public String getSessionNumber() {
+        return sessionNumber;
+    }
+    
+    public void setSessionNumber(String sessionNumber) {
+        this.sessionNumber = sessionNumber;
+    }
+    
+    public Date getStartSession() {
+        return startSession;
+    }
+    
+    public void setStartSession(Date startSession) {
+        this.startSession = startSession;
+    }
+    
+    public Date getEndSession() {
+        return endSession;
+    }
+    
+    public void setEndSession(Date endSession) {
+        this.endSession = endSession;
+    }
+    
+    @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
@@ -100,7 +105,7 @@ public class UserSession {
         result = prime * result + ((uuid == null) ? 0 : uuid.hashCode());
         return result;
     }
-
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -137,11 +142,21 @@ public class UserSession {
             return false;
         return true;
     }
-
+    
     @Override
-	public String toString() {
-		return "UserSession [uuid=" + uuid + ", nickName=" + nickName + ", sessionNumber=" + sessionNumber
-				+ ", startSession=" + startSession + ", endSession=" + endSession + "]\n";
-	}
+    public String toString() {
+        return "UserSession [uuid=" + uuid + ", nickName=" + nickName
+                + ", sessionNumber=" + sessionNumber
+                + ", startSession=" + startSession + ", endSession="
+                + endSession + "]\n";
+    }
 
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
+    
 }

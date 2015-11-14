@@ -17,13 +17,13 @@
         <h1><a href="/DiaryClient/">The Diary Registration</a></h1>
         <form:form method="post" commandName="signupForm" id="signupForm">
             <form:input path="username" id="username" type='text' name='username' placeholder='username' />
-            <noscript><form:errors path="username" class="error"/></noscript>
+            <form:errors path="username" class="error"/>
             <form:input path="email" id="email" type='text' name='email' placeholder='email' />
-            <noscript><form:errors path="email" /></noscript>
+            <form:errors path="email" class="error"/>
             <form:input path="password" id="password" type='password' name='password' placeholder="password" />
-            <noscript><form:errors path="password" class="error"/></noscript>
+            <form:errors path="password" class="error"/>
             <form:input path="confirmPassword" id="confirmPassword" type='password' name='confirmPassword' placeholder="confirm password" />
-            <noscript><form:errors path="confirmPassword" class="error"/></noscript>
+            <form:errors path="confirmPassword" class="error"/>
             <div class="" id="passwordStrength"></div>
             <input type="submit" value="Submit" />
             <div class="register">Already registered? <a href="/DiaryClient/login">Login here</a></div>

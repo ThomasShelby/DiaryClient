@@ -6,7 +6,10 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+import com.softserve.tc.diary.webservice.DiaryService;
+import com.softserve.tc.diaryclient.dao.impl.UserDAOImpl;
 import com.softserve.tc.diaryclient.entity.SignupForm;
+import com.softserve.tc.diaryclient.webservice.diary.DiaryServicePortProvider;
 
 @Component
 public class SignupValidator implements Validator{
@@ -23,6 +26,11 @@ public class SignupValidator implements Validator{
                         errors.rejectValue("username", "username.tooLong", "Please enter value less than or equal 20 characters");
                 }
                 
+                DiaryService port = DiaryServicePortProvider.getPort();
+                if (port.getUserByNickName(username) != null) {
+                        errors.rejectValue("username", "username.incorrect", "Username already exist");
+                }
+                
                 ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "password.empty", "Please provide a password");
                 if (!(signupForm.getPassword()).equals(signupForm
                                 .getConfirmPassword())) {
@@ -31,6 +39,10 @@ public class SignupValidator implements Validator{
                 
                 if( !EmailValidator.getInstance().isValid( signupForm.getEmail() ) ){
                         errors.rejectValue("email", "email.notValid", "Your email address must be in the format of name@domain.com");
+                }
+                
+                if (port.getUserByEmail(signupForm.getEmail()) != null) {
+                    errors.rejectValue("email", "email.incorrect", "Email already exist");
                 }
         }
 }

@@ -25,7 +25,7 @@
             <form:input path="confirmPassword" id="confirmPassword" type='password' name='confirmPassword' placeholder="confirm password" />
             <form:errors path="confirmPassword" class="error"/>
             <div class="" id="passwordStrength"></div>
-            <input type="submit" value="Submit" />
+            <input type="submit" value="Sign Up" id="submitBtn"/>
             <div class="register">Already registered? <a href="/DiaryClient/login">Login here</a></div>
         </form:form>
     </div>

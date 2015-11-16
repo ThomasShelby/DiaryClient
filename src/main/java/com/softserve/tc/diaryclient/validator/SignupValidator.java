@@ -7,7 +7,6 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.softserve.tc.diary.webservice.DiaryService;
-import com.softserve.tc.diaryclient.dao.impl.UserDAOImpl;
 import com.softserve.tc.diaryclient.entity.SignupForm;
 import com.softserve.tc.diaryclient.webservice.diary.DiaryServicePortProvider;
 

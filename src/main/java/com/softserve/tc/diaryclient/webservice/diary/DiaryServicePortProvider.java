@@ -23,6 +23,9 @@ public class DiaryServicePortProvider {
 	}
 	
 	public static synchronized DiaryService getPort(){
+		if (port == null) {
+			new DiaryServicePortProvider();
+		}
 		return port;
 	}
 	

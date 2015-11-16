@@ -68,7 +68,15 @@
 	<bean id="baseDao" class="com.softserve.tc.diaryclient.dao.impl.BaseDAOImpl">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
-
+	
+	<bean id="timerStatistic" class="com.softserve.tc.diaryclient.statistic.SystemStatisticTimer"
+	scope="singleton" init-method="init">
+	 <property name="timerTask" ref="timerTask"/>
+	</bean>
+	
+	<bean id="timerTask" class="com.softserve.tc.diaryclient.statistic.SystemStatisticTimerTask"
+	scope="singleton"/>
+	
 	<bean id="diaryServicePortProvider"
 		class="com.softserve.tc.diaryclient.webservice.diary.DiaryServicePortProvider"
 				scope="singleton" />

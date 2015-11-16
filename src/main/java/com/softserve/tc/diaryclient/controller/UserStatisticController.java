@@ -34,7 +34,7 @@ public class UserStatisticController {
         String json = new Gson().toJson(usersList);
         model.addAttribute("usersList", json);
         
-        User mostActiveUser = port.getMostActiveUser(); 
+        User mostActiveUser = port.getMostActiveUser(null); 
         model.addAttribute("mostActiveUser", mostActiveUser);
         int numberOfRecords = port.getUserAmountOfRecords(mostActiveUser.getNickName());
         model.addAttribute("usersAmountOfRecords", numberOfRecords);

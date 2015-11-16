@@ -3,6 +3,7 @@
     <head>
 
 <script src="resources/js/modalWindow.js"></script>	
+<script src="resources/js/jquery-2.1.4.min.js"></script>  
 
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

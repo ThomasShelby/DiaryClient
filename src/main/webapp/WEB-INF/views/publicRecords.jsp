@@ -8,7 +8,6 @@
 		<div class="body">
 <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
 <script src="resources/js/forPublicRecords.js"></script>
-<script src="resources/js/calendar-and-records.js"></script>
 <!--  <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">-->
 <link rel="stylesheet" type="text/css" href="resources/css/dataTable-style.css">
 <table id="pubRecords" >

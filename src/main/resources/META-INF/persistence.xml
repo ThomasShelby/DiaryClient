@@ -9,5 +9,6 @@
 		<class>com.softserve.tc.diaryclient.entity.UserSession</class>
 		<class>com.softserve.tc.diaryclient.entity.UserSettings</class>
 		<class>com.softserve.tc.diaryclient.entity.UserStatistic</class>
+		<class>com.softserve.tc.diaryclient.entity.SystemStatisticPerDay</class>
 	</persistence-unit>
 </persistence>
